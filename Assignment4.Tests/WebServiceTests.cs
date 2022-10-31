@@ -66,6 +66,18 @@ namespace Assignment4.Tests
             };
             var (category, _) = PostData($"{CategoriesApi}", data);
 
+            string id = null;
+            if (category["id"] == null)
+            {
+                var url = category["url"].ToString();
+                id = url.Substring(url.LastIndexOf('/') + 1);
+            }
+            else
+            {
+                id = category["id"].ToString();
+            }
+
+
             var update = new
             {
                 Id = category["id"],
