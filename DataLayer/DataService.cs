@@ -37,14 +37,21 @@ namespace DataLayer
         {
             using var db = new NorthwindContext();
             var cat = new Category();
-            cat.Id = GetCategories().Max(x => x.Id+1);
+            cat.Id = GetCategories().Max(x => x.Id + 1);
             cat.Name = name;
             cat.Description = description; 
             db.Categories.Add(cat);
             db.SaveChanges();
 
             return cat;
+        }
 
+        public void CreateCategory(Category category)
+        {
+            using var db = new NorthwindContext();
+            category.Id = GetCategories().Max(x => x.Id + 1);
+            db.Categories.Add(category);
+            db.SaveChanges();
         }
 
         public bool DeleteCategory(int id)
@@ -61,16 +68,16 @@ namespace DataLayer
   
         }
 
-        public bool UpdateCategory(int id, string name, string desc)
+        public bool UpdateCategory(Category category)
         {
             using var db = new NorthwindContext();
-            var cat = db.Categories.Find(id);
+            var cat = db.Categories.Find(category.Id);
    
             if (cat != null)
             {
-                cat.Description = desc;
-                cat.Name = name;
-                db.SaveChanges();
+                //cat.Description = desc;
+                //cat.Name = name;
+                //db.SaveChanges();
                 return true;
             }
             return false;
@@ -165,16 +172,6 @@ namespace DataLayer
         }
 
         public IList<Product> GetProducts()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateCategory(Category category)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool UpdateCategory(Category category)
         {
             throw new NotImplementedException();
         }

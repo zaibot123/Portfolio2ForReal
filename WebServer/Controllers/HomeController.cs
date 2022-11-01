@@ -71,7 +71,26 @@ namespace WebServer.Controllers
             return Ok();
         }
 
+        [HttpPut("{id}", Name = nameof(GetCategory))]
+        public IActionResult PutData(Category category)
+        {
+            //if(_dataService.UpdateCategory(category))
+            //{ 
+            //return Ok();
+            //}
+            //return NotFound();
 
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            var model = _dataService.UpdateCategory(category);
+
+            return Ok(model);
+        }
+
+       
         private CategoryModel CreateCategoryModel(Category category)
         {
             var model = _mapper.Map<CategoryModel>(category);

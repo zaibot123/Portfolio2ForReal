@@ -13,7 +13,7 @@ namespace Assignment4.Tests
     {
         private const string CategoriesApi = "http://localhost:5001/api/categories";
         private const string ProductsApi = "http://localhost:5001/api/products";
-
+#if Comment
         /* /api/categories */
         [Fact]
         public void ApiCategories_GetWithNoArguments_OkAndAllCategories()
@@ -57,8 +57,8 @@ namespace Assignment4.Tests
 
             DeleteData($"{CategoriesApi}/{category["id"]}");
         }
-#if COMMENT
 
+#endif
         [Fact]
         public void ApiCategories_PutWithValidCategory_Ok()
         {
@@ -100,7 +100,7 @@ namespace Assignment4.Tests
 
             DeleteData($"{CategoriesApi}/{category["id"]}");
         }
-
+#if COMMENT
         [Fact]
         public void ApiCategories_PutWithInvalidCategory_NotFound()
         {
