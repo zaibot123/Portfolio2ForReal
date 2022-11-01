@@ -1,11 +1,12 @@
 using DataLayer;
+using DataLayer.Model;
 
 namespace Assignment4.Tests
 {
     public class DataServiceTests
     {
         /* Categories */
-#if COMMENT
+#if comment
         [Fact]
         public void Category_Object_HasIdNameAndDescription()
         {
