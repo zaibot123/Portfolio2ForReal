@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DataLayer;
-
+using DataLayer.Model;
 
 namespace WebServer.Models.Profiles
 {
