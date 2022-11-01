@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -9,7 +8,7 @@ using Newtonsoft.Json.Linq;
 namespace Assignment4.Tests
 
 {
-   
+
     public class WebServiceTests
     {
         private const string CategoriesApi = "http://localhost:5001/api/categories";
@@ -35,7 +34,7 @@ namespace Assignment4.Tests
             Assert.Equal(HttpStatusCode.OK, statusCode);
             Assert.Equal("Beverages", category["name"]);
         }
-#if COMMENT
+
         [Fact]
         public void ApiCategories_GetWithInvalidCategoryId_NotFound()
         {
@@ -58,7 +57,7 @@ namespace Assignment4.Tests
 
             DeleteData($"{CategoriesApi}/{category["id"]}");
         }
-
+#if COMMENT
 
         [Fact]
         public void ApiCategories_PutWithValidCategory_Ok()
@@ -220,7 +219,7 @@ namespace Assignment4.Tests
             var client = new HttpClient();
             var response = client.GetAsync(url).Result;
             var data = response.Content.ReadAsStringAsync().Result;
-            return ((JObject)(data), response.StatusCode);
+            return ((JObject)JsonConvert.DeserializeObject(data), response.StatusCode);
         }
 
         (JObject, HttpStatusCode) PostData(string url, object content)
