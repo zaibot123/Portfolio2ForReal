@@ -17,7 +17,7 @@ using DataLayer;
 
 namespace DataLayer
 {
-    public class DataService
+    public class DataService : IDataService
     {
          
     public IList<Category> GetCategories()
@@ -164,5 +164,19 @@ namespace DataLayer
 
         }
 
+        public IList<Product> GetProducts()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

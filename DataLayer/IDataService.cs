@@ -13,7 +13,8 @@ namespace DataLayer
         void CreateCategory(Category category);
         bool UpdateCategory(Category category);
         bool DeleteCategory(int id);
+        Order? GetOrder(int id);
 
-       // IList<ProductSearchModel> GetProductByName(string search);
+        // IList<ProductSearchModel> GetProductByName(string search);
     }
 }

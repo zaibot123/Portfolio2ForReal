@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment4.Tests", "Assign
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer", "WebServer\WebServer.csproj", "{64573226-B984-449C-A9E6-192E470DAFB8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "..\tamig\DataLayer\DataLayer.csproj", "{80A67F6E-94F5-46C4-9E5A-281935EBE774}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\DataLayer.csproj", "{1B907A71-A0A7-48FD-814B-DA435310496B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{64573226-B984-449C-A9E6-192E470DAFB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64573226-B984-449C-A9E6-192E470DAFB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64573226-B984-449C-A9E6-192E470DAFB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80A67F6E-94F5-46C4-9E5A-281935EBE774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80A67F6E-94F5-46C4-9E5A-281935EBE774}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80A67F6E-94F5-46C4-9E5A-281935EBE774}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80A67F6E-94F5-46C4-9E5A-281935EBE774}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B907A71-A0A7-48FD-814B-DA435310496B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B907A71-A0A7-48FD-814B-DA435310496B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B907A71-A0A7-48FD-814B-DA435310496B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B907A71-A0A7-48FD-814B-DA435310496B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

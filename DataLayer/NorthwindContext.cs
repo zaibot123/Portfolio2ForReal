@@ -7,13 +7,13 @@ namespace DataLayer
 {
     public class NorthwindContext : DbContext
     {
-        const string ConnectionString = "host=localhost;db=northwind;uid=postgres;pwd=1234";
+        const string ConnectionString = "host=localhost;db=Assignment4;uid=postgres;pwd=Google-1234";
 
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<Category>? Categories { get; set; }
+        public DbSet<Product>? Products { get; set; }
+        public DbSet<Order>? Orders { get; set; }
 
-        public DbSet<OrderDetails> OrderDetails { get; set; }
+        public DbSet<OrderDetails>? OrderDetails { get; set; }
 
 
 
