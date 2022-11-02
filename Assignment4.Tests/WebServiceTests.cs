@@ -13,7 +13,7 @@ namespace Assignment4.Tests
     {
         private const string CategoriesApi = "http://localhost:5001/api/categories";
         private const string ProductsApi = "http://localhost:5001/api/products";
-#if Comment
+
         /* /api/categories */
         [Fact]
         public void ApiCategories_GetWithNoArguments_OkAndAllCategories()
@@ -53,12 +53,23 @@ namespace Assignment4.Tests
             };
             var (category, statusCode) = PostData(CategoriesApi, newCategory);
 
+            string id = null;
+            if (category["id"] == null)
+            {
+                var url = category["url"].ToString();
+                id = url.Substring(url.LastIndexOf('/') + 1);
+            }
+            else
+            {
+                id = category["id"].ToString();
+            }
+
             Assert.Equal(HttpStatusCode.Created, statusCode);
 
-            DeleteData($"{CategoriesApi}/{category["id"]}");
+            DeleteData($"{CategoriesApi}/{id}");
         }
 
-#endif
+
         [Fact]
         public void ApiCategories_PutWithValidCategory_Ok()
         {
@@ -84,23 +95,22 @@ namespace Assignment4.Tests
 
             var update = new
             {
-                Id = category["id"],
                 Name = category["name"] + "Updated",
                 Description = category["description"] + "Updated"
             };
 
-            var statusCode = PutData($"{CategoriesApi}/{category["id"]}", update);
+            var statusCode = PutData($"{CategoriesApi}/{id}", update);
 
             Assert.Equal(HttpStatusCode.OK, statusCode);
 
-            var (cat, _) = GetObject($"{CategoriesApi}/{category["id"]}");
+            var (cat, _) = GetObject($"{CategoriesApi}/{id}");
 
             Assert.Equal(category["name"] + "Updated", cat["name"]);
             Assert.Equal(category["description"] + "Updated", cat["description"]);
 
-            DeleteData($"{CategoriesApi}/{category["id"]}");
+            DeleteData($"{CategoriesApi}/{id}");
         }
-#if COMMENT
+
         [Fact]
         public void ApiCategories_PutWithInvalidCategory_NotFound()
         {
@@ -127,11 +137,22 @@ namespace Assignment4.Tests
             };
             var (category, _) = PostData($"{CategoriesApi}", data);
 
-            var statusCode = DeleteData($"{CategoriesApi}/{category["id"]}");
+            string id = null;
+            if (category["id"] == null)
+            {
+                var url = category["url"].ToString();
+                id = url.Substring(url.LastIndexOf('/') + 1);
+            }
+            else
+            {
+                id = category["id"].ToString();
+            }
+
+            var statusCode = DeleteData($"{CategoriesApi}/{id}");
 
             Assert.Equal(HttpStatusCode.OK, statusCode);
         }
-
+#if Comment
         [Fact]
         public void ApiCategories_DeleteWithInvalidId_NotFound()
         {

@@ -13,7 +13,7 @@ using System.ComponentModel;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
 using DataLayer;
-
+using Nest;
 
 namespace DataLayer
 {
@@ -68,16 +68,16 @@ namespace DataLayer
   
         }
 
-        public bool UpdateCategory(Category category)
+        public bool UpdateCategory(int id, string name, string desc)
         {
             using var db = new NorthwindContext();
-            var cat = db.Categories.Find(category.Id);
+            var cat = db.Categories.Find(id);
    
             if (cat != null)
             {
-                //cat.Description = desc;
-                //cat.Name = name;
-                //db.SaveChanges();
+                cat.Description = desc;
+                cat.Name = name;
+                db.SaveChanges();
                 return true;
             }
             return false;
@@ -174,6 +174,21 @@ namespace DataLayer
         public IList<Product> GetProducts()
         {
             throw new NotImplementedException();
+        }
+
+        public bool UpdateCategory(Category category)
+        {
+            using var db = new NorthwindContext();
+            var cat = db.Categories.Find(category.Id);
+
+            if (cat != null)
+            {
+                cat.Description = category.Description;
+                cat.Name = category.Name;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }
