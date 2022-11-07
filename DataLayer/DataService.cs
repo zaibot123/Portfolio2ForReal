@@ -1,25 +1,31 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Text.Json;
-using System.Linq;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using DataLayer.Model;
-using System.ComponentModel;
-using System.Security.Cryptography.X509Certificates;
-using System.Xml.Linq;
-using DataLayer;
 using Nest;
 
 namespace DataLayer
 {
     public class DataService : IDataService
     {
-         
+
+
+        IList<TitlesModel>? IDataService.getTitles(string name)
+        {
+            using var db = new IMDBcontext();
+            return db.Titles
+                .Where(x => x.TitleName.Contains(name))
+                .Select(x => new TitlesModel
+                {
+                    TitleName = x.TitleName,
+                    Poster = x.Poster,
+                })
+                .ToList();
+        }
+    }
+}
+
+
+
+/*
     public IList<Category> GetCategories()
         {
             using var db = new NorthwindContext();
@@ -90,6 +96,7 @@ namespace DataLayer
                 .Include(x=>x.Category)
                 .FirstOrDefault(x => x.Id == id);
         }
+
         public IList<ProductModel> GetProductByCategory(int id)
         {
             using var db = new NorthwindContext();
@@ -171,10 +178,6 @@ namespace DataLayer
 
         }
 
-        public IList<Product> GetProducts()
-        {
-            throw new NotImplementedException();
-        }
 
         public bool UpdateCategory(Category category)
         {
@@ -190,5 +193,9 @@ namespace DataLayer
             }
             return false;
         }
-    }
-}
+
+        public IList<Product> GetProducts()
+        {
+            throw new NotImplementedException();
+        }
+*/

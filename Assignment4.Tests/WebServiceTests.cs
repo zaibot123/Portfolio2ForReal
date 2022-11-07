@@ -11,6 +11,7 @@ namespace Assignment4.Tests
 
     public class WebServiceTests
     {
+
         private const string CategoriesApi = "http://localhost:5001/api/categories";
         private const string ProductsApi = "http://localhost:5001/api/products";
 
@@ -152,7 +153,7 @@ namespace Assignment4.Tests
 
             Assert.Equal(HttpStatusCode.OK, statusCode);
         }
-#if Comment
+
         [Fact]
         public void ApiCategories_DeleteWithInvalidId_NotFound()
         {
@@ -203,6 +204,7 @@ namespace Assignment4.Tests
             Assert.Equal(0, products.Count);
         }
 
+
         [Fact]
         public void ApiProducts_NameContained_ListOfProduct()
         {
@@ -223,7 +225,6 @@ namespace Assignment4.Tests
             Assert.Equal(0, products.Count);
         }
 
-#endif
 
         // Helpers
 

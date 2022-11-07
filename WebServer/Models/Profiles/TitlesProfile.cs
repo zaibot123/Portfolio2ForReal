@@ -4,14 +4,14 @@ using DataLayer.Model;
 
 namespace WebServer.Models.Profiles
 {
-    public class ProductProfile : Profile
+    public class TitlesProfile : Profile
     {
-        public ProductProfile()
+        public TitlesProfile()
         {
-            CreateMap<Product, ProductListModel>();
+
             //.ForMember(dst => dst.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
 
-            CreateMap<Product, ProductModel>();
+            CreateMap<Titles, TitlesModel>();
         }
     }
 }

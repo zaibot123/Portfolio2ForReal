@@ -9,6 +9,7 @@ using DataLayer.Model;
 
 namespace WebServer.Controllers
 {
+    /*
     [Route("api/categories")]
     [ApiController]
     public class CategoriesController : ControllerBase
@@ -95,4 +96,5 @@ namespace WebServer.Controllers
             return model;
         }
     }
+    */
 }
