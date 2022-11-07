@@ -3,19 +3,18 @@ using DataLayer;
 using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace WebServer.Controllers
 {
     [Route("movies")]
     [ApiController]
 
-    public class MovieController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private IDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
-        public MovieController(IDataService dataService, LinkGenerator generator, IMapper mapper)
+        public ProductController(IDataService dataService, LinkGenerator generator, IMapper mapper)
         {
             _dataService = dataService;
             _generator = generator;
@@ -31,6 +30,7 @@ namespace WebServer.Controllers
             {
                 return NotFound();
             }
+            _dataService.AddSearch("Ruumst",name);
             return Ok(titles);
         }
 
@@ -43,14 +43,12 @@ namespace WebServer.Controllers
                 private IDataService _dataService;
                 private readonly LinkGenerator _generator;
                 private readonly IMapper _mapper;
-
                 public ProductController(IDataService dataService, LinkGenerator generator, IMapper mapper)
                 {
                     _dataService = dataService;
                     _generator = generator;
                     _mapper = mapper;
                 }
-
             [HttpGet("{id}")]
             public IActionResult GetProduct(int id)
             {
@@ -62,9 +60,6 @@ namespace WebServer.Controllers
                 }
                 return Ok(product);
             }
-
-
-
             [HttpGet("category/{categoryId}")]
             public IActionResult GetListOFProduct(int categoryId)
             {
@@ -87,11 +82,7 @@ namespace WebServer.Controllers
                 }
                 return Ok(product);
             }
-
-
-
         }
             */
     }
-    }
-
+}

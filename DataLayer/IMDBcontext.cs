@@ -13,6 +13,8 @@ namespace DataLayer
         public DbSet<Casting>? Casting { get; set; }
         public DbSet<Titles>? Titles { get; set; }
 
+        public DbSet<Search>? Search { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -52,6 +54,13 @@ namespace DataLayer
             modelBuilder.Entity<Titles>().Property(x => x.IsAdult).HasColumnName("is_adult");
             modelBuilder.Entity<Titles>().Property(x => x.NrRatings).HasColumnName("nr_ratings");
             modelBuilder.Entity<Titles>().Property(x => x.AvgRating).HasColumnName("avg_ratong");
+
+
+            modelBuilder.Entity<Search>().ToTable("search_history");
+            modelBuilder.Entity<Search>().HasKey(x => new { x.SearchString , x.Username});
+
+            modelBuilder.Entity<Search>().Property(x => x.SearchString).HasColumnName("search_string");
+            modelBuilder.Entity<Search>().Property(x => x.Username).HasColumnName("username");
 
 
 

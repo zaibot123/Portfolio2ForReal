@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Model
 {
-    public class TitlesModel
+    public class Search
     {
-        public string? TitleName { get; set; }
-        public string? Poster { get; set; }
-
+        public string SearchString { get; set; }
+        public string Username { get; set; }
     }
 }

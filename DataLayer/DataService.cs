@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DataLayer.Model;
 using Nest;
+using Npgsql;
+using System.Xml.Linq;
 
 namespace DataLayer
 {
@@ -14,11 +16,47 @@ namespace DataLayer
             return db.Titles
                 .Where(x => x.TitleName.Contains(name))
                 .Select(x => new TitlesModel
+               {
+                   TitleName = x.TitleName,
+
+                   Poster = (x.Poster == null) ? "" : x.Poster
+               })
+                .ToList();
+        }
+
+        IList<TitlesModel>? IDataService.getCoActors(string name)
+        {
+            using var db = new IMDBcontext();
+            return db.Titles
+                .Where(x => x.TitleName.Contains(name))
+                .Select(x => new TitlesModel
                 {
                     TitleName = x.TitleName,
-                    Poster = x.Poster,
+                    Poster = (x.Poster == null) ? "" : x.Poster
                 })
                 .ToList();
+        }
+
+
+     IList<Search>? IDataService.getSearch()
+        {
+            using var db = new IMDBcontext();
+            return db.Search
+                .Select(x => new Search
+                {
+                    SearchString = x.SearchString,
+                    Username = x.Username,
+                })
+                .ToList();
+        }
+        public void AddSearch(string search, string username="Default")
+        {
+          
+            using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
+            connection.Open();
+            using var cmd = new NpgsqlCommand($"INSERT INTO search_history (username,search_string) VALUES ({username},{search});", connection);
+            // cmd.Parameters.AddWithValue("@query", "%ab%");
+            using var reader = cmd.ExecuteReader();
         }
     }
 }
