@@ -3,18 +3,19 @@ using DataLayer;
 using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace WebServer.Controllers
 {
     [Route("movies")]
     [ApiController]
 
-    public class ProductController : ControllerBase
+    public class MovieController : ControllerBase
     {
         private IDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
-        public ProductController(IDataService dataService, LinkGenerator generator, IMapper mapper)
+        public MovieController(IDataService dataService, LinkGenerator generator, IMapper mapper)
         {
             _dataService = dataService;
             _generator = generator;
