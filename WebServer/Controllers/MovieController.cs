@@ -33,6 +33,19 @@ namespace WebServer.Controllers
             return Ok(titles);
         }
 
+        [HttpGet("similar/{title_id}")]
+        public IActionResult GetSimilarTitles(string title_id)
+        {
+            Console.WriteLine("HEEELLOOOOO");
+            var titles =
+                _dataService.getSimilarMovies(title_id);
+            if (titles == null)
+            {
+                return NotFound();
+            }
+            return Ok(titles);
+        }
+
 
         /*
             [Route("api/products")]

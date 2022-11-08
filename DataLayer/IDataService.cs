@@ -11,6 +11,7 @@ namespace DataLayer
         void AddSearch(string search);
         IList<ActorsModel> getCoActors(string name);
         IList<TitlesModel>? getSearch(string user_input);
+        IList<TitlesModel>? getSimilarMovies(string user_input);
         //IList<Category> GetCategories();
         //Category? GetCategory(int id);
         //IList<Product> GetProducts();

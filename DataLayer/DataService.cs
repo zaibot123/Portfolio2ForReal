@@ -82,6 +82,36 @@ namespace DataLayer
 
             }
 
+
+        IList<TitlesModel>? IDataService.getSimilarMovies(string title_id)
+        {
+            
+            using var db = new IMDBcontext();
+            var ResultList = new List<TitlesModel>();
+            using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
+            connection.Open();
+
+            using var cmd = new NpgsqlCommand($"select * from similar_movies('{title_id}');", connection);
+
+            // cmd.Parameters.AddWithValue("@query", "%ab%");
+            using var reader = cmd.ExecuteReader();
+
+
+            while (reader.Read())
+            {
+                
+                var actor = new TitlesModel
+                {
+                    TitleName = reader.GetString(2),
+                    Poster = reader.GetString(3)
+
+                };
+                ResultList.Add(actor);
+            }
+            return ResultList;
+
+        }
+
         void IDataService.AddSearch(string search)
         {
             throw new NotImplementedException();
