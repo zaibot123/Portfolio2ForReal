@@ -21,7 +21,7 @@ namespace WebServer.Controllers
             _generator = generator;
             _mapper = mapper;
         }
-
+        /*
         [HttpGet()]
         public IActionResult getTitles()
         {
@@ -33,6 +33,6 @@ namespace WebServer.Controllers
             }
             return Ok(search);
         }
-
+        */
     }
 }

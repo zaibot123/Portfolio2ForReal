@@ -16,50 +16,82 @@ namespace DataLayer
             return db.Titles
                 .Where(x => x.TitleName.Contains(name))
                 .Select(x => new TitlesModel
-               {
-                   TitleName = x.TitleName,
-
-                   Poster = (x.Poster == null) ? "" : x.Poster
-               })
-                .ToList();
-        }
-
-        IList<TitlesModel>? IDataService.getCoActors(string name)
-        {
-            using var db = new IMDBcontext();
-            return db.Titles
-                .Where(x => x.TitleName.Contains(name))
-                .Select(x => new TitlesModel
                 {
                     TitleName = x.TitleName,
+
                     Poster = (x.Poster == null) ? "" : x.Poster
                 })
                 .ToList();
         }
 
-
-     IList<Search>? IDataService.getSearch()
+        IList<ActorsModel>? IDataService.getCoActors(string name)
         {
             using var db = new IMDBcontext();
-            return db.Search
-                .Select(x => new Search
-                {
-                    SearchString = x.SearchString,
-                    Username = x.Username,
-                })
-                .ToList();
-        }
-        public void AddSearch(string search)
-        {
-            var username = "Troels";
+            var ActorList = new List<ActorsModel>();
             using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
             connection.Open();
-            using var cmd = new NpgsqlCommand($"INSERT INTO search_history (username,search_string) VALUES ('{username}','{search}');", connection);
+
+            using var cmd = new NpgsqlCommand($"select * from co_actors_function('{name}');", connection);
+
             // cmd.Parameters.AddWithValue("@query", "%ab%");
             using var reader = cmd.ExecuteReader();
+
+
+            while (reader.Read())
+            {
+                Console.WriteLine("!!");
+                var actor = new ActorsModel
+                {
+                    ActorName = reader.GetString(1)
+                };
+                ActorList.Add(actor);
+            }
+            return ActorList;
+        }
+
+
+
+
+
+            IList<TitlesModel>? IDataService.getSearch(string user_input)
+          {
+                var username = "Troels";
+                using var db = new IMDBcontext();
+                var ResultList = new List<TitlesModel>();
+                using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
+                connection.Open();
+
+                using var cmd = new NpgsqlCommand($"select * from simple_search('{username}','{user_input}');", connection);
+
+                // cmd.Parameters.AddWithValue("@query", "%ab%");
+                using var reader = cmd.ExecuteReader();
+
+
+                while (reader.Read())
+               {
+    
+                var actor = new TitlesModel
+                {
+                    TitleName=reader.GetString(1),
+                    Poster = reader.GetString(2)
+
+                };
+                    ResultList.Add(actor);
+                }
+                return ResultList;
+
+            }
+
+        void IDataService.AddSearch(string search)
+        {
+            throw new NotImplementedException();
         }
     }
 }
+
+
+
+
 
 
 

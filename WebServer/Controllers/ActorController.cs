@@ -13,7 +13,7 @@ namespace WebServer.Controllers
 {
 
 
-    [Route("coactors")]
+    [Route("actors")]
     [ApiController]
 
     public class ActorController : ControllerBase
@@ -30,26 +30,13 @@ namespace WebServer.Controllers
         }
 
 
-        [HttpGet("{name}")]
+        [HttpGet("coactors/{name}")]
         public IActionResult getCoactors(string name)
         {
-
-            var ActorList = new List<string>();
-            Console.WriteLine("Plain ADO stored procedure");
-            using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
-            connection.Open();
-
-            using var cmd = new NpgsqlCommand($"select * from co_actors_function('{name}');", connection);
-
-            // cmd.Parameters.AddWithValue("@query", "%ab%");
-            using var reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Console.WriteLine("!!");
-                ActorList.Add($" {reader.GetString(1)}");
-            }
-            return Ok(ActorList);
+            var result=  _dataService.getCoActors(name);
+            return Ok(result);
         }
+
 
 
 

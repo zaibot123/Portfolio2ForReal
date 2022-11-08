@@ -1,5 +1,4 @@
-﻿using Nest;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +10,6 @@ namespace DataLayer.Model
     {
         public string SearchString { get; set; }
         public string Username { get; set; }
+
     }
 }

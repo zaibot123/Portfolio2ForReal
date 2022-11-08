@@ -9,8 +9,7 @@ namespace DataLayer.Model
 {
     public class TitlesModel
     {
-        public string? TitleName { get; set; }
-        public string? Poster { get; set; }
-
+        public string TitleName { get; set; }
+        public string Poster { get; set; }
     }
 }

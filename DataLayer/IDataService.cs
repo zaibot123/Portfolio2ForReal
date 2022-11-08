@@ -6,11 +6,11 @@ namespace DataLayer
 {
     public interface IDataService
     {
-        IList<Search>? getSearch();
+     
         IList<TitlesModel>? getTitles(string name);
         void AddSearch(string search);
-        IList<TitlesModel>? getCoActors(string name);
-
+        IList<ActorsModel> getCoActors(string name);
+        IList<TitlesModel>? getSearch(string user_input);
         //IList<Category> GetCategories();
         //Category? GetCategory(int id);
         //IList<Product> GetProducts();

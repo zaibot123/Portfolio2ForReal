@@ -12,7 +12,7 @@ namespace DataLayer
         //public DbSet<Category>? Categories { get; set; }
         public DbSet<Casting>? Casting { get; set; }
         public DbSet<Titles>? Titles { get; set; }
-
+        public DbSet<Professionals>? Professionals { get; set; }
         public DbSet<Search>? Search { get; set; }
 
 
@@ -61,6 +61,19 @@ namespace DataLayer
 
             modelBuilder.Entity<Search>().Property(x => x.SearchString).HasColumnName("search_string");
             modelBuilder.Entity<Search>().Property(x => x.Username).HasColumnName("username");
+
+
+            modelBuilder.Entity<Professionals>().ToTable("professionals");
+            modelBuilder.Entity<Professionals>().HasKey(x => new { x.ProfId});
+            modelBuilder.Entity<Professionals>().Property(x => x.ProfId).HasColumnName("prof_id");
+            modelBuilder.Entity<Professionals>().Property(x => x.ProfName).HasColumnName("prof_name");
+            modelBuilder.Entity<Professionals>().Property(x => x.BirthYear).HasColumnName("birth_year");
+            modelBuilder.Entity<Professionals>().Property(x => x.DeathYear).HasColumnName("death_year");
+            modelBuilder.Entity<Professionals>().Property(x => x.ProfRating).HasColumnName("prof_rating");
+
+
+
+
 
 
 

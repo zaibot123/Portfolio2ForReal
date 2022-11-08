@@ -21,16 +21,15 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{name}")]
-        public IActionResult getTitles(string name)
+        [HttpGet("{user_input}")]
+        public IActionResult getTitles(string user_input)
         {
             var titles =
-                _dataService.getTitles(name);
+                _dataService.getSearch(user_input);
             if (titles == null)
             {
                 return NotFound();
             }
-            _dataService.AddSearch(name);
             return Ok(titles);
         }
 
