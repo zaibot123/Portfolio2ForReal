@@ -21,7 +21,7 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{user_input}")]
+        [HttpGet("simple/{user_input}")]
         public IActionResult getTitles(string user_input)
         {
             var titles =
@@ -32,6 +32,21 @@ namespace WebServer.Controllers
             }
             return Ok(titles);
         }
+
+        [HttpGet("structured/title:{title}&plot:{plot}&characters:{characters}&actorname:{actorname}")]
+        public IActionResult GetStructuredSearch(string title, string plot, string characters, string actorname)
+        
+        {
+            Console.WriteLine("JAAA");
+                var titles =
+                   _dataService.getStructuredSearch(title, plot, characters, actorname);
+                if (titles == null)
+                {
+                    return NotFound();
+                }
+                return Ok(titles);
+            }
+        
 
         [HttpGet("similar/{title_id}")]
         public IActionResult GetSimilarMovies(string title_id)

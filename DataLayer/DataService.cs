@@ -4,12 +4,13 @@ using Nest;
 using Npgsql;
 using System.Xml.Linq;
 
+
 namespace DataLayer
 {
     public class DataService : IDataService
     {
 
-
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
         IList<TitlesModel>? IDataService.getTitles(string name)
         {
             using var db = new IMDBcontext();
@@ -53,39 +54,39 @@ namespace DataLayer
 
 
 
-            IList<TitlesModel>? IDataService.getSearch(string user_input)
-          {
-                var username = "Troels";
-                using var db = new IMDBcontext();
-                var ResultList = new List<TitlesModel>();
-                using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
-                connection.Open();
+        IList<TitlesModel>? IDataService.getSearch(string user_input)
+        {
+            var username = "Troels";
+            using var db = new IMDBcontext();
+            var ResultList = new List<TitlesModel>();
+            using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
+            connection.Open();
 
-                using var cmd = new NpgsqlCommand($"select * from simple_search('{username}','{user_input}');", connection);
+            using var cmd = new NpgsqlCommand($"select * from simple_search('{username}','{user_input}');", connection);
 
-                // cmd.Parameters.AddWithValue("@query", "%ab%");
-                using var reader = cmd.ExecuteReader();
+            // cmd.Parameters.AddWithValue("@query", "%ab%");
+            using var reader = cmd.ExecuteReader();
 
 
-                while (reader.Read())
-               {
-    
+            while (reader.Read())
+            {
+
                 var actor = new TitlesModel
                 {
-                    TitleName=reader.GetString(1),
+                    TitleName = reader.GetString(1),
                     Poster = reader.GetString(2)
 
                 };
-                    ResultList.Add(actor);
-                }
-                return ResultList;
-
+                ResultList.Add(actor);
             }
+            return ResultList;
+
+        }
 
 
         IList<TitlesModel>? IDataService.getSimilarMovies(string title_id)
         {
-            
+
             using var db = new IMDBcontext();
             var ResultList = new List<TitlesModel>();
             using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
@@ -99,7 +100,7 @@ namespace DataLayer
 
             while (reader.Read())
             {
-                
+
                 var actor = new TitlesModel
                 {
                     TitleName = reader.GetString(2),
@@ -130,7 +131,7 @@ namespace DataLayer
 
                 var actor = new ActorsModel
                 {
-                  ActorName = reader.GetString(0)
+                    ActorName = reader.GetString(0)
                 };
                 ResultList.Add(actor);
             }
@@ -141,6 +142,25 @@ namespace DataLayer
         void IDataService.AddSearch(string search)
         {
             throw new NotImplementedException();
+        }
+
+        IList<SearchResult>? IDataService.getStructuredSearch(string title, string plot, string characters, string actorname)
+        {
+            var ResultList = new List<SearchResult>();
+            using var db = new IMDBcontext();
+            var result = db.SearchResult.FromSqlInterpolated($"select * from structured_search({title},{plot},{characters},{actorname})");
+
+            foreach (var searchResult in result)
+            {
+                var search = new SearchResult
+                {
+                    ActorNames = searchResult.ActorNames,
+                    Title = searchResult.Title,
+                    Characters = searchResult.Characters,
+                    Plot = searchResult.Plot
+                };
+            }
+            return ResultList;
         }
     }
 }

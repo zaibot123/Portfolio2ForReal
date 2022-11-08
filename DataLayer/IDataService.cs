@@ -13,6 +13,8 @@ namespace DataLayer
         IList<TitlesModel>? getSearch(string user_input);
         IList<TitlesModel>? getSimilarMovies(string user_input);
         IList<ActorsModel>? getPopularActorsFromMovie(string title_id);
+        IList<SearchResult>? getStructuredSearch(string title, string plot, string characters, string actorname);
+       
         //IList<Category> GetCategories();
         //Category? GetCategory(int id);
         //IList<Product> GetProducts();
