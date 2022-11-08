@@ -49,12 +49,12 @@ namespace DataLayer
                 })
                 .ToList();
         }
-        public void AddSearch(string search, string username="Default")
+        public void AddSearch(string search)
         {
-          
+            var username = "Troels";
             using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
             connection.Open();
-            using var cmd = new NpgsqlCommand($"INSERT INTO search_history (username,search_string) VALUES ({username},{search});", connection);
+            using var cmd = new NpgsqlCommand($"INSERT INTO search_history (username,search_string) VALUES ('{username}','{search}');", connection);
             // cmd.Parameters.AddWithValue("@query", "%ab%");
             using var reader = cmd.ExecuteReader();
         }

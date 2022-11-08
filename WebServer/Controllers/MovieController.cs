@@ -30,7 +30,7 @@ namespace WebServer.Controllers
             {
                 return NotFound();
             }
-            _dataService.AddSearch("Ruumst",name);
+            _dataService.AddSearch(name);
             return Ok(titles);
         }
 

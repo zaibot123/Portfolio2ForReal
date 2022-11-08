@@ -8,7 +8,7 @@ namespace DataLayer
     {
         IList<Search>? getSearch();
         IList<TitlesModel>? getTitles(string name);
-        void AddSearch(string name, string search);
+        void AddSearch(string search);
         IList<TitlesModel>? getCoActors(string name);
 
         //IList<Category> GetCategories();

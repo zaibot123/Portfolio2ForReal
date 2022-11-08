@@ -47,7 +47,6 @@ namespace WebServer.Controllers
             {
                 Console.WriteLine("!!");
                 ActorList.Add($" {reader.GetString(1)}");
-     
             }
             return Ok(ActorList);
         }
