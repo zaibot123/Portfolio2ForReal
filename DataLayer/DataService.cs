@@ -112,6 +112,32 @@ namespace DataLayer
 
         }
 
+        IList<ActorsModel>? IDataService.getPopularActorsFromMovie(string title_id)
+        {
+
+            var ResultList = new List<ActorsModel>();
+            using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
+            connection.Open();
+
+            using var cmd = new NpgsqlCommand($"select * from populer_actors('{title_id}');", connection);
+
+            // cmd.Parameters.AddWithValue("@query", "%ab%");
+            using var reader = cmd.ExecuteReader();
+
+
+            while (reader.Read())
+            {
+
+                var actor = new ActorsModel
+                {
+                  ActorName = reader.GetString(0)
+                };
+                ResultList.Add(actor);
+            }
+            return ResultList;
+
+        }
+
         void IDataService.AddSearch(string search)
         {
             throw new NotImplementedException();

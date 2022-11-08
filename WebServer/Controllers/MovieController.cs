@@ -8,13 +8,13 @@ namespace WebServer.Controllers
     [Route("movies")]
     [ApiController]
 
-    public class ProductController : ControllerBase
+    public class MovieController : ControllerBase
     {
         private IDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
-        public ProductController(IDataService dataService, LinkGenerator generator, IMapper mapper)
+        public MovieController(IDataService dataService, LinkGenerator generator, IMapper mapper)
         {
             _dataService = dataService;
             _generator = generator;
@@ -34,7 +34,7 @@ namespace WebServer.Controllers
         }
 
         [HttpGet("similar/{title_id}")]
-        public IActionResult GetSimilarTitles(string title_id)
+        public IActionResult GetSimilarMovies(string title_id)
         {
             Console.WriteLine("HEEELLOOOOO");
             var titles =
@@ -44,6 +44,19 @@ namespace WebServer.Controllers
                 return NotFound();
             }
             return Ok(titles);
+        }
+
+        [HttpGet("popular_actor/{title_id}")]
+        public IActionResult GetPopularActorsFromMovie(string title_id)
+        {
+         
+            var actors =
+                _dataService.getPopularActorsFromMovie(title_id);
+            if (actors == null)
+            {
+                return NotFound();
+            }
+            return Ok(actors);
         }
 
 

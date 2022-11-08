@@ -12,6 +12,7 @@ namespace DataLayer
         IList<ActorsModel> getCoActors(string name);
         IList<TitlesModel>? getSearch(string user_input);
         IList<TitlesModel>? getSimilarMovies(string user_input);
+        IList<ActorsModel>? getPopularActorsFromMovie(string title_id);
         //IList<Category> GetCategories();
         //Category? GetCategory(int id);
         //IList<Product> GetProducts();
