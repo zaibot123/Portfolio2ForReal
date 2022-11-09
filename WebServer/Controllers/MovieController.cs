@@ -40,7 +40,15 @@ namespace WebServer.Controllers
             {
                 var result = _dataService.GetBestMatch(title);
                 Console.WriteLine($"Længde er resultat: {result.Count}");
+
                 return Ok(result);
+            }
+
+            else if (searchType == "exact")
+            {
+              var result = _dataService.GetExcactSearch(title.ToLower());
+              Console.WriteLine($"Længde er resultat: {result.Count}");
+              return Ok(result);
             }
             else return NotFound();
         }

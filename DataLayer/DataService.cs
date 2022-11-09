@@ -72,6 +72,15 @@ namespace DataLayer
             return result;
         }
 
+        IList<TitlesModel>? IDataService.GetExcactSearch(string user_input)
+        {
+            using var db = new IMDBcontext();
+            string sqlstring = CreateSqlQueryForVariadic(user_input);
+            var result = db.TitlesModel.FromSqlRaw(sqlstring).ToList();
+            return result;
+        }
+
+
         private static string CreateSqlQueryForVariadic(string user_input)
         {
             var u = user_input.Split(",").Select(x => "'" + x + "'");
