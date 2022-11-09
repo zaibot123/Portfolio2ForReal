@@ -25,19 +25,14 @@ namespace DataLayer
                 .ToList();
         }
 
-        IList<ActorsModel>? IDataService.getCoActors(string name)
+        IList<ActorsModel>? IDataService.getCoActors(string actorname)
         {
             using var db = new IMDBcontext();
             var ActorList = new List<ActorsModel>();
             using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
             connection.Open();
-
-            using var cmd = new NpgsqlCommand($"select * from co_actors_function('{name}');", connection);
-
-            // cmd.Parameters.AddWithValue("@query", "%ab%");
+            using var cmd = new NpgsqlCommand($"select * from co_actors_function('{actorname}');", connection);
             using var reader = cmd.ExecuteReader();
-
-
             while (reader.Read())
             {
                 var actor = new ActorsModel
@@ -47,6 +42,13 @@ namespace DataLayer
                 ActorList.Add(actor);
             }
             return ActorList;
+        }
+
+        IList<WordModel> IDataService.GetPersonWords(string actorname)
+        {
+            using var db = new IMDBcontext();
+            var result = db.WordModel.FromSqlInterpolated($"select * from person_words({actorname})").ToList();
+            return result;
         }
 
 
@@ -67,25 +69,35 @@ namespace DataLayer
         IList<TitlesModel>? IDataService.GetBestMatch(string user_input)
         {
             using var db = new IMDBcontext();
-            string sqlstring = CreateSqlQueryForVariadic(user_input);
+            string sqlstring = CreateSqlQueryForVariadic(user_input,"best_match");
             var result = db.TitlesModel.FromSqlRaw(sqlstring).ToList();
+            return result;
+        }
+
+
+        IList<WordModel>? IDataService.GetWordToWord(string user_input)
+        {
+            using var db = new IMDBcontext();
+            string sqlstring = CreateSqlQueryForVariadic(user_input, "word_to_word");
+            var result = db.WordModel.FromSqlRaw(sqlstring).ToList();
             return result;
         }
 
         IList<TitlesModel>? IDataService.GetExcactSearch(string user_input)
         {
             using var db = new IMDBcontext();
-            string sqlstring = CreateSqlQueryForVariadic(user_input);
+            string sqlstring = CreateSqlQueryForVariadic(user_input, "excact_search");
             var result = db.TitlesModel.FromSqlRaw(sqlstring).ToList();
             return result;
         }
 
 
-        private static string CreateSqlQueryForVariadic(string user_input)
+        private static string CreateSqlQueryForVariadic(string user_input,string function_name)
         {
             var u = user_input.Split(",").Select(x => "'" + x + "'");
             var search = string.Join(",", u);
-            var sqlstring = $"select * from best_match({search})";
+            var sqlstring = $"select * from {function_name}({search})";
+            Console.WriteLine(sqlstring);
             return sqlstring;
         }
 

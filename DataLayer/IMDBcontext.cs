@@ -17,6 +17,7 @@ namespace DataLayer
         public DbSet<SearchResult>? SearchResult { get; set; }
 
         public DbSet<TitlesModel>? TitlesModel { get; set; }
+        public DbSet<WordModel>? WordModel { get; set; }
 
 
 
@@ -74,6 +75,12 @@ namespace DataLayer
             modelBuilder.Entity<Professionals>().Property(x => x.BirthYear).HasColumnName("birth_year");
             modelBuilder.Entity<Professionals>().Property(x => x.DeathYear).HasColumnName("death_year");
             modelBuilder.Entity<Professionals>().Property(x => x.ProfRating).HasColumnName("prof_rating");
+
+            modelBuilder.Entity<WordModel>().HasNoKey();
+            modelBuilder.Entity<WordModel>().Property(x => x.Word).HasColumnName("words");
+            modelBuilder.Entity<WordModel>().Property(x => x.Frequency).HasColumnName("c_count");
+
+
 
         }
     }

@@ -31,6 +31,12 @@ namespace WebServer.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{name}/words")]
+        public IActionResult getPersonWords(string name)
+        {
+            var result = _dataService.GetPersonWords(name);
+            return Ok(result);
+        }
 
 
 

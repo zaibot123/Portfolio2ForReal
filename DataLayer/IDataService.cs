@@ -19,6 +19,9 @@ namespace DataLayer
         IList<SearchResult>? getStructuredSearch(string title, string plot, string character, string name);
         IList<TitlesModel>? GetBestMatch(string user_input);
         IList<TitlesModel>? GetExcactSearch(string user_input);
+        IList<WordModel>? GetWordToWord(string user_input);
+
+        IList<WordModel>? GetPersonWords(string user_input);
 
         //IList<Category> GetCategories();
         //Category? GetCategory(int id);

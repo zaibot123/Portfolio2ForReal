@@ -50,6 +50,12 @@ namespace WebServer.Controllers
               Console.WriteLine($"Længde er resultat: {result.Count}");
               return Ok(result);
             }
+            else if (searchType == "word")
+            {
+                var result = _dataService.GetWordToWord(title.ToLower());
+                Console.WriteLine($"Længde er resultat: {result.Count}");
+                return Ok(result);
+            }
             else return NotFound();
         }
 
