@@ -21,34 +21,26 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("simple/{user_input}")]
-        public IActionResult getTitles(string user_input)
+        [HttpGet()]
+        public IActionResult GetSearch(string searchType, string title, string? plot=null, string? character=null, string? name=null)
+
         {
-            var titles =
-                _dataService.getSearch(user_input);
-            if (titles == null)
+            if (searchType == "structured")
             {
-                return NotFound();
+                var result = _dataService.getStructuredSearch(title, plot, character, name);
+                return Ok(result);
             }
-            return Ok(titles);
+            else if (searchType == "simple")
+            {
+                var result = _dataService.GetSearch(title);
+                return Ok(result);
+            }
+            else return NotFound();
         }
 
-        [HttpGet("structured/title:{title}&plot:{plot}&characters:{characters}&actorname:{actorname}")]
-        public IActionResult GetStructuredSearch(string title, string plot, string characters, string actorname)
-        
-        {
-            Console.WriteLine("JAAA");
-                var titles =
-                   _dataService.getStructuredSearch(title, plot, characters, actorname);
-                if (titles == null)
-                {
-                    return NotFound();
-                }
-                return Ok(titles);
-            }
-        
 
-        [HttpGet("similar/{title_id}")]
+
+        [HttpGet("{title_id}/similar")]
         public IActionResult GetSimilarMovies(string title_id)
         {
             Console.WriteLine("HEEELLOOOOO");
@@ -61,7 +53,7 @@ namespace WebServer.Controllers
             return Ok(titles);
         }
 
-        [HttpGet("popular_actor/{title_id}")]
+        [HttpGet("{title_id}/popular_actor/")]
         public IActionResult GetPopularActorsFromMovie(string title_id)
         {
          
@@ -74,55 +66,5 @@ namespace WebServer.Controllers
             return Ok(actors);
         }
 
-
-        /*
-            [Route("api/products")]
-            [ApiController]
-            public class ProductController : ControllerBase
-            {
-                private IDataService _dataService;
-                private readonly LinkGenerator _generator;
-                private readonly IMapper _mapper;
-                public ProductController(IDataService dataService, LinkGenerator generator, IMapper mapper)
-                {
-                    _dataService = dataService;
-                    _generator = generator;
-                    _mapper = mapper;
-                }
-            [HttpGet("{id}")]
-            public IActionResult GetProduct(int id)
-            {
-                var product =
-                    _dataService.GetProduct(id);
-                if (product == null)
-                {
-                    return NotFound();  
-                }
-                return Ok(product);
-            }
-            [HttpGet("category/{categoryId}")]
-            public IActionResult GetListOFProduct(int categoryId)
-            {
-                var product =
-                    _dataService.GetProductByCategory(categoryId);
-                if (!product.Any())
-                {
-                    return NotFound(product);
-                }
-                return Ok(product);
-            }
-            [HttpGet("name/{name}")]
-            public IActionResult NameContained(string name)
-            {
-                var product =
-                    _dataService.GetProductByName(name);
-                if (!product.Any())
-                {
-                    return NotFound(product);
-                }
-                return Ok(product);
-            }
-        }
-            */
     }
 }

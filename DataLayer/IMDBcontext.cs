@@ -9,11 +9,15 @@ namespace DataLayer
     {
         const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
 
+
         //public DbSet<Category>? Categories { get; set; }
         public DbSet<Casting>? Casting { get; set; }
         public DbSet<Titles>? Titles { get; set; }
         public DbSet<Professionals>? Professionals { get; set; }
         public DbSet<SearchResult>? SearchResult { get; set; }
+
+        public DbSet<TitlesModel>? TitlesModel { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -53,17 +57,18 @@ namespace DataLayer
             modelBuilder.Entity<Titles>().Property(x => x.Runtime).HasColumnName("runtime");
             modelBuilder.Entity<Titles>().Property(x => x.IsAdult).HasColumnName("is_adult");
             modelBuilder.Entity<Titles>().Property(x => x.NrRatings).HasColumnName("nr_ratings");
-            modelBuilder.Entity<Titles>().Property(x => x.AvgRating).HasColumnName("avg_ratong");
-
+            modelBuilder.Entity<Titles>().Property(x => x.AvgRating).HasColumnName("avg_rating");
 
             modelBuilder.Entity<SearchResult>().HasNoKey();
             modelBuilder.Entity<SearchResult>().Property(x => x.Title).HasColumnName("title");
             modelBuilder.Entity<SearchResult>().Property(x => x.Plot).HasColumnName("plot");
-            modelBuilder.Entity<SearchResult>().Property(x => x.Characters).HasColumnName("characters");
+            modelBuilder.Entity<SearchResult>().Property(x => x.Character).HasColumnName("characters");
             modelBuilder.Entity<SearchResult>().Property(x => x.ActorNames).HasColumnName("profname");
 
-
-
+            modelBuilder.Entity<TitlesModel>().HasNoKey();
+            modelBuilder.Entity<TitlesModel>().Property(x => x.TitleName).HasColumnName("title");
+            modelBuilder.Entity<TitlesModel>().Property(x => x.Poster).HasColumnName("poster");
+            
             modelBuilder.Entity<Professionals>().ToTable("professionals");
             modelBuilder.Entity<Professionals>().HasKey(x => new { x.ProfId});
             modelBuilder.Entity<Professionals>().Property(x => x.ProfId).HasColumnName("prof_id");

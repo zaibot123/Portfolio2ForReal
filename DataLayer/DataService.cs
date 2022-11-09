@@ -3,7 +3,7 @@ using DataLayer.Model;
 using Nest;
 using Npgsql;
 using System.Xml.Linq;
-
+using System.Reflection.PortableExecutable;
 
 namespace DataLayer
 {
@@ -54,32 +54,13 @@ namespace DataLayer
 
 
 
-        IList<TitlesModel>? IDataService.getSearch(string user_input)
+        IList<TitlesModel>? IDataService.GetSearch(string user_input)
         {
+
             var username = "Troels";
             using var db = new IMDBcontext();
-            var ResultList = new List<TitlesModel>();
-            using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
-            connection.Open();
-
-            using var cmd = new NpgsqlCommand($"select * from simple_search('{username}','{user_input}');", connection);
-
-            // cmd.Parameters.AddWithValue("@query", "%ab%");
-            using var reader = cmd.ExecuteReader();
-
-
-            while (reader.Read())
-            {
-
-                var actor = new TitlesModel
-                {
-                    TitleName = reader.GetString(1),
-                    Poster = reader.GetString(2)
-
-                };
-                ResultList.Add(actor);
-            }
-            return ResultList;
+            var result = db.TitlesModel.FromSqlInterpolated($"select * from simple_search({username},{user_input})").ToList();
+            return result;
 
         }
 
@@ -139,30 +120,56 @@ namespace DataLayer
 
         }
 
+
+        IList<SearchResult>? IDataService.getStructuredSearch(string title, string plot, string character, string name)
+        {
+ 
+            using var db = new IMDBcontext();
+            var result = db.SearchResult.FromSqlInterpolated($"select * from structured_search({title}, {plot}, {character},{name})").ToList();
+            return result;
+
+        }
+
+
         void IDataService.AddSearch(string search)
         {
             throw new NotImplementedException();
         }
 
-        IList<SearchResult>? IDataService.getStructuredSearch(string title, string plot, string characters, string actorname)
+        /*
+        IQueryable<SearchResult>? IDataService.getStructuredSearch(string title, string plot, string characters, string actorname)
         {
+            Console.WriteLine(title);
             var ResultList = new List<SearchResult>();
-            using var db = new IMDBcontext();
-            var result = db.SearchResult.FromSqlInterpolated($"select * from structured_search({title},{plot},{characters},{actorname})");
-
-            foreach (var searchResult in result)
+            using (var db = new IMDBcontext())
             {
-                var search = new SearchResult
-                {
-                    ActorNames = searchResult.ActorNames,
-                    Title = searchResult.Title,
-                    Characters = searchResult.Characters,
-                    Plot = searchResult.Plot
-                };
+                var sqlstring = $"select * from structured_search('{title}','{plot}','{characters}','{actorname}')";
+                var result = db.SearchResult.FromSqlInterpolated($"select * from structured_search('{title}','{plot}','{characters}','{actorname}')");
             }
-            return ResultList;
+             
+                Console.WriteLine(result.ToString());
+                Console.WriteLine(result.GetType());
+             
+                foreach (var searchResult in result)
+                {
+                    var search = new SearchResult
+                    {
+
+                        ActorNames = searchResult.ActorNames,
+                        Title = searchResult.Title,
+                        Characters = searchResult.Characters,
+                        Plot = searchResult.Plot
+                    };
+                    Console.WriteLine($"her er search {search}");
+                    ResultList.Add(search);
+                }
+
+                return result;
+            
         }
+         */
     }
+
 }
 
 

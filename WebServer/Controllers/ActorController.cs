@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
 using DataLayer;
 using Microsoft.AspNetCore.Mvc;
-using WebServer;
-using WebServer.Models;
-using DataLayer;
-using DataLayer.Model;
-using Npgsql;
-using Microsoft.Extensions.Hosting;
-using System.Data;
+
 
 namespace WebServer.Controllers
 {
@@ -30,7 +24,7 @@ namespace WebServer.Controllers
         }
 
 
-        [HttpGet("coactors/{name}")]
+        [HttpGet("{name}/coactors")]
         public IActionResult getCoactors(string name)
         {
             var result=  _dataService.getCoActors(name);

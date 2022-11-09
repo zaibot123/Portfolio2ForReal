@@ -9,12 +9,15 @@ namespace DataLayer
      
         IList<TitlesModel>? getTitles(string name);
         void AddSearch(string search);
+
+       // IQueryable<SearchResult>? UseEntityFramework();
         IList<ActorsModel> getCoActors(string name);
-        IList<TitlesModel>? getSearch(string user_input);
+        IList<TitlesModel>? GetSearch(string user_input);
         IList<TitlesModel>? getSimilarMovies(string user_input);
         IList<ActorsModel>? getPopularActorsFromMovie(string title_id);
-        IList<SearchResult>? getStructuredSearch(string title, string plot, string characters, string actorname);
-       
+      //  IQueryable<SearchResult>? UseEntityFramework(string name, string plot, string character, string title);
+        IList<SearchResult>? getStructuredSearch(string title, string plot, string character, string name);
+
         //IList<Category> GetCategories();
         //Category? GetCategory(int id);
         //IList<Product> GetProducts();

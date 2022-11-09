@@ -10,7 +10,7 @@ namespace DataLayer.Model
     {
         public string Title { get; set; }
         public string Plot { get; set; }
-        public string Characters { get; set; }
+        public string Character { get; set; }
         public string ActorNames { get; set; }
 
     }
