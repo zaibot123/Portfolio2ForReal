@@ -22,7 +22,7 @@ namespace WebServer.Controllers
         }
 
         [HttpGet()]
-        public IActionResult GetSearch(string searchType, string title, string? plot=null, string? character=null, string? name=null)
+        public IActionResult GetSearch(string searchType, string title, string? plot = null, string? character = null, string? name = null)
 
         {
             if (searchType == "structured")
@@ -35,6 +35,13 @@ namespace WebServer.Controllers
                 var result = _dataService.GetSearch(title);
                 return Ok(result);
             }
+
+            else if (searchType == "best")
+            {
+                var result = _dataService.GetBestMatch(title);
+                Console.WriteLine($"Længde er resultat: {result.Count}");
+                return Ok(result);
+            }
             else return NotFound();
         }
 
@@ -42,8 +49,7 @@ namespace WebServer.Controllers
 
         [HttpGet("{title_id}/similar")]
         public IActionResult GetSimilarMovies(string title_id)
-        {
-            Console.WriteLine("HEEELLOOOOO");
+        { 
             var titles =
                 _dataService.getSimilarMovies(title_id);
             if (titles == null)

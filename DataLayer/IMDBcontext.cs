@@ -32,7 +32,6 @@ namespace DataLayer
         {
             base.OnModelCreating(modelBuilder);
 
-
             modelBuilder.Entity<Casting>().ToTable("casting");
             modelBuilder.Entity<Casting>().HasKey(x => new { x.TitleId, x.ProfId, x.Ordering });
 
@@ -42,7 +41,6 @@ namespace DataLayer
             modelBuilder.Entity<Casting>().Property(x => x.JobCategory).HasColumnName("job_category");
             modelBuilder.Entity<Casting>().Property(x => x.Job).HasColumnName("job");
             modelBuilder.Entity<Casting>().Property(x => x.Characters).HasColumnName("characters");
-
 
             modelBuilder.Entity<Titles>().ToTable("title");
             modelBuilder.Entity<Titles>().HasKey(x => new { x.TitleId});
@@ -66,7 +64,7 @@ namespace DataLayer
             modelBuilder.Entity<SearchResult>().Property(x => x.ActorNames).HasColumnName("profname");
 
             modelBuilder.Entity<TitlesModel>().HasNoKey();
-            modelBuilder.Entity<TitlesModel>().Property(x => x.TitleName).HasColumnName("title");
+            modelBuilder.Entity<TitlesModel>().Property(x => x.TitleName).HasColumnName("title_name");
             modelBuilder.Entity<TitlesModel>().Property(x => x.Poster).HasColumnName("poster");
             
             modelBuilder.Entity<Professionals>().ToTable("professionals");
@@ -76,15 +74,6 @@ namespace DataLayer
             modelBuilder.Entity<Professionals>().Property(x => x.BirthYear).HasColumnName("birth_year");
             modelBuilder.Entity<Professionals>().Property(x => x.DeathYear).HasColumnName("death_year");
             modelBuilder.Entity<Professionals>().Property(x => x.ProfRating).HasColumnName("prof_rating");
-
-
-
-
-
-
-
-
-
 
         }
     }

@@ -17,6 +17,7 @@ namespace DataLayer
         IList<ActorsModel>? getPopularActorsFromMovie(string title_id);
       //  IQueryable<SearchResult>? UseEntityFramework(string name, string plot, string character, string title);
         IList<SearchResult>? getStructuredSearch(string title, string plot, string character, string name);
+        IList<TitlesModel>? GetBestMatch(string user_input);
 
         //IList<Category> GetCategories();
         //Category? GetCategory(int id);

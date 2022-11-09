@@ -40,7 +40,6 @@ namespace DataLayer
 
             while (reader.Read())
             {
-                Console.WriteLine("!!");
                 var actor = new ActorsModel
                 {
                     ActorName = reader.GetString(1)
@@ -65,14 +64,28 @@ namespace DataLayer
         }
 
 
+        IList<TitlesModel>? IDataService.GetBestMatch(string user_input)
+        {
+            using var db = new IMDBcontext();
+            string sqlstring = CreateSqlQueryForVariadic(user_input);
+            var result = db.TitlesModel.FromSqlRaw(sqlstring).ToList();
+            return result;
+        }
+
+        private static string CreateSqlQueryForVariadic(string user_input)
+        {
+            var u = user_input.Split(",").Select(x => "'" + x + "'");
+            var search = string.Join(",", u);
+            var sqlstring = $"select * from best_match({search})";
+            return sqlstring;
+        }
+
         IList<TitlesModel>? IDataService.getSimilarMovies(string title_id)
         {
-
             using var db = new IMDBcontext();
             var ResultList = new List<TitlesModel>();
             using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
             connection.Open();
-
             using var cmd = new NpgsqlCommand($"select * from similar_movies('{title_id}');", connection);
 
             // cmd.Parameters.AddWithValue("@query", "%ab%");
@@ -149,7 +162,6 @@ namespace DataLayer
              
                 Console.WriteLine(result.ToString());
                 Console.WriteLine(result.GetType());
-             
                 foreach (var searchResult in result)
                 {
                     var search = new SearchResult
