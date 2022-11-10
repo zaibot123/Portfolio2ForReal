@@ -15,10 +15,8 @@ namespace DataLayer
         public DbSet<Titles>? Titles { get; set; }
         public DbSet<Professionals>? Professionals { get; set; }
         public DbSet<SearchResult>? SearchResult { get; set; }
-
         public DbSet<TitlesModel>? TitlesModel { get; set; }
         public DbSet<WordModel>? WordModel { get; set; }
-
         public DbSet<UserModel>? UserModel { get; set; }
 
 
