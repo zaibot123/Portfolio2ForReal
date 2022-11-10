@@ -11,11 +11,11 @@ namespace WebServer.Controllers
 
     public class LoginController : ControllerBase
     {
-        private IDataService _dataService;
+        private ILoginDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
-        public LoginController(IDataService dataService, LinkGenerator generator, IMapper mapper)
+        public LoginController(ILoginDataService dataService, LinkGenerator generator, IMapper mapper)
         {
             _dataService = dataService;
             _generator = generator;
@@ -23,7 +23,7 @@ namespace WebServer.Controllers
         }
 
         [HttpGet()]
-        public void GetUser(string username, string password)
+        public void RegisterUser(string username, string password)
         {
             _dataService.RegisterUser(username,password);
 

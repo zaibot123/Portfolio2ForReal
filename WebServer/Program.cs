@@ -8,7 +8,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddSingleton<IDataService, DataService>();
+builder.Services.AddSingleton<Interfaces, DataService>();
 
 var app = builder.Build();
 

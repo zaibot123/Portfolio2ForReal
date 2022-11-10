@@ -6,22 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebServer.Controllers
 {
+   /*
     [Route("searchhistory")]
     [ApiController]
 
     public class SearchController : ControllerBase
     {
-        private IDataService _dataService;
+        private Interfaces _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
-        public SearchController(IDataService dataService, LinkGenerator generator, IMapper mapper)
+        public SearchController(Interfaces dataService, LinkGenerator generator, IMapper mapper)
         {
             _dataService = dataService;
             _generator = generator;
             _mapper = mapper;
         }
-        /*
+
         [HttpGet()]
         public IActionResult getTitles()
         {
@@ -33,6 +34,7 @@ namespace WebServer.Controllers
             }
             return Ok(search);
         }
-        */
+
     }
+*/
 }

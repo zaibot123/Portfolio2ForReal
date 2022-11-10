@@ -10,11 +10,11 @@ namespace WebServer.Controllers
 
     public class MovieController : ControllerBase
     {
-        private IDataService _dataService;
+        private IMovieDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
-        public MovieController(IDataService dataService, LinkGenerator generator, IMapper mapper)
+        public MovieController(IMovieDataService dataService, LinkGenerator generator, IMapper mapper)
         {
             _dataService = dataService;
             _generator = generator;
@@ -53,7 +53,6 @@ namespace WebServer.Controllers
             else if (searchType == "word")
             {
                 var result = _dataService.GetWordToWord(title.ToLower());
-                Console.WriteLine($"Længde er resultat: {result.Count}");
                 return Ok(result);
             }
             else return NotFound();
@@ -71,19 +70,6 @@ namespace WebServer.Controllers
                 return NotFound();
             }
             return Ok(titles);
-        }
-
-        [HttpGet("{title_id}/popular_actor/")]
-        public IActionResult GetPopularActorsFromMovie(string title_id)
-        {
-         
-            var actors =
-                _dataService.getPopularActorsFromMovie(title_id);
-            if (actors == null)
-            {
-                return NotFound();
-            }
-            return Ok(actors);
         }
 
     }
