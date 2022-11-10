@@ -7,7 +7,7 @@ namespace DataLayer
 {
     public class IMDBcontext : DbContext
     {
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
 
 
         //public DbSet<Category>? Categories { get; set; }
@@ -80,7 +80,8 @@ namespace DataLayer
             modelBuilder.Entity<WordModel>().Property(x => x.Word).HasColumnName("words");
             modelBuilder.Entity<WordModel>().Property(x => x.Frequency).HasColumnName("c_count");
 
-
+            modelBuilder.Entity<UserModel>().HasNoKey();
+            modelBuilder.Entity<UserModel>().Property(x => x.UserName).HasColumnName("username");
 
         }
     }

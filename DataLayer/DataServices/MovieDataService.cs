@@ -10,7 +10,7 @@ namespace DataLayer
     public class MovieDataService : IMovieDataService
     {
 
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
         IList<TitlesModel>? IMovieDataService.getTitles(string name)
         {
             using var db = new IMDBcontext();
@@ -76,7 +76,7 @@ namespace DataLayer
         {
             using var db = new IMDBcontext();
             var ResultList = new List<TitlesModel>();
-            using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
+            using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = Google-1234");
             connection.Open();
             using var cmd = new NpgsqlCommand($"select * from similar_movies('{title_id}');", connection);
 
