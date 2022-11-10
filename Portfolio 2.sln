@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer", "WebServer\WebS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\DataLayer.csproj", "{1B907A71-A0A7-48FD-814B-DA435310496B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security", "Security2\Security.csproj", "{006D434D-D2A6-41F2-ACC4-21E8F2E8D281}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Secuurity", "b\Secuurity.csproj", "{7174601C-3436-4D9B-B6A9-EF3BEDA9CFB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{1B907A71-A0A7-48FD-814B-DA435310496B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B907A71-A0A7-48FD-814B-DA435310496B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B907A71-A0A7-48FD-814B-DA435310496B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{006D434D-D2A6-41F2-ACC4-21E8F2E8D281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{006D434D-D2A6-41F2-ACC4-21E8F2E8D281}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{006D434D-D2A6-41F2-ACC4-21E8F2E8D281}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{006D434D-D2A6-41F2-ACC4-21E8F2E8D281}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7174601C-3436-4D9B-B6A9-EF3BEDA9CFB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7174601C-3436-4D9B-B6A9-EF3BEDA9CFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7174601C-3436-4D9B-B6A9-EF3BEDA9CFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7174601C-3436-4D9B-B6A9-EF3BEDA9CFB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

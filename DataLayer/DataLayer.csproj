@@ -30,7 +30,7 @@
 
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\security\security\security.csproj" />
+	  <ProjectReference Include="..\b\Secuurity.csproj" />
 	</ItemGroup>
 
 
