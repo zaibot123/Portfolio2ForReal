@@ -19,6 +19,8 @@ namespace DataLayer
         public DbSet<TitlesModel>? TitlesModel { get; set; }
         public DbSet<WordModel>? WordModel { get; set; }
 
+        public DbSet<UserModel>? UserModel { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -65,7 +67,7 @@ namespace DataLayer
             modelBuilder.Entity<SearchResult>().Property(x => x.ActorNames).HasColumnName("profname");
 
             modelBuilder.Entity<TitlesModel>().HasNoKey();
-            modelBuilder.Entity<TitlesModel>().Property(x => x.TitleName).HasColumnName("title_name");
+            modelBuilder.Entity<TitlesModel>().Property(x => x.TitleName).HasColumnName("title");
             modelBuilder.Entity<TitlesModel>().Property(x => x.Poster).HasColumnName("poster");
             
             modelBuilder.Entity<Professionals>().ToTable("professionals");

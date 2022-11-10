@@ -51,6 +51,15 @@ namespace DataLayer
             return result;
         }
 
+        void IDataService.RegisterUser(string username, string password)
+        {
+            Authenticator auth = new Authenticator();
+            bool registered = auth.register(username, password);
+            if (registered) Console.WriteLine("Registration succeeded");
+            else Console.WriteLine("Registration failed");
+        }
+            
+
 
 
 

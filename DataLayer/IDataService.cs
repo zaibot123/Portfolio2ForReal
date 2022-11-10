@@ -22,6 +22,7 @@ namespace DataLayer
         IList<WordModel>? GetWordToWord(string user_input);
 
         IList<WordModel>? GetPersonWords(string user_input);
+        void RegisterUser(string username, string password);
 
         //IList<Category> GetCategories();
         //Category? GetCategory(int id);
