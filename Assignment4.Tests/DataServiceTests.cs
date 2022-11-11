@@ -7,6 +7,7 @@ namespace Assignment4.Tests
     {
         /* Categories */
         private IMovieDataService _movieDataService;
+        private IActorDataService _actorDataService;
 
 
         //[Fact]
@@ -18,6 +19,15 @@ namespace Assignment4.Tests
         //    Assert.Equal("Courteney Cox", name);
         //}
 
+        [Fact]
+        public void CoActors()
+        {
+            var service = new ActorDataService();
+            var result = service.getCoActors("Jennifer Aniston");
+            var name = result.First().ActorName;
+
+            Assert.Equal("10 jaar leuven kort", name);
+        }
 
 
         [Fact]

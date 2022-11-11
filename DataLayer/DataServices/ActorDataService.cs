@@ -12,7 +12,7 @@ namespace DataLayer
     {
 
         const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
-            IList<ActorsModel>? IActorDataService.getCoActors(string actorname)
+            public IList<ActorsModel>? getCoActors(string actorname)
         {
             
             using var db = new IMDBcontext();
