@@ -33,12 +33,15 @@ namespace DataLayer
             return result;
 
         }
-        IList<TitlesModel>? IMovieDataService.GetSearch(string user_input)
+
+        public IList<TitlesModel> GetSearch(string user_input)
         {
             var username = "Troels";
             using var db = new IMDBcontext();   
             var result = db.TitlesModel.FromSqlInterpolated($"select * from simple_search({username},{user_input})").ToList();
-            return result;  
+            return result.OrderBy(x => x.TitleName).ToList();
+
+                
         }
 
 

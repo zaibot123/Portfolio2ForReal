@@ -6,20 +6,30 @@ namespace Assignment4.Tests
     public class DataServiceTests
     {
         /* Categories */
-        private IActorDataService _dataService;
+        private IMovieDataService _movieDataService;
 
-#if comment
+
+        //[Fact]
+        //public void Category_Object_HasIdNameAndDescription()
+        //{
+        //    var result=_dataService.getCoActors("Jennifer Aniston");
+        //    var first=result[0];
+        //    var name= first.ActorName;
+        //    Assert.Equal("Courteney Cox", name);
+        //}
+
+
+
         [Fact]
-        public void Category_Object_HasIdNameAndDescription()
+        public void SimpleSearch()
         {
-            var result=_dataService.getCoActors("Jennifer Aniston");
-            var name= result[0].ActorName;
-            Assert.Equal("Courteney Cox", name);
-
-
-
+            var service = new MovieDataService();
+            IList<TitlesModel> ? result  = (IList<TitlesModel>?)service.GetSearch("dog");
+            var name = result.First().TitleName;
+  
+            Assert.Equal("10 jaar leuven kort", name);
         }
-
+#if comment
         [Fact]
         public void GetAllCategories_NoArgument_ReturnsAllCategories()
         {

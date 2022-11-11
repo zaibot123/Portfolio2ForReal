@@ -29,6 +29,7 @@ namespace DataLayer
                 };
                 ActorList.Add(actor);
             }
+            Console.WriteLine(ActorList[0].ActorName);
             return ActorList;
         }
 
