@@ -9,7 +9,7 @@ namespace DataLayer
      
         IList<TitlesModel>? getTitles(string name);
 
-        IList<TitlesModel>? GetSearch(string user_input, int page, int pagesize);
+        IList<TitlesModel>? GetSearch(string user_input/*, int page, int pagesize*/);
         IList<TitlesModel>? getSimilarMovies(string user_input);
  
         IList<SearchResult>? getStructuredSearch(int page, int pagesize, string title, string plot, string character, string name);

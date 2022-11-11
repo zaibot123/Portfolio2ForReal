@@ -37,19 +37,21 @@ namespace DataLayer
                 .Take(page)
                 .ToList();
         }
-        IList<TitlesModel>? IMovieDataService.GetSearch(string user_input, int page, int pagesize)
+        public IList<TitlesModel>? GetSearch(string user_input/*, int page, int pagesize*/)
         {
 
             var username = "Troels";
             using var db = new IMDBcontext();
             var result = db.TitlesModel.FromSqlInterpolated($"select * from simple_search({username},{user_input})").ToList();
             return result
-            .Skip(page * pagesize)
-            .Take(page)
+            //.Skip(page * pagesize)
+            //.Take(page)
             .OrderBy(x => x.TitleName)
             .ToList();
 
         }
+
+       
 
 
         IList<TitlesModel>? IMovieDataService.GetBestMatch(string user_input)
@@ -115,5 +117,7 @@ namespace DataLayer
             return result;
 
         }
+
+      
     }
 }

@@ -19,17 +19,28 @@ namespace Assignment4.Tests
             Assert.Equal(null, ActorsModel.ActorName);
         }
 
+        //[Fact]
+        //public void GetCoActorsTest()
+        //{
+        //    var service = new MovieDataService();
+        //    var coactors = _dataService.getCoActors("Jennifer Aniston");
+        //   // var first = coactors[1];
+        //    //Assert.Equal(10, coactors.Count);
+
+        //    Assert.Equal("Courteney Cox", coactors.First().ActorName.ToList().ToString());
+
+        //}
+
         [Fact]
-        public void GetCoActorsTest()
+        public void SimpleSearch()
         {
             var service = new MovieDataService();
-            var coactors = _dataService.getCoActors("Jennifer Aniston");
-           // var first = coactors[1];
-            //Assert.Equal(10, coactors.Count);
+            IList<TitlesModel>? result = service.GetSearch("dog");
+            var name = result.First().TitleName;
 
-            Assert.Equal("Courteney Cox", coactors.First().ActorName.ToList().ToString());
-
+            Assert.Equal("10 jaar leuven kort", name);
         }
+     
 #if comment
         [Fact]
         public void GetCategory_ValidId_ReturnsCategoryObject()

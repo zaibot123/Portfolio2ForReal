@@ -37,7 +37,7 @@ namespace WebServer.Controllers
             else if (searchType == "simple")
             {
             
-                var result = _dataService.GetSearch(title, pageSize, page);
+                var result = _dataService.GetSearch(title/*, pageSize, page*/);
               
                 return Ok(result);
             }
