@@ -21,7 +21,7 @@ namespace Assignment4.Tests
         public void SimpleSearchWithValidUrl()
         {
             var validsearchurl = "http://localhost:5001/movies?searchtype=simple&title=warrior";
-            var (category, statusCode) = GetArray(validsearchurl);
+            var (titles, statusCode) = GetArray(validsearchurl);
             Assert.Equal(HttpStatusCode.OK, statusCode);
         }
 
@@ -29,7 +29,7 @@ namespace Assignment4.Tests
         public void SimilarWithInvalidID()
         {
             var invalidsimilarurl = "http://localhost:5001/movies/tt1514122/similar";
-            var (category, statusCode) = GetObject(invalidsimilarurl);
+            var (similar, statusCode) = GetObject(invalidsimilarurl);
             Assert.Equal(HttpStatusCode.NotFound, statusCode);
         }
 
@@ -37,10 +37,20 @@ namespace Assignment4.Tests
         public void SimilarWithValidID()
         {
             var validsimilarurl = "http://localhost:5001/movies/tt15141242/similar";
-            var (category, statusCode) = GetArray(validsimilarurl);
+            var (similar, statusCode) = GetArray(validsimilarurl);
             Assert.Equal(HttpStatusCode.OK, statusCode);
         }
 
+
+        [Fact]
+        public void SuccesfulRegister()
+        {
+            var validsimilarurl = "http://localhost:5001/login?username=test&password=testpassword";
+
+            var (register, statusCode) = GetObject(validsimilarurl);
+            Assert.Equal(HttpStatusCode.OK, statusCode);
+ 
+        }
 
 
         //        [Fact]

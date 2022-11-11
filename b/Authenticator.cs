@@ -82,7 +82,7 @@ public class Authenticator {
   // check the password
 
   public virtual bool passwordIsOK(string password, string username) {
-    if (password.Length >= 1) return true;
+    if (password.Length >= 7 && !username.Contains(password)) return true;
     else  return false;
   }
 
