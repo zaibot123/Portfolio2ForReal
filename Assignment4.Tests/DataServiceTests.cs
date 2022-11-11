@@ -6,16 +6,14 @@ namespace Assignment4.Tests
     public class DataServiceTests
     {
         /* Categories */
-#if comment
+
         [Fact]
         public void Category_Object_HasIdNameAndDescription()
         {
-            var category = new Category();
-            Assert.Equal(0, category.Id);
-            Assert.Null(category.Name);
-            Assert.Null(category.Description);
+            var ActorsModel = new ActorsModel();
+            Assert.Equal(null, ActorsModel.ActorName);
         }
-
+#if comment
         [Fact]
         public void GetAllCategories_NoArgument_ReturnsAllCategories()
         {

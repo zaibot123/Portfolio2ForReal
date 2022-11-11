@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// MovieDataService.cs
+
+using Microsoft.EntityFrameworkCore;
 using DataLayer.Model;
-using Nest;
 using Npgsql;
-using System.Xml.Linq;
-using System.Reflection.PortableExecutable;
 
 namespace DataLayer
+
+
+
 {
     public class MovieDataService : IMovieDataService
     {
@@ -25,21 +27,27 @@ namespace DataLayer
                 .ToList();
         }
 
-        IList<SearchResult>? IMovieDataService.getStructuredSearch(string title, string plot, string character, string name)
+        IList<SearchResult>? IMovieDataService.getStructuredSearch(int page, int pagesize, string title, string plot, string character, string name)
         {
 
             using var db = new IMDBcontext();
             var result = db.SearchResult.FromSqlInterpolated($"select * from structured_search({title}, {plot}, {character},{name})").ToList();
-            return result;
-
+            return result
+                .Skip(page * pagesize)
+                .Take(page)
+                .ToList();
         }
-        IList<TitlesModel>? IMovieDataService.GetSearch(string user_input)
+        IList<TitlesModel>? IMovieDataService.GetSearch(string user_input, int page, int pagesize)
         {
 
             var username = "Troels";
             using var db = new IMDBcontext();
             var result = db.TitlesModel.FromSqlInterpolated($"select * from simple_search({username},{user_input})").ToList();
-            return result;
+            return result
+            .Skip(page * pagesize)
+            .Take(page)
+            .OrderBy(x => x.TitleName)
+            .ToList();
 
         }
 
@@ -105,7 +113,7 @@ namespace DataLayer
             string sqlstring = CreateSqlQueryForVariadic(user_input, "word_to_word");
             var result = db.WordModel.FromSqlRaw(sqlstring).ToList();
             return result;
-        }
 
+        }
     }
 }

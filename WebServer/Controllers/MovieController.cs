@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using DataLayer;
-using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebServer.Controllers
@@ -10,6 +9,7 @@ namespace WebServer.Controllers
 
     public class MovieController : ControllerBase
     {
+        private const int MaxPageSize = 25;
         private IMovieDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
@@ -19,20 +19,26 @@ namespace WebServer.Controllers
             _dataService = dataService;
             _generator = generator;
             _mapper = mapper;
-        }
+     
+    }
+
+    
 
         [HttpGet()]
-        public IActionResult GetSearch(string searchType, string title, string? plot = null, string? character = null, string? name = null)
+        public IActionResult GetSearch(string searchType, string title, int page = 0, int pageSize = 10, string? plot= null, string? character = null, string? name = null)
 
         {
             if (searchType == "structured")
             {
-                var result = _dataService.getStructuredSearch(title, plot, character, name);
+                var result = _dataService.getStructuredSearch(pageSize, page, title, plot, character, name);
+
                 return Ok(result);
             }
             else if (searchType == "simple")
             {
-                var result = _dataService.GetSearch(title);
+            
+                var result = _dataService.GetSearch(title, pageSize, page);
+              
                 return Ok(result);
             }
 
@@ -72,5 +78,9 @@ namespace WebServer.Controllers
             return Ok(titles);
         }
 
+
+
     }
+
+
 }

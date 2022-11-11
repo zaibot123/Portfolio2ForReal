@@ -11,7 +11,7 @@ namespace Assignment4.Tests
 
     public class WebServiceTests
     {
-
+#if comment
         private const string CategoriesApi = "http://localhost:5001/api/categories";
         private const string ProductsApi = "http://localhost:5001/api/products";
 
@@ -274,5 +274,7 @@ namespace Assignment4.Tests
             var response = client.DeleteAsync(url).Result;
             return response.StatusCode;
         }
+#endif
     }
+
 }
