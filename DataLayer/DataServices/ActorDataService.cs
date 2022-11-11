@@ -4,6 +4,7 @@ using Nest;
 using Npgsql;
 using System.Xml.Linq;
 using System.Reflection.PortableExecutable;
+using System.Collections;
 
 namespace DataLayer
 {
@@ -12,12 +13,12 @@ namespace DataLayer
 
         const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
 
-
+      
         IList<ActorsModel>? IActorDataService.getCoActors(string actorname)
         {
             using var db = new IMDBcontext();
             var ActorList = new List<ActorsModel>();
-            using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = Google-1234");
+            using var connection = new NpgsqlConnection(ConnectionString);
             connection.Open();
             using var cmd = new NpgsqlCommand($"select * from co_actors_function('{actorname}');", connection);
             using var reader = cmd.ExecuteReader();
@@ -29,6 +30,9 @@ namespace DataLayer
                 };
                 ActorList.Add(actor);
             }
+
+            
+           
             return ActorList;
         }
 
@@ -65,7 +69,7 @@ namespace DataLayer
             return result;
         }
 
-
+      
     }
 }
 

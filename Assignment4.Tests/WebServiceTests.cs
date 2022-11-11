@@ -12,24 +12,26 @@ namespace Assignment4.Tests
     public class WebServiceTests
     {
 #if comment
-        private const string CategoriesApi = "http://localhost:5001/api/categories";
-        private const string ProductsApi = "http://localhost:5001/api/products";
+        private const string MoviesApi = "http://localhost:5001/movies/";
+        
 
-        /* /api/categories */
+        /* /movies */
         [Fact]
-        public void ApiCategories_GetWithNoArguments_OkAndAllCategories()
+        public void ApiCoActors()
         {
-            var (data, statusCode) = GetArray(CategoriesApi);
+            const string ActorsApi = "http://localhost:5001/actors/Jennifer Aniston/coactors";
+            var (data, statusCode) = GetArray(ActorsApi);
 
             Assert.Equal(HttpStatusCode.OK, statusCode);
-            Assert.Equal(8, data.Count);
-            Assert.Equal("Beverages", data.First()["name"]);
-            Assert.Equal("Seafood", data.Last()["name"]);
+            Assert.Equal(10, data.Count);
+            Assert.Equal("Courteney Cox", data.First()["actorName"].ToString());
+            Assert.Equal("Ira Ungerleider", data.Last()["actorName"].ToString());
         }
 
         [Fact]
         public void ApiCategories_GetWithValidCategoryId_OkAndCategory()
         {
+            
             var (category, statusCode) = GetObject($"{CategoriesApi}/1");
 
             Assert.Equal(HttpStatusCode.OK, statusCode);
@@ -225,7 +227,7 @@ namespace Assignment4.Tests
             Assert.Equal(0, products.Count);
         }
 
-
+#endif
         // Helpers
 
         (JArray, HttpStatusCode) GetArray(string url)
@@ -274,7 +276,7 @@ namespace Assignment4.Tests
             var response = client.DeleteAsync(url).Result;
             return response.StatusCode;
         }
-#endif
+
     }
 
 }

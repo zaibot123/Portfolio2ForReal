@@ -1,28 +1,36 @@
 using DataLayer;
 using DataLayer.Model;
+using Google.GData.Client;
+using Nest;
+using System.Collections;
+using System.Runtime.CompilerServices;
 
 namespace Assignment4.Tests
 {
     public class DataServiceTests
     {
+        private IActorDataService _dataService;
         /* Categories */
 
         [Fact]
-        public void Category_Object_HasIdNameAndDescription()
+        public void CrateEmptyActorsModelWithNullValue()
         {
             var ActorsModel = new ActorsModel();
             Assert.Equal(null, ActorsModel.ActorName);
         }
-#if comment
-        [Fact]
-        public void GetAllCategories_NoArgument_ReturnsAllCategories()
-        {
-            var service = new DataService();
-            var categories = service.GetCategories();
-            Assert.Equal(8, categories.Count);
-            Assert.Equal("Beverages", categories.First().Name);
-        }
 
+        [Fact]
+        public void GetCoActorsTest()
+        {
+            var service = new MovieDataService();
+            var coactors = _dataService.getCoActors("Jennifer Aniston");
+           // var first = coactors[1];
+            //Assert.Equal(10, coactors.Count);
+
+            Assert.Equal("Courteney Cox", coactors.First().ActorName.ToList().ToString());
+
+        }
+#if comment
         [Fact]
         public void GetCategory_ValidId_ReturnsCategoryObject()
         {
