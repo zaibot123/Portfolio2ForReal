@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataLayer.Model
+namespace DataLayer
 {
-     public class UserModel
+    public class Class1
     {
-        public string UserName { get; set; }
+
     }
 }

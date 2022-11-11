@@ -4,6 +4,7 @@ using Nest;
 using Npgsql;
 using System.Xml.Linq;
 using System.Reflection.PortableExecutable;
+using Microsoft.AspNetCore.Routing;
 
 namespace DataLayer
 {
@@ -11,10 +12,9 @@ namespace DataLayer
     {
 
         const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
-
-
-        IList<ActorsModel>? IActorDataService.getCoActors(string actorname)
+            IList<ActorsModel>? IActorDataService.getCoActors(string actorname)
         {
+            
             using var db = new IMDBcontext();
             var ActorList = new List<ActorsModel>();
             using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");

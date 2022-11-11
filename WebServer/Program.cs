@@ -14,6 +14,8 @@ builder.Services.AddSingleton<ILoginDataService, LoginDataService>();
 
 var app = builder.Build();
 
+
+
 app.MapControllers();
 
 app.Run();

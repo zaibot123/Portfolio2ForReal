@@ -2,6 +2,9 @@
 using DataLayer;
 using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
+using Nest;
+using static System.Net.Mime.MediaTypeNames;
+using System.Collections.Generic;
 
 namespace WebServer.Controllers
 {
@@ -21,6 +24,13 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
+        private string? CreateLink(int page, int pageSize)
+        {
+            return _generator.GetUriByName( 
+                HttpContext,
+                nameof(GetSearch), new { page, pageSize });
+     
+        }
         [HttpGet()]
         public IActionResult GetSearch(string searchType, string title, string? plot = null, string? character = null, string? name = null)
 
@@ -28,6 +38,8 @@ namespace WebServer.Controllers
             if (searchType == "structured")
             {
                 var result = _dataService.getStructuredSearch(title, plot, character, name);
+             
+
                 return Ok(result);
             }
             else if (searchType == "simple")
@@ -65,7 +77,7 @@ namespace WebServer.Controllers
         { 
             var titles =
                 _dataService.getSimilarMovies(title_id);
-            if (titles == null)
+            if (titles.Count == 0) 
             {
                 return NotFound();
             }

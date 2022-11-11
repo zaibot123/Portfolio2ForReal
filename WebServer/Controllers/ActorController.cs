@@ -28,8 +28,11 @@ namespace WebServer.Controllers
         [HttpGet("{name}/coactors")]
         public IActionResult getCoactors(string name)
         {
-            var result=  _dataService.getCoActors(name);
+            var result=_dataService.getCoActors(name);
+
+            Console.WriteLine(result[0].ActorName);
             return Ok(result);
+    
         }
 
         [HttpGet("{name}/words")]

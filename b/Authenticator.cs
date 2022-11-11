@@ -7,7 +7,7 @@ public class Authenticator {
   public Authenticator() {
     try {
       string s = "Host=localhost;Username=postgres;Password=1234;Database=imdb";
-      con = new NpgsqlConnection(s);
+      con = new NpgsqlConnection(s);    
       con.Open();
     } catch (Exception e) {
       Console.WriteLine("Exception caught in Authenticator.cs");

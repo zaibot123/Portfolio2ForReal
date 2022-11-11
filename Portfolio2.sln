@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer", "WebServer\WebS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\DataLayer.csproj", "{1B907A71-A0A7-48FD-814B-DA435310496B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Secuurity", "b\Secuurity.csproj", "{7174601C-3436-4D9B-B6A9-EF3BEDA9CFB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Secuurity", "b\Secuurity.csproj", "{7174601C-3436-4D9B-B6A9-EF3BEDA9CFB5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D0CF1F5F-624A-4B0B-808F-939E3EB3567E}"
+	ProjectSection(SolutionItems) = preProject
+		TextFile1.txt = TextFile1.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

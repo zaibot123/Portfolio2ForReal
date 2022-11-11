@@ -6,14 +6,18 @@ namespace Assignment4.Tests
     public class DataServiceTests
     {
         /* Categories */
+        private IActorDataService _dataService;
+
 #if comment
         [Fact]
         public void Category_Object_HasIdNameAndDescription()
         {
-            var category = new Category();
-            Assert.Equal(0, category.Id);
-            Assert.Null(category.Name);
-            Assert.Null(category.Description);
+            var result=_dataService.getCoActors("Jennifer Aniston");
+            var name= result[0].ActorName;
+            Assert.Equal("Courteney Cox", name);
+
+
+
         }
 
         [Fact]
