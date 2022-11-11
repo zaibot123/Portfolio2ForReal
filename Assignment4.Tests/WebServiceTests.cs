@@ -42,14 +42,25 @@ namespace Assignment4.Tests
         }
 
 
-        [Fact]
-        public void SuccesfulRegister()
-        {
-            var validsimilarurl = "http://localhost:5001/login?username=test&password=testpassword";
+        //[Fact]
+        //public void SuccesfulRegister()
+        //{
+        //    var validsimilarurl = "http://localhost:5001/login?username=test&password=testpassword";
 
-            var (register, statusCode) = GetObject(validsimilarurl);
-            Assert.Equal(HttpStatusCode.OK, statusCode);
+        //    var (register, statusCode) = GetObject(validsimilarurl);
+        //    Assert.Equal(HttpStatusCode.OK, statusCode);
  
+        //}
+
+
+        [Fact]
+        public void PopularActorsInvalidID()
+        {
+            var invalidsimilarurl = "http://localhost:5001/actors/popular/tt1514122";
+
+            var (register, statusCode) = GetObject(invalidsimilarurl);
+            Assert.Equal(HttpStatusCode.NotFound, statusCode);
+
         }
 
 

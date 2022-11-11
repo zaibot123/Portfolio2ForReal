@@ -48,7 +48,7 @@ namespace WebServer.Controllers
 
             var actors =
                 _dataService.getPopularActorsFromMovie(title_id);
-            if (actors == null)
+            if (actors.Count==0)
             {
                 return NotFound();
             }
