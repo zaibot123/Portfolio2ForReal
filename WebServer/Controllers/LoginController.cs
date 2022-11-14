@@ -11,13 +11,13 @@ namespace WebServer.Controllers
     [Route("login")]
     [ApiController]
 
-    public class loginController : ControllerBase
+    public class LoginController : ControllerBase
     {
         private ILoginDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
-        public loginController(ILoginDataService dataService, LinkGenerator generator, IMapper mapper)
+        public LoginController(ILoginDataService dataService, LinkGenerator generator, IMapper mapper)
         {
             _dataService = dataService;
             _generator = generator;

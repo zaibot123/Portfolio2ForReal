@@ -7,21 +7,17 @@ namespace DataLayer
 {
     public class IMDBcontext : DbContext
     {
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
-
-
-        //public DbSet<Category>? Categories { get; set; }
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
         public DbSet<Casting>? Casting { get; set; }
-
+        public DbSet<Bookmark>? Bookmark { get; set; }
         public DbSet<Password>? Password { get; set; }
         public DbSet<Titles>? Titles { get; set; }
         public DbSet<Professionals>? Professionals { get; set; }
         public DbSet<SearchResult>? SearchResult { get; set; }
+       // public DbSet<BookmarkModels>? BookmarkModels { get; set; }
         public DbSet<TitlesModel>? TitlesModel { get; set; }
         public DbSet<WordModel>? WordModel { get; set; }
-
-
-
+      
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -89,6 +85,20 @@ namespace DataLayer
             modelBuilder.Entity<Password>().Property(x => x.UserName).HasColumnName("username");
             modelBuilder.Entity<Password>().Property(x => x.HashedPassword).HasColumnName("hashed_password");
             modelBuilder.Entity<Password>().Property(x => x.Salt).HasColumnName("salt");
+
+
+            modelBuilder.Entity<Bookmark>().ToTable("bookmark");
+            modelBuilder.Entity<Bookmark>().HasKey(x => new { x.TitleId, x.UserName});
+
+            modelBuilder.Entity<Bookmark>().Property(x => x.UserName).HasColumnName("username");
+            modelBuilder.Entity<Bookmark>().Property(x => x.TitleId).HasColumnName("title_id");
+
+            //modelBuilder.Entity<BookmarkModels>().HasNoKey();
+            //modelBuilder.Entity<TitlesModel>().Property(x => x.TitleName).HasColumnName("title_name");
+            //modelBuilder.Entity<TitlesModel>().Property(x => x.Poster).HasColumnName("poster");
+            //modelBuilder.Entity<Bookmark>().Property(x => x.UserName).HasColumnName("username");
+            //modelBuilder.Entity<Bookmark>().Property(x => x.TitleId).HasColumnName("title_id");
+            
 
 
 

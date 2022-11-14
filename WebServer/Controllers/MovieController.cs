@@ -84,5 +84,19 @@ namespace WebServer.Controllers
             return Ok(titles);
         }
 
+        [HttpPut()]
+        public IActionResult AssignBookmark(string title_id, string username)
+        {     
+            _dataService.Bookmark(title_id, username);
+            return Ok();
+        }
+
+        [HttpDelete()]
+        public IActionResult DeleteBookmark(string title_id, string username)
+        {
+            _dataService.Bookmark(title_id, username);
+            return Ok();
+        }
+
     }
 }
