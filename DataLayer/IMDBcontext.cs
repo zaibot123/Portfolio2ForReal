@@ -17,7 +17,13 @@ namespace DataLayer
        // public DbSet<BookmarkModels>? BookmarkModels { get; set; }
         public DbSet<TitlesModel>? TitlesModel { get; set; }
         public DbSet<WordModel>? WordModel { get; set; }
-      
+
+
+        public DbSet<UserModel>? UserModels { get; set; }
+
+
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
