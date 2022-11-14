@@ -108,5 +108,26 @@ namespace DataLayer
             return result;
         }
 
+
+        void IMovieDataService.AssignBookmark(string username, string title_id)
+        {
+            using var db = new IMDBcontext();
+            var result = db.Bookmark.FromSqlInterpolated($"insert into bookmark(username, title_id) VALUES({username},{title_id}); select * from bookmark where username={username} and title_id = {title_id};").ToList();
+        }
+
+        void IMovieDataService.DeleteBookmark(string username, string title_id)
+        {
+            using var db = new IMDBcontext();
+            //string sqlString 
+            var result = db.Bookmark.FromSqlInterpolated($"delete from bookmark where username={username} and title_id = {title_id}; select * from bookmark;").ToList();
+        }
+
+        void IMovieDataService.Bookmark(string username, string title_id)
+        {
+            using var db = new IMDBcontext();
+            //string sqlString 
+            var result = db.Bookmark.FromSqlInterpolated($"Select * from bookmark_function({username}, {title_id})").ToList();
+        }
+
     }
 }
