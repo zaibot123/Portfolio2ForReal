@@ -17,6 +17,7 @@ namespace DataLayer
        // public DbSet<BookmarkModels>? BookmarkModels { get; set; }
         public DbSet<TitlesModel>? TitlesModel { get; set; }
         public DbSet<WordModel>? WordModel { get; set; }
+<<<<<<< HEAD
 
 
         public DbSet<UserModel>? UserModels { get; set; }
@@ -24,6 +25,9 @@ namespace DataLayer
 
 
 
+=======
+      
+>>>>>>> 0742848d9a578068ccdb53cb17be6964c554ded2
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -94,6 +98,7 @@ namespace DataLayer
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             modelBuilder.Entity<UserModel>().HasKey(x => new { x.UserName });
             modelBuilder.Entity<UserModel>().Property(x => x.UserName).HasColumnName("username");
             modelBuilder.Entity<UserModel>().Property(x => x.Bio).HasColumnName("user_bio");
@@ -101,19 +106,19 @@ namespace DataLayer
             modelBuilder.Entity<UserModel>().Property(x => x.Email).HasColumnName("email");
 
 =======
+=======
+>>>>>>> 0742848d9a578068ccdb53cb17be6964c554ded2
             modelBuilder.Entity<Bookmark>().ToTable("bookmark");
             modelBuilder.Entity<Bookmark>().HasKey(x => new { x.TitleId, x.UserName});
 
             modelBuilder.Entity<Bookmark>().Property(x => x.UserName).HasColumnName("username");
             modelBuilder.Entity<Bookmark>().Property(x => x.TitleId).HasColumnName("title_id");
 
-            //modelBuilder.Entity<BookmarkModels>().HasNoKey();
-            //modelBuilder.Entity<TitlesModel>().Property(x => x.TitleName).HasColumnName("title_name");
-            //modelBuilder.Entity<TitlesModel>().Property(x => x.Poster).HasColumnName("poster");
-            //modelBuilder.Entity<Bookmark>().Property(x => x.UserName).HasColumnName("username");
-            //modelBuilder.Entity<Bookmark>().Property(x => x.TitleId).HasColumnName("title_id");
-            
->>>>>>> 63125a710edd8bbe716df1f3bc79015a15e0cbe1
+            modelBuilder.Entity<BookmarkModels>().HasNoKey();
+            modelBuilder.Entity<TitlesModel>().Property(x => x.TitleName).HasColumnName("title_name");
+            modelBuilder.Entity<TitlesModel>().Property(x => x.Poster).HasColumnName("poster");
+            modelBuilder.Entity<Bookmark>().Property(x => x.UserName).HasColumnName("username");
+            modelBuilder.Entity<Bookmark>().Property(x => x.TitleId).HasColumnName("title_id");
 
 
 
