@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebServer.Controllers
 {
-    [Route("login")]
+    [Route("register")]
     [ApiController]
 
-    public class LoginController : ControllerBase
+    public class registerController : ControllerBase
     {
         private ILoginDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
-        public LoginController(ILoginDataService dataService, LinkGenerator generator, IMapper mapper)
+        public registerController(ILoginDataService dataService, LinkGenerator generator, IMapper mapper)
         {
             _dataService = dataService;
             _generator = generator;

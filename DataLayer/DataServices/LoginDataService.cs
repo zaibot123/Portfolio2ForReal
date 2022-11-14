@@ -1,8 +1,13 @@
-﻿using System;
+﻿using DataLayer.Model;
+using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Secuurity;
+using Nest;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.DataServices
 {
@@ -15,6 +20,18 @@ namespace DataLayer.DataServices
             bool registered = auth.register(username, password);
             if (registered) Console.WriteLine("Registration succeeded");
             else Console.WriteLine("Registration failed");
+        }
+
+
+
+        IList<Password> ILoginDataService.Login(string username, string hashed_pass)
+        {
+
+            using var db = new IMDBcontext();
+            var result = db.Password.FromSqlInterpolated($"select * from password where username = {username} and hashed_password = {hashed_pass};").ToList();
+            return result;
+
+
         }
 
     }

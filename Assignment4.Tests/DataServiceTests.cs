@@ -1,5 +1,7 @@
 using DataLayer;
 using DataLayer.Model;
+using Secuurity;
+
 
 namespace Assignment4.Tests
 {
@@ -9,15 +11,12 @@ namespace Assignment4.Tests
         private IMovieDataService _movieDataService;
         private IActorDataService _actorDataService;
 
-
-        //[Fact]
-        //public void Category_Object_HasIdNameAndDescription()
-        //{
-        //    var result=_dataService.getCoActors("Jennifer Aniston");
-        //    var first=result[0];
-        //    var name= first.ActorName;
-        //    Assert.Equal("Courteney Cox", name);
-        //}
+        [Fact]
+        public void CrateEmptyActorsModelWithNullValue()
+        {
+            var ActorsModel = new ActorsModel();
+            Assert.Equal(null, ActorsModel.ActorName);
+        }
 
         [Fact]
         public void CoActors()
@@ -25,8 +24,9 @@ namespace Assignment4.Tests
             var service = new ActorDataService();
             var result = service.getCoActors("Jennifer Aniston");
             var name = result.First().ActorName;
+            Assert.Equal(10, result.Count);
+            Assert.Equal("Courteney Cox", name);
 
-            Assert.Equal("10 jaar leuven kort", name);
         }
 
 
@@ -36,8 +36,30 @@ namespace Assignment4.Tests
             var service = new MovieDataService();
             IList<TitlesModel> ? result  = (IList<TitlesModel>?)service.GetSearch("dog");
             var name = result.First().TitleName;
-  
             Assert.Equal("10 jaar leuven kort", name);
+
+
+        }
+
+        [Fact]
+        public void LoginValid()
+        {
+            var service = new Authenticator();
+            bool result = service.login("Henrik", "henrik1234");
+            Assert.True(result);
+
+
+        }
+
+
+        [Fact]
+        public void LoginInvalid()
+        {
+            var service = new Authenticator();
+            bool result = service.login("1234", "henrik1234");
+            Assert.False(result);
+
+
         }
 #if comment
         [Fact]

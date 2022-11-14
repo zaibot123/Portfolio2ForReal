@@ -27,7 +27,7 @@ namespace DataLayer
 //:)
     public interface ILoginDataService
     {
-
+        public IList<Password> Login(string username, string hashed_pass);
         void RegisterUser(string username, string password);
     }
 }

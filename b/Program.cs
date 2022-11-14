@@ -1,4 +1,6 @@
 ﻿// Program.cs
+using Secuurity;
+
 
 Console.WriteLine("Welcome to the password-based authenticator");
 Console.WriteLine("");
@@ -77,6 +79,7 @@ string getUserInput(string s) {
 string readLineError() {
   return "Error: no string read by Console.ReadLine()";
 }
+
 
 
 

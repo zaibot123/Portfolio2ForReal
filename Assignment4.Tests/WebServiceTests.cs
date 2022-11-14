@@ -41,6 +41,33 @@ namespace Assignment4.Tests
             Assert.Equal(HttpStatusCode.OK, statusCode);
         }
 
+        public void ValidLogin() {
+            var validloginurl = "http://localhost:5001/login?username=Henrik&hashed_password=C0EB542D4EFFC7C41319AE19B6D28EC29FE0806F4318C77533D8AE323DC921ED";
+            var (data, statusCode) = GetArray(validloginurl);
+            
+            Assert.Equal(HttpStatusCode.OK, statusCode);
+            Assert.Equal(1, data.Count);
+            Assert.Equal("Henrik", data.First()["username"].ToString());
+
+
+
+
+        }
+
+        [Fact]
+        public void ApiCoActors()
+        {
+            const string ActorsApi = "http://localhost:5001/actors/Jennifer Aniston/coactors";
+            var (data, statusCode) = GetArray(ActorsApi);
+
+
+
+            Assert.Equal(HttpStatusCode.OK, statusCode);
+            Assert.Equal(10, data.Count);
+            Assert.Equal("Courteney Cox", data.First()["actorName"].ToString());
+            Assert.Equal("Ira Ungerleider", data.Last()["actorName"].ToString());
+        }
+
 
         //[Fact]
         //public void SuccesfulRegister()
@@ -49,7 +76,7 @@ namespace Assignment4.Tests
 
         //    var (register, statusCode) = GetObject(validsimilarurl);
         //    Assert.Equal(HttpStatusCode.OK, statusCode);
- 
+
         //}
 
 

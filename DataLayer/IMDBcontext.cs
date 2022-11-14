@@ -12,6 +12,8 @@ namespace DataLayer
 
         //public DbSet<Category>? Categories { get; set; }
         public DbSet<Casting>? Casting { get; set; }
+
+        public DbSet<Password>? Password { get; set; }
         public DbSet<Titles>? Titles { get; set; }
         public DbSet<Professionals>? Professionals { get; set; }
         public DbSet<SearchResult>? SearchResult { get; set; }
@@ -46,6 +48,7 @@ namespace DataLayer
             modelBuilder.Entity<Titles>().ToTable("title");
             modelBuilder.Entity<Titles>().HasKey(x => new { x.TitleId});
 
+
             modelBuilder.Entity<Titles>().Property(x => x.TitleId).HasColumnName("title_id");
             modelBuilder.Entity<Titles>().Property(x => x.TitleName).HasColumnName("title_name");
             modelBuilder.Entity<Titles>().Property(x => x.TitleType).HasColumnName("title_type");
@@ -79,6 +82,14 @@ namespace DataLayer
             modelBuilder.Entity<WordModel>().HasNoKey();
             modelBuilder.Entity<WordModel>().Property(x => x.Word).HasColumnName("words");
             modelBuilder.Entity<WordModel>().Property(x => x.Frequency).HasColumnName("c_count");
+
+            modelBuilder.Entity<Password>().ToTable("password");
+            modelBuilder.Entity<Password>().HasKey(x => new { x.UserName });
+
+            modelBuilder.Entity<Password>().Property(x => x.UserName).HasColumnName("username");
+            modelBuilder.Entity<Password>().Property(x => x.HashedPassword).HasColumnName("hashed_password");
+            modelBuilder.Entity<Password>().Property(x => x.Salt).HasColumnName("salt");
+
 
 
 

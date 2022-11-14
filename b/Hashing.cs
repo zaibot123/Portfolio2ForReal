@@ -37,7 +37,7 @@ public class Hashing {
 
   // hashSHA256 is the "workhorse" --- the actual hashing
 
-  private string hashSHA256(string password, string saltstring) {
+  public string hashSHA256(string password, string saltstring) {
     byte[] hashinput = Encoding.UTF8.GetBytes(saltstring + password); // perhaps encode only the password part?
     byte[] hashoutput = sha256.ComputeHash(hashinput); 
     return Convert.ToHexString(hashoutput);
@@ -63,3 +63,5 @@ public class Hashing {
   }
 
 }
+
+
