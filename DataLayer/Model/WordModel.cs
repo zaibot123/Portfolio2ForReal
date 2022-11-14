@@ -9,6 +9,6 @@ namespace DataLayer.Model
     public class WordModel
     {
         public string Word { get; set; }
-        public int Frequency { get; set; }
+        public int Frequency {  get; set; }
     }
 }

@@ -20,6 +20,8 @@ namespace DataLayer
         public DbSet<TitlesModel>? TitlesModel { get; set; }
         public DbSet<WordModel>? WordModel { get; set; }
 
+        public DbSet<UserModel>? UserModels { get; set; }
+
 
 
 
@@ -89,6 +91,14 @@ namespace DataLayer
             modelBuilder.Entity<Password>().Property(x => x.UserName).HasColumnName("username");
             modelBuilder.Entity<Password>().Property(x => x.HashedPassword).HasColumnName("hashed_password");
             modelBuilder.Entity<Password>().Property(x => x.Salt).HasColumnName("salt");
+
+
+            modelBuilder.Entity<UserModel>().HasKey(x => new { x.UserName });
+            modelBuilder.Entity<UserModel>().Property(x => x.UserName).HasColumnName("username");
+            modelBuilder.Entity<UserModel>().Property(x => x.Bio).HasColumnName("user_bio");
+            modelBuilder.Entity<UserModel>().Property(x => x.Photo).HasColumnName("photo");
+            modelBuilder.Entity<UserModel>().Property(x => x.Email).HasColumnName("email");
+
 
 
 

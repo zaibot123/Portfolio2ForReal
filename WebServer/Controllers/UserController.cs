@@ -11,13 +11,13 @@ namespace WebServer.Controllers
     [Route("login")]
     [ApiController]
 
-    public class loginController : ControllerBase
+    public class UserController : ControllerBase
     {
         private ILoginDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
-        public loginController(ILoginDataService dataService, LinkGenerator generator, IMapper mapper)
+        public UserController(ILoginDataService dataService, LinkGenerator generator, IMapper mapper)
         {
             _dataService = dataService;
             _generator = generator;
@@ -43,6 +43,16 @@ namespace WebServer.Controllers
            
 
         }
+        [HttpPatch()]
+        public IActionResult EditUser(string username, string bio, string photo, string email)
+        {
+            if (!String.IsNullOrEmpty(username) ){ 
+            var data=_dataService.EditUser(username, bio, photo, email);
+            return Ok(data);
+            }
+            return BadRequest();
+        }
+
 
     }
 }
