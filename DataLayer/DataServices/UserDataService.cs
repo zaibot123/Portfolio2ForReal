@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.DataServices
 {
-    public class LoginDataService : ILoginDataService
+    public class UserDataService : ILoginDataService
     {
 
         void ILoginDataService.RegisterUser(string username, string password)
