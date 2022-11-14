@@ -11,13 +11,13 @@ namespace DataLayer
     public class ActorDataService : IActorDataService
     {
 
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
             public IList<ActorsModel>? getCoActors(string actorname)
         {
             
             using var db = new IMDBcontext();
             var ActorList = new List<ActorsModel>();
-            using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
+            using var connection = new NpgsqlConnection(ConnectionString);
             connection.Open();
             using var cmd = new NpgsqlCommand($"select * from co_actors_function('{actorname}');", connection);
             using var reader = cmd.ExecuteReader();
@@ -37,7 +37,7 @@ namespace DataLayer
         {
 
             var ResultList = new List<ActorsModel>();
-            using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
+            using var connection = new NpgsqlConnection(ConnectionString);
             connection.Open();
 
             using var cmd = new NpgsqlCommand($"select * from populer_actors('{title_id}');", connection);

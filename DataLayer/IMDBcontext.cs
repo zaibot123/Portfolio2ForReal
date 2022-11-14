@@ -23,12 +23,6 @@ namespace DataLayer
         public DbSet<UserModel>? UserModels { get; set; }
 
 
-
-
-=======
-      
->>>>>>> 0742848d9a578068ccdb53cb17be6964c554ded2
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -95,30 +89,6 @@ namespace DataLayer
             modelBuilder.Entity<Password>().Property(x => x.UserName).HasColumnName("username");
             modelBuilder.Entity<Password>().Property(x => x.HashedPassword).HasColumnName("hashed_password");
             modelBuilder.Entity<Password>().Property(x => x.Salt).HasColumnName("salt");
-
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-            modelBuilder.Entity<UserModel>().HasKey(x => new { x.UserName });
-            modelBuilder.Entity<UserModel>().Property(x => x.UserName).HasColumnName("username");
-            modelBuilder.Entity<UserModel>().Property(x => x.Bio).HasColumnName("user_bio");
-            modelBuilder.Entity<UserModel>().Property(x => x.Photo).HasColumnName("photo");
-            modelBuilder.Entity<UserModel>().Property(x => x.Email).HasColumnName("email");
-
-=======
-=======
->>>>>>> 0742848d9a578068ccdb53cb17be6964c554ded2
-            modelBuilder.Entity<Bookmark>().ToTable("bookmark");
-            modelBuilder.Entity<Bookmark>().HasKey(x => new { x.TitleId, x.UserName});
-
-            modelBuilder.Entity<Bookmark>().Property(x => x.UserName).HasColumnName("username");
-            modelBuilder.Entity<Bookmark>().Property(x => x.TitleId).HasColumnName("title_id");
-
-            modelBuilder.Entity<BookmarkModels>().HasNoKey();
-            modelBuilder.Entity<TitlesModel>().Property(x => x.TitleName).HasColumnName("title_name");
-            modelBuilder.Entity<TitlesModel>().Property(x => x.Poster).HasColumnName("poster");
-            modelBuilder.Entity<Bookmark>().Property(x => x.UserName).HasColumnName("username");
-            modelBuilder.Entity<Bookmark>().Property(x => x.TitleId).HasColumnName("title_id");
 
 
 
