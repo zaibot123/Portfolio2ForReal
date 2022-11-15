@@ -4,6 +4,7 @@ using Nest;
 using Npgsql;
 using System.Xml.Linq;
 using System.Reflection.PortableExecutable;
+using DataLayer.Interfaces;
 
 namespace DataLayer
 {

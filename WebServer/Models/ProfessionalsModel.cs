@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataLayer.Model
+namespace WebServer.Models
 {
-    public class Professionals
+    public class ProfessionalsModel
     {
-
-        public string ProfId { get; set; }
-        public string ProfName { get; set; }
+        public string? URL { get; set; }
+        public string  Name { get; set; }
         public string? DeathYear { get; set; }
         public string? BirthYear { get; set; }
-        public double? ProfRating { get; set; }
+        public double? Rating { get; set; }
     }
 }

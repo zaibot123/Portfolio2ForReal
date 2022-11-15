@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DataLayer;
+using DataLayer.Interfaces;
 using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 

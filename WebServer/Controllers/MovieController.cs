@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using DataLayer;
 using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 using Nest;
 using static System.Net.Mime.MediaTypeNames;
 using System.Collections.Generic;
+using DataLayer.Interfaces;
 
 namespace WebServer.Controllers
 {

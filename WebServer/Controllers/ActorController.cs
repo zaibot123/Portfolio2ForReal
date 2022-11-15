@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using DataLayer;
+using DataLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-
-
+using WebServer.Models;
 
 namespace WebServer.Controllers
 {
@@ -25,11 +24,34 @@ namespace WebServer.Controllers
             _generator = generator;
             _mapper = mapper;
         }
-        [HttpGet("{ID}")]
+
+        private string? CreateLink(string endpoint, object? values)
+        {
+
+            return _generator.GetUriByName(
+                HttpContext,
+                endpoint, values);
+
+        }
+
+
+        [HttpGet("{ID}",Name =nameof(getSingleProffesionalFromId))]
         public IActionResult getSingleProffesionalFromId(string ID)
         {
             var result = _dataService.GetSingleProfessionalFromID(ID);
-            return Ok(result);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            var model = new ProfessionalsModel
+            {
+                URL = CreateLink(nameof(getSingleProffesionalFromId), new { ID }),
+                BirthYear = result.BirthYear,
+                DeathYear = result.DeathYear,
+                Name = result.ProfName,
+                Rating = result.ProfRating
+            };
+            return Ok(model);
         }
 
         [HttpGet("{name}/coactors")]

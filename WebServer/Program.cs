@@ -1,6 +1,7 @@
 using DataLayer;
 using AutoMapper;
 using DataLayer.DataServices;
+using DataLayer.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

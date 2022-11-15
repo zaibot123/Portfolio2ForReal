@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DataLayer;
 using DataLayer.DataServices;
+using DataLayer.Interfaces;
 using DataLayer.Model;
 using DataLayer.Security;
 using Microsoft.AspNetCore.Mvc;
@@ -54,16 +54,6 @@ namespace WebServer.Controllers
             }
             return BadRequest();
         }
-
-        [HttpGet()]
-        public IActionResult RateMovie(string username, string title_id, string rating)
-        {
-           _dataService.RateMovie(username, title_id, rating);
-            return Ok();
-        }
-
-
-        
 
 
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DataLayer.Model;
 using Npgsql;
+using DataLayer.Interfaces;
 
 namespace DataLayer
 {
@@ -15,7 +16,7 @@ namespace DataLayer
             return result;
         }
 
-        IList<ActorsModel>? IActorDataService.getPopularActorsFromMovie(string title_id)
+        public IList<ActorsModel>? getPopularActorsFromMovie(string title_id)
         {
 
             var ResultList = new List<ActorsModel>();
@@ -40,26 +41,25 @@ namespace DataLayer
             return ResultList;
 
         }
-
-        IList<WordModel> IActorDataService.GetPersonWords(string actorname)
+        //yesy
+        public IList<WordModel> GetPersonWords(string actorname)
         {
             using var db = new IMDBcontext();
             var result = db.WordModel.FromSqlInterpolated($"select * from person_words({actorname})").ToList();
             return result;
         }
 
-        IList<ActorsModel>? IActorDataService.getStructuredPersonSearch(string name, string profession, string character)
+        public IList<Professionals>? getStructuredPersonSearch(string name, string profession, string character)
         {
-
             using var db = new IMDBcontext();
-            var result = db.ActorsModel.FromSqlInterpolated($"select * from structured_search_person({name},´{profession}, {character})").ToList();
+            var result = db.Professionals.FromSqlInterpolated($"select * from structured_search_person({name},´{profession}, {character})").ToList();
             return result;
 
         }
 
       
 
-        IList<ActorsModel> IActorDataService.GetPersonSearch(string user_input)
+        public IList<ActorsModel> GetPersonSearch(string user_input)
         {
             var username = "Troels";
             using var db = new IMDBcontext();
@@ -67,12 +67,12 @@ namespace DataLayer
             return result;
         }
 
-        IList<ProfessionalsPageModel> IActorDataService.GetSingleProfessionalFromID(string ID)
+        public Professionals? GetSingleProfessionalFromID(string ID)
         {
             var username = "Troels";
             using var db = new IMDBcontext();
-            var result = db.ProfessionalsPageModels.FromSqlInterpolated($"select * from professionals where prof_id={ID}").ToList();
-            return result;
+            return db.Professionals.FromSqlInterpolated($"select * from professionals where prof_id={ID}").FirstOrDefault();
+
         }
 
 
