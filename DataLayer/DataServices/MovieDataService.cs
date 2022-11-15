@@ -12,7 +12,7 @@ namespace DataLayer
     {
 
         const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
-        IList<Titles>? IMovieDataService.getTitles(string name)
+       public IList<Titles>? getTitles(string name)
         {
             using var db = new IMDBcontext();
             return db.Titles
@@ -44,7 +44,7 @@ namespace DataLayer
         }
 
 
-        IList<Titles>? IMovieDataService.GetBestMatch(string user_input)
+        public IList<Titles>? GetBestMatch(string user_input)
         {
             using var db = new IMDBcontext();
             string sqlstring = CreateSqlQueryForVariadic(user_input, "best_match");
@@ -52,7 +52,7 @@ namespace DataLayer
             return result;
         }
 
-        IList<Titles>? IMovieDataService.GetExcactSearch(string user_input)
+       public IList<Titles>? GetExcactSearch(string user_input)
         {
             using var db = new IMDBcontext();
             string sqlstring = CreateSqlQueryForVariadic(user_input, "excact_search");
@@ -69,7 +69,7 @@ namespace DataLayer
             return sqlstring;
         }
 
-        IList<Titles>? IMovieDataService.getSimilarMovies(string title_id)
+       public IList<Titles>? getSimilarMovies(string title_id)
         {
             using var db = new IMDBcontext();
             var ResultList = new List<Titles>();
@@ -96,7 +96,7 @@ namespace DataLayer
 
         }
 
-        IList<Word>? IMovieDataService.GetWordToWord(string user_input)
+        public IList<Word>? GetWordToWord(string user_input)
         {
             using var db = new IMDBcontext();
             string sqlstring = CreateSqlQueryForVariadic(user_input, "word_to_word");
@@ -105,20 +105,20 @@ namespace DataLayer
         }
 
 
-        void IMovieDataService.AssignBookmark(string username, string title_id)
+        public void AssignBookmark(string username, string title_id)
         {
             using var db = new IMDBcontext();
             var result = db.Bookmark.FromSqlInterpolated($"insert into bookmark(username, title_id) VALUES({username},{title_id}); select * from bookmark where username={username} and title_id = {title_id};").ToList();
         }
 
-        void IMovieDataService.DeleteBookmark(string username, string title_id)
+        public void DeleteBookmark(string username, string title_id)
         {
             using var db = new IMDBcontext();
             //string sqlString 
             var result = db.Bookmark.FromSqlInterpolated($"delete from bookmark where username={username} and title_id = {title_id}; select * from bookmark;").ToList();
         }
 
-        void IMovieDataService.Bookmark(string username, string title_id)
+        public void Bookmark(string username, string title_id)
         {
             using var db = new IMDBcontext();
             //string sqlString 
@@ -126,7 +126,7 @@ namespace DataLayer
         }
 
 
-        IList<Titles> IMovieDataService.GetSingleMovieByID(string ID)
+        public IList<Titles> GetSingleMovieByID(string ID)
         {
             using var db = new IMDBcontext();
             //string sqlString 

@@ -10,7 +10,7 @@ namespace DataLayer
     {
 
         const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
-            public IList<ActorsModel>? getCoActors(string actorname)
+            public IList<Professionals>? getCoActors(string actorname)
         {
             using var db = new IMDBcontext();
             var result = db.Professionals.FromSqlInterpolated($"select * from co_actors_function({actorname})").ToList();
@@ -21,11 +21,13 @@ namespace DataLayer
         public IList<Professionals>? getPopularActorsFromMovie(string title_id, int page, int pagesize)
         {
             using var db = new IMDBcontext();
-            return db.Professionals.FromSqlInterpolated($"select * from populer_actors({title_id})")
-            .Skip(page * pagesize)
-            .Take(pagesize)
-            .OrderBy(x => x.ProfName)
-            .ToList();
+            var liste = db.Professionals.FromSqlInterpolated($"select * from populer_actors({title_id})").ToList();
+            return liste;
+
+            //.Skip(page * pagesize)
+            //.Take(pagesize)
+            //.OrderBy(x => x.ProfName)
+            //.ToList();
         }
 
         //public IList<Professionals>? getPopularActorsFromMovie(string title_id)
