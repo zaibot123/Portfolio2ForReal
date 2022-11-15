@@ -11,7 +11,7 @@ namespace DataLayer
     public class ActorDataService : IActorDataService
     {
 
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
             public IList<ActorsModel>? getCoActors(string actorname)
         {
             using var db = new IMDBcontext();
@@ -68,6 +68,14 @@ namespace DataLayer
             var username = "Troels";
             using var db = new IMDBcontext();
             var result = db.ActorsModel.FromSqlInterpolated($"select * from simple_search_person({username},{user_input})").ToList();
+            return result;
+        }
+
+        IList<ProfessionalsPageModel> IActorDataService.GetSingleProfessionalFromID(string ID)
+        {
+            var username = "Troels";
+            using var db = new IMDBcontext();
+            var result = db.ProfessionalsPageModels.FromSqlInterpolated($"select * from professionals where prof_id={ID}").ToList();
             return result;
         }
 

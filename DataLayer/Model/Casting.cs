@@ -12,9 +12,9 @@ namespace DataLayer.Model
         public string TitleId { get; set; }
         public string ProfId { get; set; }
         public int Ordering { get; set; }
-        public string JobCategory { get; set; }
-        public string Job { get; set; }
-        public string Characters { get; set; }
+        public string? JobCategory { get; set; }
+        public string? Job { get; set; }
+        public string? Characters { get; set; }
 
 
     }

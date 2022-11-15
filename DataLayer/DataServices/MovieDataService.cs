@@ -124,5 +124,13 @@ namespace DataLayer
             var result = db.Bookmark.FromSqlInterpolated($"Select * from bookmark_function({username}, {title_id})").ToList();
         }
 
+
+        IList<MoviePageModel> IMovieDataService.GetSingleMovieByID(string ID)
+        {
+            using var db = new IMDBcontext();
+            //string sqlString 
+            var result = db.MoviePageModel.FromSqlInterpolated($"select * from title where title_id ={ID}").ToList();
+            return result;
+        }
     }
 }

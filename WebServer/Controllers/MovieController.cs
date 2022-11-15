@@ -70,6 +70,18 @@ namespace WebServer.Controllers
             else return NotFound();
         }
 
+        [HttpGet("{title_id}")]
+        public IActionResult GetSingleMovie(string title_id)
+        {
+            var titles =
+                _dataService.GetSingleMovieByID(title_id);
+            if (titles.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(titles);
+        }
+
 
 
         [HttpGet("{title_id}/similar")]

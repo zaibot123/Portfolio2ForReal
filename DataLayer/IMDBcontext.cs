@@ -9,7 +9,7 @@ namespace DataLayer
 
         //TEEEEST
     {
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
         public DbSet<Casting>? Casting { get; set; }
         public DbSet<HasProfession>? Profession { get; set; }
         public DbSet<Bookmark>? Bookmark { get; set; }
@@ -21,6 +21,9 @@ namespace DataLayer
         // public DbSet<BookmarkModels>? BookmarkModels { get; set; }
         public DbSet<TitlesModel>? TitlesModel { get; set; }
         public DbSet<WordModel>? WordModel { get; set; }
+
+        public DbSet<ProfessionalsPageModel> ProfessionalsPageModels { get; set; }
+        public DbSet<MoviePageModel> MoviePageModel { get; set; }
 
 
 
@@ -118,6 +121,24 @@ namespace DataLayer
             modelBuilder.Entity<ActorsModel>().Property(x => x.ActorName).HasColumnName("prof_name");
             modelBuilder.Entity<ActorsModel>().Property(x => x.BirthYear).HasColumnName("birth_year");
             modelBuilder.Entity<ActorsModel>().Property(x => x.DeathYear).HasColumnName("death_year");
+
+            modelBuilder.Entity<MoviePageModel>().HasNoKey();
+            modelBuilder.Entity<MoviePageModel>().Property(x => x.TitleName).HasColumnName("title_name");
+            modelBuilder.Entity<MoviePageModel>().Property(x => x.TitleType).HasColumnName("title_type");
+            modelBuilder.Entity<MoviePageModel>().Property(x => x.Poster).HasColumnName("poster");
+            modelBuilder.Entity<MoviePageModel>().Property(x => x.TitlePlot).HasColumnName("title_plot");
+            modelBuilder.Entity<MoviePageModel>().Property(x => x.StartYear).HasColumnName("start_year");
+            modelBuilder.Entity<MoviePageModel>().Property(x => x.EndYear).HasColumnName("end_year");
+            modelBuilder.Entity<MoviePageModel>().Property(x => x.Runtime).HasColumnName("runtime");
+            modelBuilder.Entity<MoviePageModel>().Property(x => x.IsAdult).HasColumnName("is_adult");
+            modelBuilder.Entity<MoviePageModel>().Property(x => x.NrRatings).HasColumnName("nr_ratings");
+            modelBuilder.Entity<MoviePageModel>().Property(x => x.AvgRating).HasColumnName("avg_rating");
+
+            modelBuilder.Entity<ProfessionalsPageModel>().HasNoKey();
+            modelBuilder.Entity<ProfessionalsPageModel>().Property(x => x.ProfName).HasColumnName("prof_name");
+            modelBuilder.Entity<ProfessionalsPageModel>().Property(x => x.BirthYear).HasColumnName("birth_year");
+            modelBuilder.Entity<ProfessionalsPageModel>().Property(x => x.DeathYear).HasColumnName("death_year");
+            modelBuilder.Entity<ProfessionalsPageModel>().Property(x => x.ProfRating).HasColumnName("prof_rating");
 
         }
     }

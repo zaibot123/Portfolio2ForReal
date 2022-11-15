@@ -20,6 +20,7 @@ namespace DataLayer
         void AssignBookmark(string title_id, string username);
         void DeleteBookmark(string username, string title_id);
         void Bookmark(string username, string title_id);
+        IList<MoviePageModel> GetSingleMovieByID(string ID);
     }
     public interface IActorDataService
     {
@@ -28,6 +29,7 @@ namespace DataLayer
         IList<WordModel>? GetPersonWords(string user_input);
         IList<ActorsModel?> GetPersonSearch(string user_input);    
         IList<ActorsModel>? getStructuredPersonSearch(string name, string profession, string character);
+        IList<ProfessionalsPageModel> GetSingleProfessionalFromID(string ID);
     }
 //:)
     public interface ILoginDataService

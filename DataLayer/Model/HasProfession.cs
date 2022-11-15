@@ -2,7 +2,7 @@
 {
     public class HasProfession
     {
-        public string Profession { get; set; }
+        public string? Profession { get; set; }
         public string ProfId { get; set; }
     }
 }

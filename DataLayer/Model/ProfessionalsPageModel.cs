@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Model
 {
-    public class Professionals
+    public class ProfessionalsPageModel
     {
-        public string ProfId { get; set; }
+        //public ProfessionalsPageModel()
+        //{
+        //    ProfRating = 0;
+        //}
+
         public string ProfName { get; set; }
-        public int? DeathYear { get; set; }
-        public int? BirthYear { get; set; }
+        public string? DeathYear { get; set; }
+        public string? BirthYear { get; set; }
         public double? ProfRating { get; set; }
     }
 }

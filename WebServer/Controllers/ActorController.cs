@@ -24,6 +24,13 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("{ID}")]
+        public IActionResult getSingleProffesionalFromId(string ID)
+        {
+            var result = _dataService.GetSingleProfessionalFromID(ID);
+            return Ok(result);
+
+        }
 
         [HttpGet("{name}/coactors")]
         public IActionResult getCoactors(string name)

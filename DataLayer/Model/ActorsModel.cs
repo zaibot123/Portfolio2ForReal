@@ -10,8 +10,9 @@ namespace DataLayer.Model
     {
        
         public string ActorName { get; set; } 
-        public string DeathYear { get; set; }
-        public string BirthYear { get; set; }
+        public string? DeathYear { get; set; }
+        public string? BirthYear { get; set; }
+
 
       
     }

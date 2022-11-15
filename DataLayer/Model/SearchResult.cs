@@ -8,10 +8,10 @@ namespace DataLayer.Model
 {
     public class SearchResult
     {
-        public string Title { get; set; }
-        public string Plot { get; set; }
-        public string Character { get; set; }
-        public string ActorNames { get; set; }
+        public string? Title { get; set; }
+        public string? Plot { get; set; }
+        public string? Character { get; set; }
+        public string? ActorNames { get; set; }
 
     }
 }
