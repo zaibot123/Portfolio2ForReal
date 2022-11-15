@@ -55,6 +55,16 @@ namespace WebServer.Controllers
             return BadRequest();
         }
 
+        [HttpGet()]
+        public IActionResult RateMovie(string username, string title_id, string rating)
+        {
+           _dataService.RateMovie(username, title_id, rating);
+            return Ok();
+        }
+
+
+        
+
 
     }
 }

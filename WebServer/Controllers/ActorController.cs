@@ -29,7 +29,6 @@ namespace WebServer.Controllers
         {
             var result = _dataService.GetSingleProfessionalFromID(ID);
             return Ok(result);
-
         }
 
         [HttpGet("{name}/coactors")]
