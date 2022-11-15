@@ -9,12 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer", "WebServer\WebS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\DataLayer.csproj", "{1B907A71-A0A7-48FD-814B-DA435310496B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Secuurity", "b\Secuurity.csproj", "{7174601C-3436-4D9B-B6A9-EF3BEDA9CFB5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D0CF1F5F-624A-4B0B-808F-939E3EB3567E}"
-	ProjectSection(SolutionItems) = preProject
-		TextFile1.txt = TextFile1.txt
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +29,6 @@ Global
 		{1B907A71-A0A7-48FD-814B-DA435310496B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B907A71-A0A7-48FD-814B-DA435310496B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B907A71-A0A7-48FD-814B-DA435310496B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7174601C-3436-4D9B-B6A9-EF3BEDA9CFB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7174601C-3436-4D9B-B6A9-EF3BEDA9CFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7174601C-3436-4D9B-B6A9-EF3BEDA9CFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7174601C-3436-4D9B-B6A9-EF3BEDA9CFB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

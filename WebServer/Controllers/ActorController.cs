@@ -17,19 +17,19 @@ namespace WebServer.Controllers
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
+
+
         public ActorController(IActorDataService dataService, LinkGenerator generator, IMapper mapper)
         {
             _dataService = dataService;
             _generator = generator;
             _mapper = mapper;
         }
-
         [HttpGet("{ID}")]
         public IActionResult getSingleProffesionalFromId(string ID)
         {
             var result = _dataService.GetSingleProfessionalFromID(ID);
             return Ok(result);
-
         }
 
         [HttpGet("{name}/coactors")]

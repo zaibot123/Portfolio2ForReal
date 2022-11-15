@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <ProjectReference Include="..\b\Secuurity.csproj" />
 	  <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
 	  <ProjectReference Include="..\WebServer\WebServer.csproj" />
   </ItemGroup>
