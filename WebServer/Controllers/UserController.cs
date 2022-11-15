@@ -45,14 +45,14 @@ namespace WebServer.Controllers
            
 
         }
+
+
         [HttpPatch()]
         public IActionResult EditUser(string username, string bio, string photo, string email)
         {
-            if (!String.IsNullOrEmpty(username) ){ 
-            var data=_dataService.EditUser(username, bio, photo, email);
-            return Ok(data);
-            }
-            return BadRequest();
+            _dataService.EditUser(username, bio, photo, email);
+            return Ok();
+
         }
 
 

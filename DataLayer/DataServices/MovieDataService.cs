@@ -12,12 +12,12 @@ namespace DataLayer
     {
 
         const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
-        IList<TitlesModel>? IMovieDataService.getTitles(string name)
+        IList<Titles>? IMovieDataService.getTitles(string name)
         {
             using var db = new IMDBcontext();
             return db.Titles
                 .Where(x => x.TitleName.Contains(name))
-                .Select(x => new TitlesModel
+                .Select(x => new Titles
                 {
                     TitleName = x.TitleName,
 
@@ -26,7 +26,7 @@ namespace DataLayer
                 .ToList();
         }
 
-        IList<SearchResult>? IMovieDataService.getStructuredSearch(string title, string plot, string character, string name)
+        public IList<SearchResult>? getStructuredSearch(string title, string plot, string character, string name)
         {
 
             using var db = new IMDBcontext();
@@ -35,28 +35,28 @@ namespace DataLayer
 
         }
 
-        public IList<TitlesModel> GetSearch(string user_input)
+        public IList<Titles> GetSearch(string user_input)
         {
             var username = "Troels";
             using var db = new IMDBcontext();   
-            var result = db.TitlesModel.FromSqlInterpolated($"select * from simple_search({username},{user_input})").ToList();
+            var result = db.Titles.FromSqlInterpolated($"select * from simple_search({username},{user_input})").ToList();
             return result.OrderBy(x => x.TitleName).ToList();                
         }
 
 
-        IList<TitlesModel>? IMovieDataService.GetBestMatch(string user_input)
+        IList<Titles>? IMovieDataService.GetBestMatch(string user_input)
         {
             using var db = new IMDBcontext();
             string sqlstring = CreateSqlQueryForVariadic(user_input, "best_match");
-            var result = db.TitlesModel.FromSqlRaw(sqlstring).ToList();
+            var result = db.Titles.FromSqlRaw(sqlstring).ToList();
             return result;
         }
 
-        IList<TitlesModel>? IMovieDataService.GetExcactSearch(string user_input)
+        IList<Titles>? IMovieDataService.GetExcactSearch(string user_input)
         {
             using var db = new IMDBcontext();
             string sqlstring = CreateSqlQueryForVariadic(user_input, "excact_search");
-            var result = db.TitlesModel.FromSqlRaw(sqlstring).ToList();
+            var result = db.Titles.FromSqlRaw(sqlstring).ToList();
             return result;
         }
 
@@ -69,10 +69,10 @@ namespace DataLayer
             return sqlstring;
         }
 
-        IList<TitlesModel>? IMovieDataService.getSimilarMovies(string title_id)
+        IList<Titles>? IMovieDataService.getSimilarMovies(string title_id)
         {
             using var db = new IMDBcontext();
-            var ResultList = new List<TitlesModel>();
+            var ResultList = new List<Titles>();
             using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
             connection.Open();
             using var cmd = new NpgsqlCommand($"select * from similar_movies('{title_id}');", connection);
@@ -84,7 +84,7 @@ namespace DataLayer
             while (reader.Read())
             {
 
-                var actor = new TitlesModel
+                var actor = new Titles
                 {
                     TitleName = reader.GetString(2),
                     Poster = reader.GetString(3)
@@ -96,7 +96,7 @@ namespace DataLayer
 
         }
 
-        IList<WordModel>? IMovieDataService.GetWordToWord(string user_input)
+        IList<Word>? IMovieDataService.GetWordToWord(string user_input)
         {
             using var db = new IMDBcontext();
             string sqlstring = CreateSqlQueryForVariadic(user_input, "word_to_word");
@@ -126,11 +126,11 @@ namespace DataLayer
         }
 
 
-        IList<MoviePageModel> IMovieDataService.GetSingleMovieByID(string ID)
+        IList<Titles> IMovieDataService.GetSingleMovieByID(string ID)
         {
             using var db = new IMDBcontext();
             //string sqlString 
-            var result = db.MoviePageModel.FromSqlInterpolated($"select * from title where title_id ={ID}").ToList();
+            var result = db.Titles.FromSqlInterpolated($"select * from title where title_id ={ID}").ToList();
             return result;
         }
     }

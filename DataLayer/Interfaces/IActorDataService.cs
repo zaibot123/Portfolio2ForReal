@@ -4,10 +4,10 @@ namespace DataLayer.Interfaces
 {
     public interface IActorDataService
     {
-        IList<ActorsModel> getCoActors(string name);
-        IList<ActorsModel>? getPopularActorsFromMovie(string title_id);
-        IList<WordModel>? GetPersonWords(string user_input);
-        IList<ActorsModel?> GetPersonSearch(string user_input);
+        IList<Professionals> getCoActors(string name);
+        IList<Professionals>? getPopularActorsFromMovie(string title_id);
+        IList<Word>? GetPersonWords(string user_input);
+        IList<Professionals?> GetPersonSearch(string user_input);
         IList<Professionals>? getStructuredPersonSearch(string name, string profession, string character);
         Professionals? GetSingleProfessionalFromID(string ID);
 

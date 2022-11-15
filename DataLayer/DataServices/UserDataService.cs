@@ -34,11 +34,10 @@ namespace DataLayer.DataServices
             return result;
         }
 
-        public IList <UserModel> EditUser(string username, string bio, string photo, string email)
+        public void EditUser (string username, string bio, string photo, string email)
         {
             var db = new IMDBcontext();
-            var result = db.UserModels.FromSqlInterpolated($"select * from update_function({username},{bio}, {photo},{email});").ToList();
-            return result;
+            db.Database.ExecuteSqlInterpolated($"select * from update_function({username},{bio}, {photo},{email});");
 
         }
 

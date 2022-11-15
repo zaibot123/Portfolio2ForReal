@@ -1,7 +1,13 @@
 ﻿using AutoMapper;
 using DataLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.Extensions.Logging.Console;
+using Nest;
+using System.Runtime.InteropServices;
+using System.Threading.Channels;
 using WebServer.Models;
+using static System.Net.WebRequestMethods;
 
 namespace WebServer.Controllers
 {
@@ -38,6 +44,7 @@ namespace WebServer.Controllers
         [HttpGet("{ID}",Name =nameof(getSingleProffesionalFromId))]
         public IActionResult getSingleProffesionalFromId(string ID)
         {
+            Console.WriteLine(ID.GetType());
             var result = _dataService.GetSingleProfessionalFromID(ID);
             if (result == null)
             {
@@ -46,26 +53,48 @@ namespace WebServer.Controllers
             var model = new ProfessionalsModel
             {
                 URL = CreateLink(nameof(getSingleProffesionalFromId), new { ID }),
-                BirthYear = result.BirthYear,
-                DeathYear = result.DeathYear,
+                //BirthYear = result.BirthYear,
+                //DeathYear = result.DeathYear,
                 Name = result.ProfName,
-                Rating = result.ProfRating
+               // Rating = result.ProfRating
             };
             return Ok(model);
         }
 
-        [HttpGet("{name}/coactors")]
+
+        [HttpGet("{name}/coactors",Name =nameof(getCoactors))]
         public IActionResult getCoactors(string name)
         {
+            List<ProfessionalsModel> ProfList = new List<ProfessionalsModel>();
             var result=_dataService.getCoActors(name);
-            Console.WriteLine(result[0].ActorName);
-            return Ok(result);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            foreach (var actor in result)
+            {
+                Console.WriteLine(actor.ProfId);
+               var model = new ProfessionalsModel
+                {
+                   //Birth og Death-year skal selectes i Postgres
+                    URL = "http://localhost:5001/actors/"+actor.ProfId,
+                    Name = actor.ProfName,
+                    //BirthYear = actor.BirthYear,
+                    //DeathYear = actor.DeathYear,
+                    //Rating =actor.ProfRating
+                };
+                Console.WriteLine(model.URL);
+                ProfList.Add(model);
+            }
+            return Ok(ProfList);
     
+
         }
 
         [HttpGet("{name}/words")]
         public IActionResult getPersonWords(string name)
         {
+
             var result = _dataService.GetPersonWords(name);
             return Ok(result);
         }

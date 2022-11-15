@@ -9,17 +9,17 @@ namespace DataLayer
     {
 
         const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
-            public IList<ActorsModel>? getCoActors(string actorname)
+            public IList<Professionals>? getCoActors(string actorname)
         {
             using var db = new IMDBcontext();
-            var result = db.ActorsModel.FromSqlInterpolated($"select * from co_actors_function({actorname})").ToList();
+            var result = db.Professionals.FromSqlInterpolated($"select * from co_actors_function({actorname})").ToList();
             return result;
         }
 
-        public IList<ActorsModel>? getPopularActorsFromMovie(string title_id)
+        public IList<Professionals>? getPopularActorsFromMovie(string title_id)
         {
 
-            var ResultList = new List<ActorsModel>();
+            var ResultList = new List<Professionals>();
             using var connection = new NpgsqlConnection(ConnectionString);
             connection.Open();
 
@@ -32,9 +32,9 @@ namespace DataLayer
             while (reader.Read())
             {
 
-                var actor = new ActorsModel
+                var actor = new Professionals
                 {
-                    ActorName = reader.GetString(0)
+                    ProfName = reader.GetString(0)
                 };
                 ResultList.Add(actor);
             }
@@ -42,7 +42,7 @@ namespace DataLayer
 
         }
         //yesy
-        public IList<WordModel> GetPersonWords(string actorname)
+        public IList<Word> GetPersonWords(string actorname)
         {
             using var db = new IMDBcontext();
             var result = db.WordModel.FromSqlInterpolated($"select * from person_words({actorname})").ToList();
@@ -59,11 +59,11 @@ namespace DataLayer
 
       
 
-        public IList<ActorsModel> GetPersonSearch(string user_input)
+        public IList<Professionals> GetPersonSearch(string user_input)
         {
             var username = "Troels";
             using var db = new IMDBcontext();
-            var result = db.ActorsModel.FromSqlInterpolated($"select * from simple_search_person({username},{user_input})").ToList();
+            var result = db.Professionals.FromSqlInterpolated($"select * from simple_search_person({username},{user_input})").ToList();
             return result;
         }
 
