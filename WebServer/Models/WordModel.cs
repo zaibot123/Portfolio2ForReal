@@ -8,7 +8,6 @@ namespace DataLayer.Model
 {
     public class WordModel
     {
-        public string MovieURL { get; set; }
         public string KeyWord { get; set; }
         public int Frequency {  get; set; }
     }

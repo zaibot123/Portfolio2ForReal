@@ -2,6 +2,7 @@
 using DataLayer.Model;
 using Npgsql;
 using DataLayer.Interfaces;
+using Nest;
 
 namespace DataLayer
 {
@@ -16,31 +17,40 @@ namespace DataLayer
             return result;
         }
 
-        public IList<Professionals>? getPopularActorsFromMovie(string title_id)
+
+        public IList<Professionals>? getPopularActorsFromMovie(string title_id, int page, int pagesize)
         {
-
-            var ResultList = new List<Professionals>();
-            using var connection = new NpgsqlConnection(ConnectionString);
-            connection.Open();
-
-            using var cmd = new NpgsqlCommand($"select * from populer_actors('{title_id}');", connection);
-
-            // cmd.Parameters.AddWithValue("@query", "%ab%");
-            using var reader = cmd.ExecuteReader();
-
-
-            while (reader.Read())
-            {
-
-                var actor = new Professionals
-                {
-                    ProfName = reader.GetString(0)
-                };
-                ResultList.Add(actor);
-            }
-            return ResultList;
-
+            using var db = new IMDBcontext();
+            return db.Professionals.FromSqlInterpolated($"select * from populer_actors({title_id})")
+            .Skip(page * pagesize)
+            .Take(pagesize)
+            .OrderBy(x => x.ProfName)
+            .ToList();
         }
+
+        //public IList<Professionals>? getPopularActorsFromMovie(string title_id)
+        //{
+
+        //    var ResultList = new List<Professionals>();
+        //    using var connection = new NpgsqlConnection(ConnectionString);
+        //    connection.Open();
+
+        //    using var cmd = new NpgsqlCommand($"select * from populer_actors('{title_id}');", connection);
+
+        //    // cmd.Parameters.AddWithValue("@query", "%ab%");
+        //    using var reader = cmd.ExecuteReader();
+        //    while (reader.Read())
+        //    {
+        //        var actor = new Professionals
+        //        {
+        //            ProfName = reader.GetString(0)
+        //            ProfID=reader.GetString(0)
+        //        };
+        //        ResultList.Add(actor);
+        //    }
+        //    return ResultList;
+
+
         //yesy
         public IList<Word> GetPersonWords(string actorname)
         {

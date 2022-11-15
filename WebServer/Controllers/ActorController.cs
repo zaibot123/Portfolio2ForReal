@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using DataLayer.Interfaces;
+using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging.Console;
 using Nest;
+using System;
 using System.Runtime.InteropServices;
 using System.Threading.Channels;
 using WebServer.Models;
@@ -61,6 +63,8 @@ namespace WebServer.Controllers
             return Ok(model);
         }
 
+        
+
 
         [HttpGet("{name}/coactors",Name =nameof(getCoactors))]
         public IActionResult getCoactors(string name)
@@ -74,10 +78,12 @@ namespace WebServer.Controllers
             foreach (var actor in result)
             {
                 Console.WriteLine(actor.ProfId);
+                var ID = actor.ProfId;
                var model = new ProfessionalsModel
                 {
+                   
                    //Birth og Death-year skal selectes i Postgres
-                    URL = "http://localhost:5001/actors/"+actor.ProfId,
+                    URL = CreateLink(nameof(getSingleProffesionalFromId), new { ID }),
                     Name = actor.ProfName,
                     //BirthYear = actor.BirthYear,
                     //DeathYear = actor.DeathYear,
@@ -94,22 +100,48 @@ namespace WebServer.Controllers
         [HttpGet("{name}/words")]
         public IActionResult getPersonWords(string name)
         {
-
+            List<WordModel> WordList = new List<WordModel>();
             var result = _dataService.GetPersonWords(name);
-            return Ok(result);
-        }
-
-        [HttpGet("popular/{title_id}")]
-        public IActionResult GetPopularActorsFromMovie(string title_id)
-        {
-
-            var actors =
-                _dataService.getPopularActorsFromMovie(title_id);
-            if (actors.Count==0)
+            if (result == null)
             {
                 return NotFound();
             }
-            return Ok(actors);
+            foreach (var word in result)
+            {
+                var model = new WordModel
+                {
+                    Frequency= word.Frequency,
+                    KeyWord=word.KeyWord
+
+                };
+                WordList.Add(model);
+            }
+            return Ok(WordList);
+        }
+
+
+
+        [HttpGet("popular/{title_id}")]
+        public IActionResult GetPopularActorsFromMovie(string title_id, int page=0, int pagesize=10)
+        {
+            List<ProfessionalsModel> ProfList = new List<ProfessionalsModel>();
+            var result = _dataService.getPopularActorsFromMovie(title_id,page,pagesize);
+            if (result.Count==0)
+            {
+                return NotFound();
+            }
+
+            foreach (var professional in ProfList)
+            {
+                var model = new ProfessionalsModel
+                {
+                    URL = CreateLink(nameof(getSingleProffesionalFromId), new { title_id }),
+                    Name = professional.Name,
+                };
+                ProfList.Add(model);
+
+            }
+            return Ok(ProfList);
         }
 
     }
