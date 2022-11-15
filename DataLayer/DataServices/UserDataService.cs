@@ -40,6 +40,12 @@ namespace DataLayer.DataServices
             return result;
 
         }
+
+        void ILoginDataService.RateMovie(string username, string title_id, string rating)
+        {
+            var db = new IMDBcontext();
+            var result = db.UserModels.FromSqlInterpolated($"select * from rating_function({username},{title_id}, {rating});").ToList();
+        }
     }
             
 
