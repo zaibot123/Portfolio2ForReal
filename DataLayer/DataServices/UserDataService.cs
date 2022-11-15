@@ -5,9 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Secuurity;
+
 using Nest;
 using Microsoft.EntityFrameworkCore;
+using DataLayer.Security;
 
 namespace DataLayer.DataServices
 {

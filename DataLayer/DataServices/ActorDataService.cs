@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DataLayer.Model;
-using Nest;
 using Npgsql;
-using System.Xml.Linq;
-using System.Reflection.PortableExecutable;
-using Microsoft.AspNetCore.Routing;
 
 namespace DataLayer
 {

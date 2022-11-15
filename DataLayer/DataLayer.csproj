@@ -23,14 +23,9 @@
 
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="7.0.0" />
 		<PackageReference Include="NEST" Version="7.17.5" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.0" />
-	</ItemGroup>
-
-
-
-	<ItemGroup>
-	  <ProjectReference Include="..\b\Secuurity.csproj" />
 	</ItemGroup>
 
 
