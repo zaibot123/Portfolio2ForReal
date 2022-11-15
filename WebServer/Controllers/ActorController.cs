@@ -2,12 +2,14 @@
 using DataLayer.Interfaces;
 using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging.Console;
 using Nest;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Channels;
+using System.Xml.Linq;
 using WebServer.Models;
 using static System.Net.WebRequestMethods;
 
@@ -124,23 +126,32 @@ namespace WebServer.Controllers
         [HttpGet("popular/{title_id}")]
         public IActionResult GetPopularActorsFromMovie(string title_id, int page=0, int pagesize=10)
         {
+
             List<ProfessionalsModel> ProfList = new List<ProfessionalsModel>();
             var result = _dataService.getPopularActorsFromMovie(title_id,page,pagesize);
-            if (result.Count==0)
+            var ID = title_id;
+
+            if (result==null)
             {
+                Console.WriteLine("Den er result==0");
                 return NotFound();
             }
 
+            else
             foreach (var professional in ProfList)
             {
                 var model = new ProfessionalsModel
                 {
-                    URL = CreateLink(nameof(getSingleProffesionalFromId), new { title_id }),
+                    URL = CreateLink(nameof(getSingleProffesionalFromId), new { ID }),
                     Name = professional.Name,
+                    Rating = professional.Rating,
+                    BirthYear = professional.BirthYear,
+                    DeathYear = professional.DeathYear
                 };
                 ProfList.Add(model);
-
+              
             }
+            
             return Ok(ProfList);
         }
 
