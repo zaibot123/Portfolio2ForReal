@@ -39,9 +39,7 @@ namespace DataLayer
             var username = "Troels";
             using var db = new IMDBcontext();   
             var result = db.TitlesModel.FromSqlInterpolated($"select * from simple_search({username},{user_input})").ToList();
-            return result.OrderBy(x => x.TitleName).ToList();
-
-                
+            return result.OrderBy(x => x.TitleName).ToList();                
         }
 
 
@@ -53,8 +51,6 @@ namespace DataLayer
             return result;
         }
 
-
-
         IList<TitlesModel>? IMovieDataService.GetExcactSearch(string user_input)
         {
             using var db = new IMDBcontext();
@@ -62,7 +58,6 @@ namespace DataLayer
             var result = db.TitlesModel.FromSqlRaw(sqlstring).ToList();
             return result;
         }
-
 
         private static string CreateSqlQueryForVariadic(string user_input, string function_name)
         {

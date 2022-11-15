@@ -26,7 +26,8 @@ namespace DataLayer
         IList<ActorsModel> getCoActors(string name);
         IList<ActorsModel>? getPopularActorsFromMovie(string title_id);
         IList<WordModel>? GetPersonWords(string user_input);
-
+        IList<ActorsModel?> GetPersonSearch(string user_input);    
+        IList<ActorsModel>? getStructuredPersonSearch(string name, string profession, string character);
     }
 //:)
     public interface ILoginDataService

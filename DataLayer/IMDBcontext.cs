@@ -9,12 +9,14 @@ namespace DataLayer
     {
         const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
         public DbSet<Casting>? Casting { get; set; }
+        public DbSet<HasProfession>? Profession { get; set; }
         public DbSet<Bookmark>? Bookmark { get; set; }
         public DbSet<Password>? Password { get; set; }
         public DbSet<Titles>? Titles { get; set; }
         public DbSet<Professionals>? Professionals { get; set; }
+        public DbSet<ActorsModel>? ActorsModel { get; set; }
         public DbSet<SearchResult>? SearchResult { get; set; }
-       // public DbSet<BookmarkModels>? BookmarkModels { get; set; }
+        // public DbSet<BookmarkModels>? BookmarkModels { get; set; }
         public DbSet<TitlesModel>? TitlesModel { get; set; }
         public DbSet<WordModel>? WordModel { get; set; }
 
@@ -91,6 +93,29 @@ namespace DataLayer
             modelBuilder.Entity<Password>().Property(x => x.Salt).HasColumnName("salt");
 
 
+            modelBuilder.Entity<HasProfession>().ToTable("has_profession");
+            modelBuilder.Entity<HasProfession>().HasKey(x => new { x.ProfId, x.Profession});
+            modelBuilder.Entity<HasProfession>().Property(x => x.ProfId).HasColumnName("prof_id");
+            modelBuilder.Entity<HasProfession>().Property(x => x.Profession).HasColumnName("profession");
+
+
+            modelBuilder.Entity<Bookmark>().ToTable("bookmark");
+            modelBuilder.Entity<Bookmark>().HasKey(x => new { x.UserName, x.TitleId });
+            modelBuilder.Entity<Bookmark>().Property(x => x.UserName).HasColumnName("username");
+            modelBuilder.Entity<Bookmark>().Property(x => x.TitleId).HasColumnName("title_id");
+
+
+            modelBuilder.Entity<UserModel>().ToTable("users");
+            modelBuilder.Entity<UserModel>().HasKey(x => new { x.UserName});
+            modelBuilder.Entity<UserModel>().Property(x => x.UserName).HasColumnName("username");
+            modelBuilder.Entity<UserModel>().Property(x => x.Photo).HasColumnName("picture");
+            modelBuilder.Entity<UserModel>().Property(x => x.Bio).HasColumnName("user_bio");
+            modelBuilder.Entity<UserModel>().Property(x => x.Email).HasColumnName("email");
+
+            modelBuilder.Entity<ActorsModel>().HasNoKey();
+            modelBuilder.Entity<ActorsModel>().Property(x => x.ActorName).HasColumnName("prof_name");
+            modelBuilder.Entity<ActorsModel>().Property(x => x.BirthYear).HasColumnName("birth_year");
+            modelBuilder.Entity<ActorsModel>().Property(x => x.DeathYear).HasColumnName("death_year");
 
         }
     }
