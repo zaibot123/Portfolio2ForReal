@@ -21,5 +21,6 @@ namespace DataLayer.Model
         public int? NrRatings { get; set; }
         public double? AvgRating { get; set; }
 
+
     }
 }
