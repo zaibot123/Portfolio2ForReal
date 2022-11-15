@@ -10,7 +10,7 @@ namespace DataLayer
     {
 
         const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
-            public IList<Professionals>? getCoActors(string actorname)
+            public IList<ActorsModel>? getCoActors(string actorname)
         {
             using var db = new IMDBcontext();
             var result = db.Professionals.FromSqlInterpolated($"select * from co_actors_function({actorname})").ToList();
