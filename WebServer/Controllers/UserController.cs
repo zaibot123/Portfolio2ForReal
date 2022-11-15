@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DataLayer;
 using DataLayer.DataServices;
+using DataLayer.Interfaces;
 using DataLayer.Model;
 using DataLayer.Security;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace WebServer.Controllers
 {
-    [Route("user")]
+    [Route("login")]
     [ApiController]
 
     public class UserController : ControllerBase
@@ -26,7 +26,7 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("login")]
+        [HttpGet()]
         public IActionResult LoginUser(string username, string hashed_password)
         {
             var data = _dataService.Login(username, hashed_password);
@@ -45,23 +45,16 @@ namespace WebServer.Controllers
            
 
         }
-        [HttpPatch("edit")]
+
+
+        [HttpPatch()]
         public IActionResult EditUser(string username, string bio, string photo, string email)
         {
-            if (!String.IsNullOrEmpty(username) ){ 
-            var data=_dataService.EditUser(username, bio, photo, email);
-            return Ok(data);
-            }
-            return BadRequest();
-        }
-
-
-        [HttpGet("rating")]
-        public IActionResult RateMovie(string username, string title_id, int rating)
-        {
-           _dataService.RateMovie(username, title_id, rating);
+            _dataService.EditUser(username, bio, photo, email);
             return Ok();
+
         }
+
 
     }
 }

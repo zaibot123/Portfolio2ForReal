@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using DataLayer;
 using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 using Nest;
 using static System.Net.Mime.MediaTypeNames;
 using System.Collections.Generic;
+using DataLayer.Interfaces;
 
 namespace WebServer.Controllers
 {
@@ -24,14 +24,16 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-        private string? CreateLink(int page, int pageSize)
+        private string? CreateLink(string endpoint, object? values)
         {
-            return _generator.GetUriByName( 
+
+            return _generator.GetUriByName(
                 HttpContext,
-                nameof(GetSearch), new { page, pageSize });
+                endpoint, values);
      
         }
-        [HttpGet()]
+
+        [HttpGet(Name=nameof(GetSearch))]
         public IActionResult GetSearch(string searchType, string title, string? plot = null, string? character = null, string? name = null)
 
         {
@@ -95,11 +97,11 @@ namespace WebServer.Controllers
             }
             return Ok(titles);
         }
-
+            
 
         [HttpPut()]
         public IActionResult AssignBookmark(string title_id, string username)
-        {     
+        {   
             _dataService.Bookmark(title_id, username);
             return Ok();
         }

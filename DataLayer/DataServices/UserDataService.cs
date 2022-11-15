@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using Nest;
 using Microsoft.EntityFrameworkCore;
 using DataLayer.Security;
+using DataLayer.Interfaces;
 
 namespace DataLayer.DataServices
 {
     public class UserDataService : ILoginDataService
     {
 
-        void ILoginDataService.RegisterUser(string username, string password)
+        public void RegisterUser(string username, string password)
         {
             Authenticator auth = new Authenticator();
             bool registered = auth.register(username, password);
@@ -25,7 +26,7 @@ namespace DataLayer.DataServices
 
 
 
-        IList<Password> ILoginDataService.Login(string username, string hashed_pass)
+        public IList<Password> Login(string username, string hashed_pass)
         {
 
             using var db = new IMDBcontext();
@@ -33,18 +34,17 @@ namespace DataLayer.DataServices
             return result;
         }
 
-        IList <UserModel> ILoginDataService.EditUser(string username, string bio, string photo, string email)
+        public void EditUser (string username, string bio, string photo, string email)
         {
             var db = new IMDBcontext();
-            var result = db.UserModels.FromSqlInterpolated($"select * from update_function({username},{bio}, {photo},{email});").ToList();
-            return result;
+            db.Database.ExecuteSqlInterpolated($"select * from update_function({username},{bio}, {photo},{email});");
 
         }
 
-        void ILoginDataService.RateMovie(string username, string title_id, int rating)
+        public void RateMovie(string username, string title_id, string rating)
         {
             var db = new IMDBcontext();
-            var result = db.RatingModel.FromSqlInterpolated($"select * from rating_function({username},{title_id}, {rating});").ToList();
+            db.Database.ExecuteSqlInterpolated($"select * from rating_function({username},{title_id}, {rating});");
         }
     }
             

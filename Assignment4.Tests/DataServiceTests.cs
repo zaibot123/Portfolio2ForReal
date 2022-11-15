@@ -1,6 +1,10 @@
 using DataLayer;
+using DataLayer.Interfaces;
 using DataLayer.Model;
+using DataLayer.Security;
+using WebServer.Models;
 using Xunit;
+
 
 
 namespace Assignment4.Tests
@@ -14,8 +18,8 @@ namespace Assignment4.Tests
         [Fact]
         public void CrateEmptyActorsModelWithNullValue()
         {
-            var ActorsModel = new ActorsModel();
-            Assert.Equal(null, ActorsModel.ActorName);
+            var ActorsModel = new ProfessionalsModel();
+            Assert.Equal(null, ActorsModel.Name);
         }
 
         [Fact]
@@ -23,7 +27,7 @@ namespace Assignment4.Tests
         {
             var service = new ActorDataService();
             var result = service.getCoActors("Jennifer Aniston");
-            var name = result.First().ActorName;
+            var name = result.First().ProfName;
             Assert.Equal(10, result.Count);
             Assert.Equal("Courteney Cox", name);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Model
 {
-    public class UserModel
+    public class User
 
     {
         public string UserName { get; set; }

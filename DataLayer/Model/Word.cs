@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Model
 {
-    public class WordModel
+    public class Word
     {
-        public string Word { get; set; }
+        public string KeyWord { get; set; }
         public int Frequency {  get; set; }
+
     }
 }
