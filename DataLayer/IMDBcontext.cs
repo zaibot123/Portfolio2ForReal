@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 namespace DataLayer
 {
     public class IMDBcontext : DbContext
+
+        //TEEEEST
     {
         const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
         public DbSet<Casting>? Casting { get; set; }
