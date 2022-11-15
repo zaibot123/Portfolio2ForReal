@@ -21,39 +21,16 @@ namespace DataLayer
         public IList<Professionals>? getPopularActorsFromMovie(string title_id, int page, int pagesize)
         {
             using var db = new IMDBcontext();
-            var liste = db.Professionals.FromSqlInterpolated($"select * from populer_actors({title_id})").ToList();
-            return liste;
-
-            //.Skip(page * pagesize)
-            //.Take(pagesize)
-            //.OrderBy(x => x.ProfName)
-            //.ToList();
+            var liste = db.Professionals.FromSqlInterpolated($"select * from populer_actors({title_id})");
+            return liste
+            .Skip(page * pagesize)
+            .Take(pagesize)
+            .OrderBy(x => x.ProfName)
+            .ToList();
+           
         }
 
-        //public IList<Professionals>? getPopularActorsFromMovie(string title_id)
-        //{
-
-        //    var ResultList = new List<Professionals>();
-        //    using var connection = new NpgsqlConnection(ConnectionString);
-        //    connection.Open();
-
-        //    using var cmd = new NpgsqlCommand($"select * from populer_actors('{title_id}');", connection);
-
-        //    // cmd.Parameters.AddWithValue("@query", "%ab%");
-        //    using var reader = cmd.ExecuteReader();
-        //    while (reader.Read())
-        //    {
-        //        var actor = new Professionals
-        //        {
-        //            ProfName = reader.GetString(0)
-        //            ProfID=reader.GetString(0)
-        //        };
-        //        ResultList.Add(actor);
-        //    }
-        //    return ResultList;
-
-
-        //yesy
+    
         public IList<Word> GetPersonWords(string actorname)
         {
             using var db = new IMDBcontext();

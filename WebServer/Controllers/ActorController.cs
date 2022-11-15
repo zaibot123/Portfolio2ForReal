@@ -132,7 +132,6 @@ namespace WebServer.Controllers
 
             if (result==null)
             {
-                Console.WriteLine("DEN KOMMER HERIND MED NULL!!!");
              
                 return NotFound();
             }
