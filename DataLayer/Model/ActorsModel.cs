@@ -8,6 +8,11 @@ namespace DataLayer.Model
 {
     public class ActorsModel
     {
-        public string ActorName { get; set; }   
+       
+        public string ActorName { get; set; } 
+        public string DeathYear { get; set; }
+        public string BirthYear { get; set; }
+
+      
     }
 }

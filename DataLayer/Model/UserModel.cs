@@ -9,7 +9,6 @@ namespace DataLayer.Model
     public class UserModel
 
     {
-
         public string UserName { get; set; }
         public string Photo { get; set; }
         public string Bio { get; set; }
