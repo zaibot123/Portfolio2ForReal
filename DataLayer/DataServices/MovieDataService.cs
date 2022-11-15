@@ -10,7 +10,7 @@ namespace DataLayer
     public class MovieDataService : IMovieDataService
     {
 
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
         IList<TitlesModel>? IMovieDataService.getTitles(string name)
         {
             using var db = new IMDBcontext();

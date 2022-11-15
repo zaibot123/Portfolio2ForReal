@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
+using Nest;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace DataLayer
 {
@@ -9,7 +11,7 @@ namespace DataLayer
 
         //TEEEEST
     {
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
         public DbSet<Casting>? Casting { get; set; }
         public DbSet<HasProfession>? Profession { get; set; }
         public DbSet<Bookmark>? Bookmark { get; set; }
@@ -21,9 +23,11 @@ namespace DataLayer
         // public DbSet<BookmarkModels>? BookmarkModels { get; set; }
         public DbSet<TitlesModel>? TitlesModel { get; set; }
         public DbSet<WordModel>? WordModel { get; set; }
-
         public DbSet<ProfessionalsPageModel> ProfessionalsPageModels { get; set; }
         public DbSet<MoviePageModel> MoviePageModel { get; set; }
+        public DbSet<HasGenre> HasGenre { get; set; }
+        public DbSet<RatingModel> RatingModel { get; set; }
+        public DbSet<RatingHistory> Rating { get; set; }
 
 
 
@@ -44,7 +48,6 @@ namespace DataLayer
 
             modelBuilder.Entity<Casting>().ToTable("casting");
             modelBuilder.Entity<Casting>().HasKey(x => new { x.TitleId, x.ProfId, x.Ordering });
-
             modelBuilder.Entity<Casting>().Property(x => x.TitleId).HasColumnName("title_id");
             modelBuilder.Entity<Casting>().Property(x => x.ProfId).HasColumnName("prof_id");
             modelBuilder.Entity<Casting>().Property(x => x.Ordering).HasColumnName("ordering");
@@ -54,8 +57,6 @@ namespace DataLayer
 
             modelBuilder.Entity<Titles>().ToTable("title");
             modelBuilder.Entity<Titles>().HasKey(x => new { x.TitleId});
-
-
             modelBuilder.Entity<Titles>().Property(x => x.TitleId).HasColumnName("title_id");
             modelBuilder.Entity<Titles>().Property(x => x.TitleName).HasColumnName("title_name");
             modelBuilder.Entity<Titles>().Property(x => x.TitleType).HasColumnName("title_type");
@@ -140,6 +141,24 @@ namespace DataLayer
             modelBuilder.Entity<ProfessionalsPageModel>().Property(x => x.DeathYear).HasColumnName("death_year");
             modelBuilder.Entity<ProfessionalsPageModel>().Property(x => x.ProfRating).HasColumnName("prof_rating");
 
+            modelBuilder.Entity<HasGenre>().ToTable("has_genre");
+            modelBuilder.Entity<HasGenre>().HasKey(x => new { x.TitleId, x.Genre });
+            modelBuilder.Entity<HasGenre>().Property(x => x.TitleId).HasColumnName("title_id");
+            modelBuilder.Entity<HasGenre>().Property(x => x.Genre).HasColumnName("genre");
+   
+
+            modelBuilder.Entity<RatingHistory>().ToTable("rating_history");
+            modelBuilder.Entity<RatingHistory>().HasKey(x => new { x.UserName, x.TitleId });
+            modelBuilder.Entity<RatingHistory>().Property(x => x.UserName).HasColumnName("username");
+            modelBuilder.Entity<RatingHistory>().Property(x => x.TitleId).HasColumnName("title_id");
+            modelBuilder.Entity<RatingHistory>().Property(x => x.Rating).HasColumnName("rating");
+
+            modelBuilder.Entity<RatingModel>().HasNoKey();
+            modelBuilder.Entity<RatingModel>().Property(x => x.UserName).HasColumnName("username");
+            modelBuilder.Entity<RatingModel>().Property(x => x.TitleId).HasColumnName("title_id");
+            modelBuilder.Entity<RatingModel>().Property(x => x.Rating).HasColumnName("rating");
+
         }
     }
+
 }

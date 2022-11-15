@@ -8,7 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace WebServer.Controllers
 {
-    [Route("login")]
+    [Route("user")]
     [ApiController]
 
     public class UserController : ControllerBase
@@ -26,7 +26,7 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet()]
+        [HttpGet("login")]
         public IActionResult LoginUser(string username, string hashed_password)
         {
             var data = _dataService.Login(username, hashed_password);
@@ -45,7 +45,7 @@ namespace WebServer.Controllers
            
 
         }
-        [HttpPatch()]
+        [HttpPatch("edit")]
         public IActionResult EditUser(string username, string bio, string photo, string email)
         {
             if (!String.IsNullOrEmpty(username) ){ 
@@ -55,16 +55,13 @@ namespace WebServer.Controllers
             return BadRequest();
         }
 
-        [HttpGet()]
-        public IActionResult RateMovie(string username, string title_id, string rating)
+
+        [HttpGet("rating")]
+        public IActionResult RateMovie(string username, string title_id, int rating)
         {
            _dataService.RateMovie(username, title_id, rating);
             return Ok();
         }
-
-
-        
-
 
     }
 }

@@ -41,10 +41,10 @@ namespace DataLayer.DataServices
 
         }
 
-        void ILoginDataService.RateMovie(string username, string title_id, string rating)
+        void ILoginDataService.RateMovie(string username, string title_id, int rating)
         {
             var db = new IMDBcontext();
-            var result = db.UserModels.FromSqlInterpolated($"select * from rating_function({username},{title_id}, {rating});").ToList();
+            var result = db.RatingModel.FromSqlInterpolated($"select * from rating_function({username},{title_id}, {rating});").ToList();
         }
     }
             
