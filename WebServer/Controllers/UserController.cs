@@ -8,7 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace WebServer.Controllers
 {
-    [Route("login")]
+    [Route("user")]
     [ApiController]
 
     public class UserController : ControllerBase
