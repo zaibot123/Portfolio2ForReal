@@ -2,11 +2,12 @@
 using DataLayer.Interfaces;
 using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 
 
 namespace WebServer.Controllers
 {
-    [Route("register")]
+    [Route("api/register")]
     [ApiController]
 
     public class registerController : ControllerBase
@@ -23,9 +24,12 @@ namespace WebServer.Controllers
         }
 
         [HttpGet()]
-        public void RegisterUser(string username, string password)
+        public IActionResult RegisterUser(string username, string password)
         {
-            _dataService.RegisterUser(username,password);
+            var registered = _dataService.RegisterUser(username, password);
+            if (registered) return Ok();
+            else return NotFound();
+
 
         }
 

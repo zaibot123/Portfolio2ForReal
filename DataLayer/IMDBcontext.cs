@@ -15,6 +15,7 @@ namespace DataLayer
         public DbSet<Bookmark>? Bookmark { get; set; }
         public DbSet<Password>? Password { get; set; }
         public DbSet<Titles>? Titles { get; set; }
+        public DbSet<TitleWithGenre>? TitleWithGenre { get; set; }
         public DbSet<Professionals>? Professionals { get; set; }
         public DbSet<SearchResult>? SearchResult { get; set; }
         // public DbSet<BookmarkModels>? BookmarkModels { get; set; }
@@ -107,7 +108,14 @@ namespace DataLayer
             modelBuilder.Entity<User>().Property(x => x.Bio).HasColumnName("user_bio");
             modelBuilder.Entity<User>().Property(x => x.Email).HasColumnName("email");
 
-          
+
+            modelBuilder.Entity<TitleWithGenre>().ToTable("titlewithgenre");
+            modelBuilder.Entity<TitleWithGenre>().HasNoKey();
+            modelBuilder.Entity<TitleWithGenre>().Property(x => x.id).HasColumnName("id");
+            modelBuilder.Entity<TitleWithGenre>().Property(x => x.poster).HasColumnName("poster");
+            modelBuilder.Entity<TitleWithGenre>().Property(x => x.name).HasColumnName("name");
+            modelBuilder.Entity<TitleWithGenre>().Property(x => x.genre).HasColumnName("genre");
+
 
 
         }

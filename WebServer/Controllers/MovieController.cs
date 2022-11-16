@@ -11,7 +11,7 @@ using System;
 
 namespace WebServer.Controllers
 {
-    [Route("movies")]
+    [Route("api/movies")]
     [ApiController]
 
     public class MovieController : ControllerBase

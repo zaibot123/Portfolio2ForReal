@@ -7,8 +7,8 @@ namespace DataLayer.Interfaces
     public interface ILoginDataService
     {
         void EditUser(string username, string bio, string photo, string email);
-        public IList<Password> Login(string username, string hashed_pass);
+        IList<Password> Login(string username, string hashed_pass);
         void RateMovie(string username, string title_id, string rating);
-        void RegisterUser(string username, string password);
+        bool RegisterUser(string username, string password);
     }
 }

@@ -8,7 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace WebServer.Controllers
 {
-    [Route("user")]
+    [Route("/api/user")]
     [ApiController]
 
     public class UserController : ControllerBase
@@ -26,24 +26,20 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet()]
+        [HttpGet("login")]
         public IActionResult LoginUser(string username, string hashed_password)
         {
             var data = _dataService.Login(username, hashed_password);
-            Authenticator auth = new Authenticator();
-
+            Console.WriteLine(data[0].UserName.ToString());
             if (username == data[0].UserName && hashed_password == data[0].HashedPassword) {
                 Console.WriteLine("SUCCES");
-                return Ok("Login Succesful");
-
+                return Ok(data);
             }
             else
             {
                 Console.WriteLine("FAIL");
-                return BadRequest("Login failed");
+                return BadRequest(data);
             }
-           
-
         }
 
 

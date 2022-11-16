@@ -17,7 +17,7 @@ namespace WebServer.Controllers
 {
 
 
-    [Route("actors")]
+    [Route("api/actors")]
     [ApiController]
 
     public class ActorController : ControllerBase
@@ -100,7 +100,7 @@ namespace WebServer.Controllers
                 Console.WriteLine(model.URL);
                 ProfList.Add(model);
             }
-
+            Console.WriteLine(ProfList.Count);
             return Ok(ProfList);
     
 
