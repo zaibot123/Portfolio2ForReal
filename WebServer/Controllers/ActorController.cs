@@ -96,7 +96,7 @@ namespace WebServer.Controllers
                 Console.WriteLine(model.URL);
                 ProfList.Add(model);
             }
-            var paging = Paging(page,3, 20,ProfList);
+            var paging = Paging(page,pagesize,10,ProfList, "Mads Mikkelsen");
 
 
             return Ok(paging);
@@ -161,15 +161,24 @@ namespace WebServer.Controllers
             
         }
 
+        //private string? CreatePageLink(int page, int pageSize, string value)
+        //{
+        //   // var x = "Mads Mikkelsen";
+        //    return _generator.GetUriByName(
+        //        HttpContext,
+        //        nameof(getCoactors), new {page, pageSize, value});
+        //}
+
+
         private string? CreatePageLink(int page, int pageSize)
         {
-            var x = "Mads Mikkelsen";
+            
             return _generator.GetUriByName(
                 HttpContext,
-                nameof(getCoactors), new {page, pageSize, x});
+                nameof(getCoactors), new { page, pageSize });
         }
 
-        private object Paging<T>(int page, int pageSize, int total, IEnumerable<T> items)
+        private object Paging<T>(int page, int pageSize, int total, IEnumerable<T> items, string value)
         {
             pageSize = pageSize > MaxPageSize ? MaxPageSize : pageSize;
 
@@ -181,9 +190,10 @@ namespace WebServer.Controllers
             var pages = (int)Math.Ceiling((double)total / (double)pageSize)
                 ;
 
-            var first = total > 0
-                ? CreatePageLink(0, pageSize)
-                : null;
+            var first = CreatePageLink(0, pageSize);
+            //var first = total > 0
+            //    ? CreatePageLink(0, pageSize)
+            //    : null;
 
             var prev = page > 0
                 ? CreatePageLink(page - 1, pageSize)
