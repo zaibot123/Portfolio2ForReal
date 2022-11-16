@@ -32,16 +32,18 @@ namespace Assignment4.Tests
         public void SimilarWithInvalidID()
         {
             var invalidsimilarurl = "http://localhost:5001/api/movies/tt1514122/similar";
-            var (similar, statusCode) = GetObject(invalidsimilarurl);
+            var (data, statusCode) = GetObject(invalidsimilarurl);
             Assert.Equal(HttpStatusCode.NotFound, statusCode);
+
         }
 
         [Fact]
         public void SimilarWithValidID()
         {
             var validsimilarurl = "http://localhost:5001/api/movies/tt15141242/similar";
-            var (similar, statusCode) = GetArray(validsimilarurl);
+            var (data, statusCode) = GetArray(validsimilarurl);
             Assert.Equal(HttpStatusCode.OK, statusCode);
+            Assert.Equal("Pokiri", data.First["name"].ToString());
         }
 
 

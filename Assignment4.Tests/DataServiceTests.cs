@@ -32,7 +32,6 @@ namespace Assignment4.Tests
             var name = result.First().ProfName;
             Assert.Equal(10, result.Count);
             Assert.Equal("Courteney Cox", name);
-
         }
 
 
