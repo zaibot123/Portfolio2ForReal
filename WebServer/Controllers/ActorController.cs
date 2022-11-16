@@ -25,7 +25,7 @@ namespace WebServer.Controllers
         private IActorDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
-
+        private const int MaxPageSize = 20;
 
 
         public ActorController(IActorDataService dataService, LinkGenerator generator, IMapper mapper)
@@ -45,6 +45,8 @@ namespace WebServer.Controllers
         }
 
 
+
+
         [HttpGet("{ID}",Name =nameof(getSingleProffesionalFromId))]
         public IActionResult getSingleProffesionalFromId(string ID)
         {
@@ -60,8 +62,9 @@ namespace WebServer.Controllers
                 BirthYear = result.BirthYear,
                 DeathYear = result.DeathYear,
                 Name = result.ProfName,
-                Rating = result.ProfRating
+                //Rating = result.ProfRating
             };
+           
             return Ok(model);
         }
 
@@ -69,7 +72,7 @@ namespace WebServer.Controllers
 
 
         [HttpGet("{name}/coactors",Name =nameof(getCoactors))]
-        public IActionResult getCoactors(string name)
+        public IActionResult getCoactors(string name,int page, int pagesize)
         {
             List<ProfessionalsModel> ProfList = new List<ProfessionalsModel>();
             var result=_dataService.getCoActors(name);
@@ -88,12 +91,15 @@ namespace WebServer.Controllers
                     Name = actor.ProfName,
                     BirthYear = actor.BirthYear,
                     DeathYear = actor.DeathYear,
-                    Rating =actor.ProfRating
+                   // Rating =actor.ProfRating
                 };
                 Console.WriteLine(model.URL);
                 ProfList.Add(model);
             }
-            return Ok(ProfList);
+            var paging = Paging(page,3, 20,ProfList);
+
+
+            return Ok(paging);
     
 
         }
@@ -116,6 +122,7 @@ namespace WebServer.Controllers
 
                 };
                 WordList.Add(model);
+
             }
             return Ok(WordList);
         }
@@ -144,17 +151,61 @@ namespace WebServer.Controllers
                 {
                     URL = CreateLink(nameof(getSingleProffesionalFromId), new { ID }),
                     Name = professionals.ProfName,
-                    Rating = professionals.ProfRating,
+                    //Rating = professionals.ProfRating,
                     BirthYear = professionals.BirthYear,
                     DeathYear = professionals.DeathYear
                 };
                 ProfList.Add(model);
-                    Console.WriteLine("DEN KOMMER HERIND FOREACH!!!");
                 }
-            Console.WriteLine("DEN KOMMER HERIND MED OK!!!");
             return Ok(ProfList);
             
         }
 
+        private string? CreatePageLink(int page, int pageSize)
+        {
+            var x = "Mads Mikkelsen";
+            return _generator.GetUriByName(
+                HttpContext,
+                nameof(getCoactors), new {page, pageSize, x});
+        }
+
+        private object Paging<T>(int page, int pageSize, int total, IEnumerable<T> items)
+        {
+            pageSize = pageSize > MaxPageSize ? MaxPageSize : pageSize;
+
+            //if (pageSize > MaxPageSize)
+            //{
+            //    pageSize = MaxPageSize;
+            //}
+
+            var pages = (int)Math.Ceiling((double)total / (double)pageSize)
+                ;
+
+            var first = total > 0
+                ? CreatePageLink(0, pageSize)
+                : null;
+
+            var prev = page > 0
+                ? CreatePageLink(page - 1, pageSize)
+                : null;
+
+            var current = CreatePageLink(page, pageSize);
+
+            var next = page < pages - 1
+                ? CreatePageLink(page + 1, pageSize)
+                : null;
+
+            var result = new
+            {
+                first,
+                prev,
+                next,
+                current,
+                total,
+                pages,
+                items
+            };
+            return result;
+        }
     }
 }

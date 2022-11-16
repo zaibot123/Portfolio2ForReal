@@ -9,7 +9,6 @@ namespace DataLayer
     public class ActorDataService : IActorDataService
     {
 
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
             public IList<Professionals>? getCoActors(string actorname)
         {
             using var db = new IMDBcontext();
@@ -27,7 +26,6 @@ namespace DataLayer
             .Take(pagesize)
             .OrderBy(x => x.ProfName)
             .ToList();
-           
         }
 
     

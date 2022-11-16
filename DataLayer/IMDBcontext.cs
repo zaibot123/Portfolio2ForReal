@@ -9,7 +9,7 @@ namespace DataLayer
 
         //TEEEEST
     {
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
         public DbSet<Casting>? Casting { get; set; }
         public DbSet<HasProfession>? Profession { get; set; }
         public DbSet<Bookmark>? Bookmark { get; set; }
@@ -74,7 +74,7 @@ namespace DataLayer
             modelBuilder.Entity<Professionals>().Property(x => x.ProfName).HasColumnName("prof_name");
             modelBuilder.Entity<Professionals>().Property(x => x.BirthYear).HasColumnName("birth_year");
             modelBuilder.Entity<Professionals>().Property(x => x.DeathYear).HasColumnName("death_year");
-            modelBuilder.Entity<Professionals>().Property(x => x.ProfRating).HasColumnName("prof_rating");
+           // modelBuilder.Entity<Professionals>().Property(x => x.ProfRating).HasColumnName("prof_rating");
 
             modelBuilder.Entity<Word>().HasNoKey();
             modelBuilder.Entity<Word>().Property(x => x.KeyWord).HasColumnName("words");
