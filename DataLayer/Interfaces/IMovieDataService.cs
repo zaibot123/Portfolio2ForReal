@@ -1,4 +1,5 @@
 ﻿using DataLayer.Model;
+using Nest;
 
 namespace DataLayer.Interfaces
 {
@@ -6,7 +7,7 @@ namespace DataLayer.Interfaces
     {
         IList<Titles>? getTitles(string name);
 
-        IList<Titles>? GetSearch(string user_input);
+        IList<Titles>? GetSearch(string user_input, int page, int pagesize);
         IList<Titles>? getSimilarMovies(string user_input);
 
         IList<SearchResult>? getStructuredSearch(string title, string plot, string character, string name);
@@ -18,5 +19,6 @@ namespace DataLayer.Interfaces
         void DeleteBookmark(string username, string title_id);
         void Bookmark(string username, string title_id);
         IList<Titles> GetSingleMovieByID(string ID);
+        int getSizeSimpleSearch(string user, string search);
     }
 }

@@ -22,14 +22,17 @@ namespace WebServer.Controllers
 
     public class ActorController : ControllerBase
     {
+        private readonly IMovieDataService _movieDataService;
         private IActorDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
         private const int MaxPageSize = 20;
+   
 
 
-        public ActorController(IActorDataService dataService, LinkGenerator generator, IMapper mapper)
+        public ActorController(IMovieDataService movieDataService, IActorDataService dataService, LinkGenerator generator, IMapper mapper)
         {
+            _movieDataService = movieDataService;
             _dataService = dataService;
             _generator = generator;
             _mapper = mapper;
@@ -72,10 +75,11 @@ namespace WebServer.Controllers
 
 
         [HttpGet("{name}/coactors",Name =nameof(getCoactors))]
-        public IActionResult getCoactors(string name,int page, int pagesize)
+        public IActionResult getCoactors(string name,int page=0, int pagesize=5)
         {
             List<ProfessionalsModel> ProfList = new List<ProfessionalsModel>();
             var result=_dataService.getCoActors(name);
+            Console.WriteLine(_movieDataService.getSizeSimpleSearch("Troels", "dog"));
             if (result == null)
             {
                 return NotFound();
@@ -96,10 +100,8 @@ namespace WebServer.Controllers
                 Console.WriteLine(model.URL);
                 ProfList.Add(model);
             }
-            var paging = Paging(page,pagesize,10,ProfList, "Mads Mikkelsen");
 
-
-            return Ok(paging);
+            return Ok(ProfList);
     
 
         }
@@ -161,61 +163,15 @@ namespace WebServer.Controllers
             
         }
 
-        //private string? CreatePageLink(int page, int pageSize, string value)
-        //{
-        //   // var x = "Mads Mikkelsen";
-        //    return _generator.GetUriByName(
-        //        HttpContext,
-        //        nameof(getCoactors), new {page, pageSize, value});
-        //}
 
 
-        private string? CreatePageLink(int page, int pageSize)
+        private string? CreatePageLink(int page, int pageSize, string name,string endpoint)
         {
-            
+
             return _generator.GetUriByName(
                 HttpContext,
-                nameof(getCoactors), new { page, pageSize });
+                nameof(endpoint), new { page, pageSize,name});
         }
 
-        private object Paging<T>(int page, int pageSize, int total, IEnumerable<T> items, string value)
-        {
-            pageSize = pageSize > MaxPageSize ? MaxPageSize : pageSize;
-
-            //if (pageSize > MaxPageSize)
-            //{
-            //    pageSize = MaxPageSize;
-            //}
-
-            var pages = (int)Math.Ceiling((double)total / (double)pageSize)
-                ;
-
-            var first = CreatePageLink(0, pageSize);
-            //var first = total > 0
-            //    ? CreatePageLink(0, pageSize)
-            //    : null;
-
-            var prev = page > 0
-                ? CreatePageLink(page - 1, pageSize)
-                : null;
-
-            var current = CreatePageLink(page, pageSize);
-
-            var next = page < pages - 1
-                ? CreatePageLink(page + 1, pageSize)
-                : null;
-
-            var result = new
-            {
-                first,
-                prev,
-                next,
-                current,
-                total,
-                pages,
-                items
-            };
-            return result;
-        }
     }
 }

@@ -15,80 +15,80 @@ namespace Assignment4.Tests
 
 
 
-        /* /api/categories */
-
-        [Fact]
-        public void SimpleSearchWithValidUrl()
-        {
-            var validsearchurl = "http://localhost:5001/movies?searchtype=simple&title=warrior";
-            var (titles, statusCode) = GetArray(validsearchurl);
-            Assert.Equal(HttpStatusCode.OK, statusCode);
-        }
-
-        [Fact]
-        public void SimilarWithInvalidID()
-        {
-            var invalidsimilarurl = "http://localhost:5001/movies/tt1514122/similar";
-            var (similar, statusCode) = GetObject(invalidsimilarurl);
-            Assert.Equal(HttpStatusCode.NotFound, statusCode);
-        }
-
-        [Fact]
-        public void SimilarWithValidID()
-        {
-            var validsimilarurl = "http://localhost:5001/movies/tt15141242/similar";
-            var (similar, statusCode) = GetArray(validsimilarurl);
-            Assert.Equal(HttpStatusCode.OK, statusCode);
-        }
-
-        public void ValidLogin() {
-            var validloginurl = "http://localhost:5001/login?username=Henrik&hashed_password=C0EB542D4EFFC7C41319AE19B6D28EC29FE0806F4318C77533D8AE323DC921ED";
-            var (data, statusCode) = GetArray(validloginurl);
-            
-            Assert.Equal(HttpStatusCode.OK, statusCode);
-            Assert.Equal(1, data.Count);
-            Assert.Equal("Henrik", data.First()["username"].ToString());
-
-
-
-
-        }
-
-        [Fact]
-        public void ApiCoActors()
-        {
-            const string ActorsApi = "http://localhost:5001/actors/Jennifer Aniston/coactors";
-            var (data, statusCode) = GetArray(ActorsApi);
-
-
-
-            Assert.Equal(HttpStatusCode.OK, statusCode);
-            Assert.Equal(10, data.Count);
-            Assert.Equal("Courteney Cox", data.First()["actorName"].ToString());
-            Assert.Equal("Ira Ungerleider", data.Last()["actorName"].ToString());
-        }
-
+        ///* /api/categories */
 
         //[Fact]
-        //public void SuccesfulRegister()
+        //public void SimpleSearchWithValidUrl()
         //{
-        //    var validsimilarurl = "http://localhost:5001/login?username=test&password=testpassword";
-
-        //    var (register, statusCode) = GetObject(validsimilarurl);
+        //    var validsearchurl = "http://localhost:5001/movies?searchtype=simple&title=warrior";
+        //    var (titles, statusCode) = GetArray(validsearchurl);
         //    Assert.Equal(HttpStatusCode.OK, statusCode);
+        //}
+
+        //[Fact]
+        //public void SimilarWithInvalidID()
+        //{
+        //    var invalidsimilarurl = "http://localhost:5001/movies/tt1514122/similar";
+        //    var (similar, statusCode) = GetObject(invalidsimilarurl);
+        //    Assert.Equal(HttpStatusCode.NotFound, statusCode);
+        //}
+
+        //[Fact]
+        //public void SimilarWithValidID()
+        //{
+        //    var validsimilarurl = "http://localhost:5001/movies/tt15141242/similar";
+        //    var (similar, statusCode) = GetArray(validsimilarurl);
+        //    Assert.Equal(HttpStatusCode.OK, statusCode);
+        //}
+
+        //public void ValidLogin() {
+        //    var validloginurl = "http://localhost:5001/login?username=Henrik&hashed_password=C0EB542D4EFFC7C41319AE19B6D28EC29FE0806F4318C77533D8AE323DC921ED";
+        //    var (data, statusCode) = GetArray(validloginurl);
+            
+        //    Assert.Equal(HttpStatusCode.OK, statusCode);
+        //    Assert.Equal(1, data.Count);
+        //    Assert.Equal("Henrik", data.First()["username"].ToString());
+
+
+
 
         //}
 
+        //[Fact]
+        //public void ApiCoActors()
+        //{
+        //    const string ActorsApi = "http://localhost:5001/actors/Jennifer Aniston/coactors";
+        //    var (data, statusCode) = GetArray(ActorsApi);
 
-        [Fact]
-        public void PopularActorsInvalidID()
-        {
-            var invalidsimilarurl = "http://localhost:5001/actors/popular/tt1514122";
 
-            var (register, statusCode) = GetObject(invalidsimilarurl);
-            Assert.Equal(HttpStatusCode.NotFound, statusCode);
 
-        }
+        //    Assert.Equal(HttpStatusCode.OK, statusCode);
+        //    Assert.Equal(10, data.Count);
+        //    Assert.Equal("Courteney Cox", data.First()["actorName"].ToString());
+        //    Assert.Equal("Ira Ungerleider", data.Last()["actorName"].ToString());
+        //}
+
+
+        ////[Fact]
+        ////public void SuccesfulRegister()
+        ////{
+        ////    var validsimilarurl = "http://localhost:5001/login?username=test&password=testpassword";
+
+        ////    var (register, statusCode) = GetObject(validsimilarurl);
+        ////    Assert.Equal(HttpStatusCode.OK, statusCode);
+
+        ////}
+
+
+        //[Fact]
+        //public void PopularActorsInvalidID()
+        //{
+        //    var invalidsimilarurl = "http://localhost:5001/actors/popular/tt1514122";
+
+        //    var (register, statusCode) = GetObject(invalidsimilarurl);
+        //    Assert.Equal(HttpStatusCode.NotFound, statusCode);
+
+        //}
 
 
         //        [Fact]

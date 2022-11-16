@@ -9,7 +9,7 @@ namespace DataLayer
 
         //TEEEEST
     {
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
         public DbSet<Casting>? Casting { get; set; }
         public DbSet<HasProfession>? Profession { get; set; }
         public DbSet<Bookmark>? Bookmark { get; set; }
@@ -57,7 +57,7 @@ namespace DataLayer
             modelBuilder.Entity<Titles>().Property(x => x.StartYear).HasColumnName("start_year");
             modelBuilder.Entity<Titles>().Property(x => x.EndYear).HasColumnName("end_year");
             modelBuilder.Entity<Titles>().Property(x => x.Runtime).HasColumnName("runtime");
-            modelBuilder.Entity<Titles>().Property(x => x.IsAdult).HasColumnName("is_adult");
+            modelBuilder.Entity<Titles>().Property(x => x.IsAdult).HasColumnName("isadult");
             modelBuilder.Entity<Titles>().Property(x => x.NrRatings).HasColumnName("nr_ratings");
             modelBuilder.Entity<Titles>().Property(x => x.AvgRating).HasColumnName("avg_rating");
 

@@ -8,7 +8,6 @@ namespace DataLayer
 {
     public class ActorDataService : IActorDataService
     {
-
             public IList<Professionals>? getCoActors(string actorname)
         {
             using var db = new IMDBcontext();

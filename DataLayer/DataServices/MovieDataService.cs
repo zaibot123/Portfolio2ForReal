@@ -5,6 +5,7 @@ using Npgsql;
 using System.Xml.Linq;
 using System.Reflection.PortableExecutable;
 using DataLayer.Interfaces;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace DataLayer
 {
@@ -28,18 +29,17 @@ namespace DataLayer
 
         public IList<SearchResult>? getStructuredSearch(string title, string plot, string character, string name)
         {
-
             using var db = new IMDBcontext();
             var result = db.SearchResult.FromSqlInterpolated($"select * from structured_search({title}, {plot}, {character},{name})").ToList();
             return result;
-
         }
 
-        public IList<Titles> GetSearch(string user_input)
-        {
+        public IList<Titles> GetSearch(string user_input, int page,int pagesize)
+        { 
             var username = "Troels";
-            using var db = new IMDBcontext();   
-            var result = db.Titles.FromSqlInterpolated($"select * from simple_search({username},{user_input})").ToList();
+            using var db = new IMDBcontext();
+            Console.WriteLine($" page: {page}");
+            var result = db.Titles.FromSqlInterpolated($"select * from simple_search({username},{user_input},{page},{pagesize})").ToList();
             return result.OrderBy(x => x.TitleName).ToList();                
         }
 
@@ -75,7 +75,7 @@ namespace DataLayer
             var ResultList = new List<Titles>();
             using var connection = new NpgsqlConnection("host = localhost; db = imdb; uid = postgres; pwd = 1234");
             connection.Open();
-            using var cmd = new NpgsqlCommand($"select * from similar_movies('{title_id}');", connection);
+            using var cmd = new NpgsqlCommand($"select from similar_movies('{title_id}');", connection);
 
             // cmd.Parameters.AddWithValue("@query", "%ab%");
             using var reader = cmd.ExecuteReader();
@@ -132,6 +132,16 @@ namespace DataLayer
             //string sqlString 
             var result = db.Titles.FromSqlInterpolated($"select * from title where title_id ={ID}").ToList();
             return result;
+        }
+
+        public int getSizeSimpleSearch (string user,string search)
+        {
+            using var db = new IMDBcontext();
+            var con=(NpgsqlConnection)db.Database.GetDbConnection();
+            con.Open();
+            using var cmd = new NpgsqlCommand($"select simple_search_count('{user}','{search}')", con);
+            return (int)cmd.ExecuteScalar();
+
         }
     }
 }
