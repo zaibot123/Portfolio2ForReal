@@ -57,10 +57,10 @@ namespace WebServer.Controllers
             var model = new ProfessionalsModel
             {
                 URL = CreateLink(nameof(getSingleProffesionalFromId), new { ID }),
-                //BirthYear = result.BirthYear,
-                //DeathYear = result.DeathYear,
+                BirthYear = result.BirthYear,
+                DeathYear = result.DeathYear,
                 Name = result.ProfName,
-               // Rating = result.ProfRating
+                Rating = result.ProfRating
             };
             return Ok(model);
         }
@@ -84,12 +84,11 @@ namespace WebServer.Controllers
                var model = new ProfessionalsModel
                 {
                    
-                   //Birth og Death-year skal selectes i Postgres
                     URL = CreateLink(nameof(getSingleProffesionalFromId), new { ID }),
                     Name = actor.ProfName,
-                    //BirthYear = actor.BirthYear,
-                    //DeathYear = actor.DeathYear,
-                    //Rating =actor.ProfRating
+                    BirthYear = actor.BirthYear,
+                    DeathYear = actor.DeathYear,
+                    Rating =actor.ProfRating
                 };
                 Console.WriteLine(model.URL);
                 ProfList.Add(model);
@@ -129,30 +128,32 @@ namespace WebServer.Controllers
 
             List<ProfessionalsModel> ProfList = new List<ProfessionalsModel>();
             var result = _dataService.getPopularActorsFromMovie(title_id,page,pagesize);
-            var ID = title_id;
+           
 
             if (result==null)
             {
-                Console.WriteLine("Den er result==0");
+             
                 return NotFound();
             }
 
-            else
-            foreach (var professional in ProfList)
+        
+            foreach (var professionals in result)
             {
+                var ID = professionals.ProfId;
                 var model = new ProfessionalsModel
                 {
                     URL = CreateLink(nameof(getSingleProffesionalFromId), new { ID }),
-                    Name = professional.Name,
-                    Rating = professional.Rating,
-                    BirthYear = professional.BirthYear,
-                    DeathYear = professional.DeathYear
+                    Name = professionals.ProfName,
+                    Rating = professionals.ProfRating,
+                    BirthYear = professionals.BirthYear,
+                    DeathYear = professionals.DeathYear
                 };
                 ProfList.Add(model);
-              
-            }
-            
+                    Console.WriteLine("DEN KOMMER HERIND FOREACH!!!");
+                }
+            Console.WriteLine("DEN KOMMER HERIND MED OK!!!");
             return Ok(ProfList);
+            
         }
 
     }

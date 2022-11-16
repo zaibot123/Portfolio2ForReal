@@ -72,9 +72,9 @@ namespace DataLayer
             modelBuilder.Entity<Professionals>().HasKey(x => new { x.ProfId});
             modelBuilder.Entity<Professionals>().Property(x => x.ProfId).HasColumnName("prof_id");
             modelBuilder.Entity<Professionals>().Property(x => x.ProfName).HasColumnName("prof_name");
-            //modelBuilder.Entity<Professionals>().Property(x => x.BirthYear).HasColumnName("birth_year");
-            //modelBuilder.Entity<Professionals>().Property(x => x.DeathYear).HasColumnName("death_year");
-           // modelBuilder.Entity<Professionals>().Property(x => x.ProfRating).HasColumnName("prof_rating");
+            modelBuilder.Entity<Professionals>().Property(x => x.BirthYear).HasColumnName("birth_year");
+            modelBuilder.Entity<Professionals>().Property(x => x.DeathYear).HasColumnName("death_year");
+            modelBuilder.Entity<Professionals>().Property(x => x.ProfRating).HasColumnName("prof_rating");
 
             modelBuilder.Entity<Word>().HasNoKey();
             modelBuilder.Entity<Word>().Property(x => x.KeyWord).HasColumnName("words");
