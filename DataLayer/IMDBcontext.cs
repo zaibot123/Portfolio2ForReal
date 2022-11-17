@@ -97,8 +97,8 @@ namespace DataLayer
             modelBuilder.Entity<User>().ToTable("users");
             modelBuilder.Entity<User>().HasKey(x => new { x.UserName});
             modelBuilder.Entity<User>().Property(x => x.UserName).HasColumnName("username");
-            modelBuilder.Entity<User>().Property(x => x.Photo).HasColumnName("picture");
-            modelBuilder.Entity<User>().Property(x => x.Bio).HasColumnName("user_bio");
+            modelBuilder.Entity<User>().Property(x => x.Photo).HasColumnName("photo");
+            modelBuilder.Entity<User>().Property(x => x.Bio).HasColumnName("bio");
             modelBuilder.Entity<User>().Property(x => x.Email).HasColumnName("email");
 
 

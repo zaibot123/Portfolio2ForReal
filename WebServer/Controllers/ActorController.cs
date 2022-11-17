@@ -2,21 +2,11 @@
 using DataLayer.Interfaces;
 using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Hosting.Internal;
-using Microsoft.Extensions.Logging.Console;
-using Nest;
-using System;
-using System.Runtime.InteropServices;
-using System.Threading.Channels;
-using System.Xml.Linq;
 using WebServer.Models;
-using static System.Net.WebRequestMethods;
+
 
 namespace WebServer.Controllers
 {
-
-
     [Route("api/actors")]
     [ApiController]
 
@@ -38,15 +28,6 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-        private string? CreateLink(string endpoint, object? values)
-        {
-
-            return _generator.GetUriByName(
-                HttpContext,
-                endpoint, values);
-
-        }
-
 
 
 
@@ -65,16 +46,14 @@ namespace WebServer.Controllers
                 BirthYear = result.BirthYear,
                 DeathYear = result.DeathYear,
                 Name = result.ProfName,
-                //Rating = result.ProfRating
             };
-           
             return Ok(model);
         }
 
         
 
 
-        [HttpGet("{name}/coactors",Name =nameof(getCoactors))]
+        [HttpGet("coactors/{name}", Name =nameof(getCoactors))]
         public IActionResult getCoactors(string name,int page=0, int pagesize=5)
         {
             List<ProfessionalsModel> ProfList = new List<ProfessionalsModel>();
@@ -106,7 +85,7 @@ namespace WebServer.Controllers
 
         }
 
-        [HttpGet("{name}/words")]
+        [HttpGet("words/{name}")]
         public IActionResult getPersonWords(string name)
         {
             List<WordModel> WordList = new List<WordModel>();
@@ -137,15 +116,12 @@ namespace WebServer.Controllers
 
             List<ProfessionalsModel> ProfList = new List<ProfessionalsModel>();
             var result = _dataService.getPopularActorsFromMovie(title_id,page,pagesize);
-           
-
+  
             if (result==null)
             {
              
                 return NotFound();
             }
-
-        
             foreach (var professionals in result)
             {
                 var ID = professionals.ProfId;
@@ -164,14 +140,13 @@ namespace WebServer.Controllers
         }
 
 
-
-        private string? CreatePageLink(int page, int pageSize, string name,string endpoint)
+        private string? CreateLink(string endpoint, object? values)
         {
-
             return _generator.GetUriByName(
                 HttpContext,
-                nameof(endpoint), new { page, pageSize,name});
+                endpoint, values);
         }
+
 
     }
 }

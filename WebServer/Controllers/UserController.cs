@@ -92,15 +92,14 @@ namespace WebServer.Controllers
 
 
         [HttpPatch("edit")]
-        public IActionResult EditUser(string username, string bio="", string photo="", string email="")  
+        public IActionResult EditUser(string username, string hashed_password, string bio="", string photo="", string email="")  
         {
             _dataService.EditUser(username, bio, photo, email);
-            return Ok();
-
+            return Ok($"Succesfully updated all information for {username}");
         }
 
         [HttpPost("rate")]
-        public IActionResult PostRating(string username, string title_id, int rating)
+        public IActionResult PostRating(string username, string title_id, int rating, string hashed_password)
         {
             try
             {
@@ -115,24 +114,21 @@ namespace WebServer.Controllers
         }
 
         [HttpDelete("rate")]
-        public IActionResult DeleteRating(string username, string title_id)
+        public IActionResult DeleteRating(string username, string title_id, string hashed_password)
         {
 
              
                 _dataService.DeleteMovieRating(username, title_id);
-                return Ok();
+                return Ok($"Succesfully deleted rating of {title_id} on behalf of {username}");
 
         }
-
-
-
-        [HttpGet("rate")]
+        [HttpGet("{username}/ratings")]
 
         public IActionResult GetRatingsForPerson(string username)
         {
             var Ratings_for = $"{username}";
             List<RatingHistoryModel> RatingList = new List<RatingHistoryModel>();
-            var data=_dataService.GetRatingHistory(username);
+            var data = _dataService.GetRatingHistory(username);
             if (data.Count == 0)
             {
                 return NotFound("No history found for " + username);
@@ -144,13 +140,14 @@ namespace WebServer.Controllers
                 {
 
                     Rating = item.Rating,
-                    TitleName=item.TitleName
+                    TitleName = item.TitleName
                 };
                 RatingList.Add(model);
                 Console.WriteLine(item);
             }
             return Ok(new { Ratings_for, RatingList });
         }
+
 
 
     }

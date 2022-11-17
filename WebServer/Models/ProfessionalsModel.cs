@@ -12,6 +12,5 @@ namespace WebServer.Models
         public string  Name { get; set; }
         public string? DeathYear { get; set; }
         public string? BirthYear { get; set; }
-     //   public double? Rating { get; set; }
     }
 }

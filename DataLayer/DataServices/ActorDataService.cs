@@ -15,8 +15,7 @@ namespace DataLayer
             return result;
         }
 
-
-        public IList<Professionals>? getPopularActorsFromMovie(string title_id, int page, int pagesize)
+        public IList<Professionals>? getPopularActorsFromMovie(string title_id, int page = 0, int pagesize = 10)
         {
             using var db = new IMDBcontext();
             var liste = db.Professionals.FromSqlInterpolated($"select * from populer_actors({title_id})");
@@ -27,7 +26,6 @@ namespace DataLayer
             .ToList();
         }
 
-    
         public IList<Word> GetPersonWords(string actorname)
         {
             using var db = new IMDBcontext();

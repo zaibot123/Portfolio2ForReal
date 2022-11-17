@@ -40,27 +40,27 @@ namespace WebServer.Controllers
 
 
         [HttpGet(Name = nameof(GetSearch))]
-        public IActionResult GetSearch(string searchType, string search, string? plot = null,
+        public IActionResult GetSearch(string searchType, string title, string? plot = null,
                   string? character = null, string? name = null, int page=0, int pagesize=10)
 
         {
             if (searchType == "structured")
             {
-                var result = _dataService.getStructuredSearch(search, plot, character, name);
+                var result = _dataService.getStructuredSearch(title, plot, character, name);
                 return Ok(result);
             }
             else if (searchType == "simple")
             {
-                var total = _dataService.getSizeSimpleSearch("Troels", search);
-                var result = _dataService.GetSearch(search,page, pagesize);
-                var paging=SearchPaging<Titles>(page, pagesize, total, result, nameof(GetSearch),searchType,search);
+                var total = _dataService.getSizeSimpleSearch("Troels", title);
+                var result = _dataService.GetSearch(title,page, pagesize);
+                var paging=SearchPaging<Titles>(page, pagesize, total, result, nameof(GetSearch),searchType,title);
 
                 return Ok(paging);
             }
 
             else if (searchType == "best")
             {
-                var result = _dataService.GetBestMatch(search);
+                var result = _dataService.GetBestMatch(title);
                 Console.WriteLine($"Længde er resultat: {result.Count}");
 
                 return Ok(result);
@@ -68,13 +68,13 @@ namespace WebServer.Controllers
 
             else if (searchType == "exact")
             {
-                var result = _dataService.GetExcactSearch(search.ToLower());
+                var result = _dataService.GetExcactSearch(title.ToLower());
                 Console.WriteLine($"Længde er resultat: {result.Count}");
                 return Ok(result);
             }
             else if (searchType == "word")
             {
-                var result = _dataService.GetWordToWord(search.ToLower());
+                var result = _dataService.GetWordToWord(title.ToLower());
                 return Ok(result);
             }
             else return NotFound();
@@ -94,7 +94,7 @@ namespace WebServer.Controllers
 
 
 
-        [HttpGet("{title_id}/similar")]
+        [HttpGet("similar/{title_id}")]
         public IActionResult GetSimilarMovies(string title_id)
         {
             List<TitlesModel> MovieList = new List<TitlesModel>();
@@ -127,14 +127,14 @@ namespace WebServer.Controllers
         public IActionResult AssignBookmark(string title_id, string username)
         {
             _dataService.Bookmark(title_id, username);
-            return Ok();
+            return Ok($"Succesfully saved bookmark for {username}");
         }
 
         [HttpDelete()]
         public IActionResult DeleteBookmark(string title_id, string username)
         {
             _dataService.Bookmark(title_id, username);
-            return Ok();
+            return Ok($"Succesfully deleted bookmark for {username}");
         }
 
         private string? CreatePageLink(int page, int pageSize, string endpoint, string searchtype, string search)
@@ -143,9 +143,6 @@ namespace WebServer.Controllers
                 HttpContext,
                 endpoint, new {searchtype, search,page, pageSize });
         }
-
-
-
 
         private object SearchPaging<T>(int page, int pageSize, int total, IEnumerable<T> items, string endpoint, string searchtype, string search)
         {

@@ -6,10 +6,8 @@ namespace DataLayer.Interfaces
     public interface IMovieDataService
     {
         IList<Titles>? getTitles(string name);
-
         IList<Titles>? GetSearch(string user_input, int page, int pagesize);
         IList<TitleSimilarModel>? getSimilarMovies(string user_input);
-
         IList<SearchResult>? getStructuredSearch(string title, string plot, string character, string name);
         IList<Titles>? GetBestMatch(string user_input);
         IList<Titles>? GetExcactSearch(string user_input);
