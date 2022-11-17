@@ -16,6 +16,7 @@ namespace DataLayer.Interfaces
         //void AssignBookmark(string title_id, string username);
         //void DeleteBookmark(string username, string title_id);
         void Bookmark(string username, string title_id);
+        void DeleteBookmark(string username, string title_id);
         IList<Titles> GetSingleMovieByID(string ID);
         int getSizeSimpleSearch(string user, string search);
     }

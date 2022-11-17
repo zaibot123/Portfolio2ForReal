@@ -123,17 +123,17 @@ namespace WebServer.Controllers
         }
 
 
-        [HttpPut()]
+        [HttpPut("bookmark")]
         public IActionResult AssignBookmark(string title_id, string username)
         {
             _dataService.Bookmark(title_id, username);
             return Ok($"Succesfully saved bookmark for {username}");
         }
 
-        [HttpDelete()]
+        [HttpDelete("bookmark")]
         public IActionResult DeleteBookmark(string title_id, string username)
         {
-            _dataService.Bookmark(title_id, username);
+            _dataService.DeleteBookmark(title_id, username);
             return Ok($"Succesfully deleted bookmark for {username}");
         }
 
