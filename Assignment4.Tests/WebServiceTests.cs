@@ -57,10 +57,7 @@ namespace Assignment4.Tests
             var cmd = new NpgsqlCommand($"DELETE FROM PASSWORD WHERE USERNAME ='test';", con);
             cmd.ExecuteReader();
             var validsimilarurl = "http://localhost:5001/api/register?username=test&password=testpassword";
-
-
             var (register, statusCode) = GetObject(validsimilarurl);
-
             Assert.Equal(HttpStatusCode.OK, statusCode);
 
         }

@@ -8,6 +8,8 @@ using DataLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Elasticsearch.Net;
 using System;
+using WebServer.Models;
+using static System.Net.WebRequestMethods;
 
 namespace WebServer.Controllers
 {
@@ -28,14 +30,14 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-        private string? CreateLink(string endpoint, object? values)
-        {
 
+        private string? CreateLink(string endpoint, object TitleId)
+        {
             return _generator.GetUriByName(
                 HttpContext,
-                endpoint, values);
-
+                endpoint, TitleId);
         }
+
 
         [HttpGet(Name = nameof(GetSearch))]
         public IActionResult GetSearch(string searchType, string search, string? plot = null,
@@ -45,8 +47,6 @@ namespace WebServer.Controllers
             if (searchType == "structured")
             {
                 var result = _dataService.getStructuredSearch(search, plot, character, name);
-
-
                 return Ok(result);
             }
             else if (searchType == "simple")
@@ -80,7 +80,7 @@ namespace WebServer.Controllers
             else return NotFound();
         }
 
-        [HttpGet("{title_id}")]
+        [HttpGet("{title_id}",Name=nameof(GetSingleMovie))]
         public IActionResult GetSingleMovie(string title_id)
         {
             var titles =
@@ -97,13 +97,29 @@ namespace WebServer.Controllers
         [HttpGet("{title_id}/similar")]
         public IActionResult GetSimilarMovies(string title_id)
         {
+            List<TitlesModel> MovieList = new List<TitlesModel>();
             var titles =
                 _dataService.getSimilarMovies(title_id);
             if (titles.Count == 0)
             {
                 return NotFound();
             }
-            return Ok(titles);
+
+            foreach (var movie in titles)
+            {
+                Console.WriteLine(movie.id.ToString()); 
+                var model = new TitlesModel
+                {
+                    URL = "http://localhost:5001/api/movies/" +movie.id,
+                    Poster = movie.poster,
+                    TitleName = movie.name,
+                    genre = movie.genre,
+                    
+                };
+                MovieList.Add(model);
+            }
+
+            return Ok(MovieList);
         }
 
 
@@ -123,11 +139,13 @@ namespace WebServer.Controllers
 
         private string? CreatePageLink(int page, int pageSize, string endpoint, string searchtype, string search)
         {
-
             return _generator.GetUriByName(
                 HttpContext,
                 endpoint, new {searchtype, search,page, pageSize });
         }
+
+
+
 
         private object SearchPaging<T>(int page, int pageSize, int total, IEnumerable<T> items, string endpoint, string searchtype, string search)
         {

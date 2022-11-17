@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Model
 {
-    public class TitleWithGenre
+    public class TitleSimilarModel
     {
-
         public string genre { get; set; }
         public string id { get; set; }
         public string name { get; set; }

@@ -10,20 +10,20 @@ namespace WebServer.Controllers
     [Route("api/register")]
     [ApiController]
 
-    public class registerController : ControllerBase
+    public class RegisterController : ControllerBase
     {
-        private ILoginDataService _dataService;
+        private IuserDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
-        public registerController(ILoginDataService dataService, LinkGenerator generator, IMapper mapper)
+        public RegisterController(IuserDataService dataService, LinkGenerator generator, IMapper mapper)
         {
             _dataService = dataService;
             _generator = generator;
             _mapper = mapper;
         }
 
-        [HttpGet()]
+        [HttpPost()]
         public IActionResult RegisterUser(string username, string password)
         {
             var registered = _dataService.RegisterUser(username, password);
