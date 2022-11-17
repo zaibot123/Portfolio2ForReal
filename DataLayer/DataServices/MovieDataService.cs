@@ -102,14 +102,14 @@ namespace DataLayer
 
 
 
-        public void Bookmark(string username, string title_id)
+        public void Bookmark(string username, string title_id,string hashed_password)
         {
             using var db = new IMDBcontext();
             //string sqlString 
             var result = db.Bookmark.FromSqlInterpolated($"Select * from bookmark_function({title_id}, {username})").ToList();
         }
 
-        public void DeleteBookmark(string username, string title_id)
+        public void DeleteBookmark(string username, string title_id, string hashed_password)
         {
             using var db = new IMDBcontext();
             //string sqlString 

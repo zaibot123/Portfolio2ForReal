@@ -9,7 +9,7 @@ namespace DataLayer
 
         //TEEEEST
     {
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=Google-1234";
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
         public DbSet<Casting>? Casting { get; set; }
         public DbSet<Bookmark>? Bookmark { get; set; }
         public DbSet<Password>? Password { get; set; }

@@ -12,12 +12,9 @@ namespace DataLayer.Interfaces
         IList<Titles>? GetBestMatch(string user_input);
         IList<Titles>? GetExcactSearch(string user_input);
         IList<Word>? GetWordToWord(string user_input);
-
-        //void AssignBookmark(string title_id, string username);
-        //void DeleteBookmark(string username, string title_id);
-        void Bookmark(string username, string title_id);
-        void DeleteBookmark(string username, string title_id);
+        void Bookmark(string username, string title_id,string hashed_password);
         IList<Titles> GetSingleMovieByID(string ID);
         int getSizeSimpleSearch(string user, string search);
+        void DeleteBookmark(string title_id, string username,string hashed_password);
     }
 }

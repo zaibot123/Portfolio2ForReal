@@ -94,7 +94,7 @@ namespace WebServer.Controllers
 
 
 
-        [HttpGet("similar/{title_id}")]
+        [HttpGet("{title_id}/similar")]
         public IActionResult GetSimilarMovies(string title_id)
         {
             List<TitlesModel> MovieList = new List<TitlesModel>();
@@ -124,18 +124,27 @@ namespace WebServer.Controllers
 
 
         [HttpPut("bookmark")]
-        public IActionResult AssignBookmark(string title_id, string username)
+        public IActionResult AssignBookmark(string title_id, string username, string hashed_password)
         {
-            _dataService.Bookmark(title_id, username);
-            return Ok($"Succesfully saved bookmark for {username}");
+            try
+            {
+                _dataService.Bookmark(title_id, username, hashed_password);
+                return Ok($"201 created bookmark for {username}");
+            }
+            catch (Npgsql.PostgresException)
+            {
+                return BadRequest("Unable to add bookmark. have you already bookmarked?");
+            }
         }
 
         [HttpDelete("bookmark")]
-        public IActionResult DeleteBookmark(string title_id, string username)
+        public IActionResult DeleteBookmark(string title_id, string username, string hashed_password)
         {
-            _dataService.DeleteBookmark(title_id, username);
-            return Ok($"Succesfully deleted bookmark for {username}");
+            _dataService.DeleteBookmark(title_id, username,hashed_password);
+            return Ok($"204 deleted bookmark for {username}");
         }
+
+
 
         private string? CreatePageLink(int page, int pageSize, string endpoint, string searchtype, string search)
         {
