@@ -92,7 +92,7 @@ namespace WebServer.Controllers
 
 
         [HttpPatch("edit")]
-        public IActionResult EditUser(string username, string bio, string photo, string email)  
+        public IActionResult EditUser(string username, string bio="", string photo="", string email="")  
         {
             _dataService.EditUser(username, bio, photo, email);
             return Ok();

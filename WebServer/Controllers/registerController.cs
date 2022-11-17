@@ -27,8 +27,8 @@ namespace WebServer.Controllers
         public IActionResult RegisterUser(string username, string password)
         {
             var registered = _dataService.RegisterUser(username, password);
-            if (registered) return Ok();
-            else return NotFound();
+            if (registered) return Ok($"User {username} registered succesfully");
+            else return NotFound($"unable to register user: {username}. Try again with a strong password.");
 
 
         }

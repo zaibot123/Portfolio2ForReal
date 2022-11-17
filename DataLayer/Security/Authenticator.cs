@@ -110,7 +110,7 @@ namespace DataLayer.Security
 
         virtual public string sqlInsertUserRecord(string username, string salt, string hashedpassword)
         {
-            return "insert into password values ("
+            return "insert into users (username,salt,hashed_password) values ("
                              + "'" + username + "',"
                              + "'" + salt + "',"
                              + "'" + hashedpassword + "'"
