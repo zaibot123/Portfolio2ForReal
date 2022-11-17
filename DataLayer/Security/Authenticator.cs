@@ -121,7 +121,7 @@ namespace DataLayer.Security
 
         virtual public string sqlSelectUserRecord(string username)
         {
-            return "select salt, hashed_password from password "
+            return "select salt, hashed_password from users "
                     + "where username = '" + username + "'";
         }
 

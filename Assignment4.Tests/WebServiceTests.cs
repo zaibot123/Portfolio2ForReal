@@ -23,7 +23,7 @@ namespace Assignment4.Tests
         [Fact]
         public void SimpleSearchWithValidUrl()
         {
-            var validsearchurl = "http://localhost:5001/api/movies?searchtype=simple&search=warrior";
+            var validsearchurl = "http://localhost:5001/api/movies?searchtype=simple&title=warrior";
             var (titles, statusCode) = GetObject(validsearchurl);
             Assert.Equal(HttpStatusCode.OK, statusCode);
         }
@@ -65,12 +65,11 @@ namespace Assignment4.Tests
         [Fact]
         public void ValidLogin()
         {
-            var validloginurl = "http://localhost:5001/api/user/login?username=Henrik&hashed_password=C0EB542D4EFFC7C41319AE19B6D28EC29FE0806F4318C77533D8AE323DC921ED";
+            var validloginurl = "http://localhost:5001/api/user/login?username=Henrik&hashed_password=F71AFC9F3FF38638EC539B8548A27AC97F0876732DD5E9CA0DF25BFB3EDF4D76";
             var (data, statusCode) = GetArray(validloginurl);
             Assert.Equal(HttpStatusCode.OK, statusCode);
             Assert.Equal("Henrik", data.First["userName"].ToString());
             Assert.Equal(1, data.Count);
-
         }
 
 
@@ -79,7 +78,7 @@ namespace Assignment4.Tests
         [Fact]
         public void ApiCoActors()
         {
-            const string ActorsApi = "http://localhost:5001/api/actors/Jennifer Aniston/coactors";
+            const string ActorsApi = "http://localhost:5001/api/actors/coactors/Jennifer Aniston";
             var (data, statusCode) = GetArray(ActorsApi);
 
 
@@ -99,7 +98,7 @@ namespace Assignment4.Tests
         {
             var invalidsimilarurl = "http://localhost:5001/actors/popular/tt1514122";
 
-            var (register, statusCode) = GetObject(invalidsimilarurl);
+            var (register, statusCode) = GetArray(invalidsimilarurl);
             Assert.Equal(HttpStatusCode.NotFound, statusCode);
 
         }

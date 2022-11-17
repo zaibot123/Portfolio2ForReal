@@ -15,6 +15,7 @@ namespace Assignment4.Tests
         /* Categories */
         private IMovieDataService _movieDataService;
         private IActorDataService _actorDataService;
+        private IuserDataService _userdataservice;
 
         [Fact]
         public void CrateEmptyActorsModelWithNullValue()
@@ -56,24 +57,21 @@ namespace Assignment4.Tests
             var name = result.First().TitleName;
             Assert.Equal("A Finished Life: The Goodbye & No Regrets Tour", name);
 
-
         }
 
         [Fact]
         public void LoginValid()
         {
-            var service = new Authenticator();
-            bool result = service.login("Henrik", "henrik1234");
-            Assert.True(result);
+            var x = _userdataservice.Login("Henrik", "F71AFC9F3FF38638EC539B8548A27AC97F0876732DD5E9CA0DF25BFB3EDF4D76");
+            Assert.Equal(0,x.Count);
         }
 
 
         [Fact]
         public void LoginInvalid()
         {
-            var service = new Authenticator();
-            bool result = service.login("1234", "henrik1234");
-            Assert.False(result);
+            var x = _userdataservice.Login("Henrik", "F71AFC9F3FF38638EC539B8548A27AC97F087732DD5E9CA0DF25BFB3EDF4D76");
+            Assert.Equal("False",x.ToString());
 
 
         }

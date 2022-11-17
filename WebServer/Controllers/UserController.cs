@@ -80,11 +80,14 @@ namespace WebServer.Controllers
         public IActionResult LoginUser(string username, string hashed_password)
         {
             var data = _dataService.Login(username, hashed_password);
-            Console.WriteLine(data[0].UserName.ToString());
-            if (username == data[0].UserName && hashed_password == data[0].HashedPassword) {
-                return Ok("Succes");
+            if (data.Count == 0)
+            {
+                return BadRequest();
             }
-            else
+            else if (username == data[0].UserName && hashed_password == data[0].HashedPassword) {
+                return Ok(data);
+            }
+            else 
             {
                 return BadRequest("Fail");
             }
