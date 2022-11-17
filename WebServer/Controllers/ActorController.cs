@@ -18,8 +18,6 @@ namespace WebServer.Controllers
         private readonly IMapper _mapper;
         private const int MaxPageSize = 20;
    
-
-
         public ActorController(IMovieDataService movieDataService, IActorDataService dataService, LinkGenerator generator, IMapper mapper)
         {
             _movieDataService = movieDataService;
@@ -27,8 +25,6 @@ namespace WebServer.Controllers
             _generator = generator;
             _mapper = mapper;
         }
-
-
 
 
         [HttpGet("{ID}",Name =nameof(getSingleProffesionalFromId))]
@@ -51,8 +47,6 @@ namespace WebServer.Controllers
         }
 
         
-
-
         [HttpGet("coactors/{name}", Name =nameof(getCoactors))]
         public IActionResult getCoactors(string name,int page=0, int pagesize=5)
         {
@@ -81,8 +75,6 @@ namespace WebServer.Controllers
             }
             Console.WriteLine(ProfList.Count);
             return Ok(ProfList);
-    
-
         }
 
         [HttpGet("words/{name}")]
@@ -107,7 +99,6 @@ namespace WebServer.Controllers
             }
             return Ok(WordList);
         }
-
 
 
         [HttpGet("popular/{title_id}")]
@@ -139,14 +130,11 @@ namespace WebServer.Controllers
             
         }
 
-
         private string? CreateLink(string endpoint, object? values)
         {
             return _generator.GetUriByName(
                 HttpContext,
                 endpoint, values);
         }
-
-
     }
 }

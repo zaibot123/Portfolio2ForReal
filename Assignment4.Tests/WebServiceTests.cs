@@ -73,16 +73,11 @@ namespace Assignment4.Tests
         }
 
 
-
-
         [Fact]
         public void ApiCoActors()
         {
             const string ActorsApi = "http://localhost:5001/api/actors/coactors/Jennifer Aniston";
             var (data, statusCode) = GetArray(ActorsApi);
-
-
-
             Assert.Equal(HttpStatusCode.OK, statusCode);
             Assert.Equal(10, data.Count);
             Assert.Equal("Courteney Cox", data.First()["name"].ToString());
@@ -97,7 +92,6 @@ namespace Assignment4.Tests
         public void PopularActorsInvalidID()
         {
             var invalidsimilarurl = "http://localhost:5001/actors/popular/tt1514122";
-
             var (register, statusCode) = GetArray(invalidsimilarurl);
             Assert.Equal(HttpStatusCode.NotFound, statusCode);
 

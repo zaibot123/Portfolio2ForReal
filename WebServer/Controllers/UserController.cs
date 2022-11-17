@@ -28,8 +28,6 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-
-
         [HttpGet("{username}")]
         public IActionResult GetSingleUser(string username)
         {
@@ -48,9 +46,6 @@ namespace WebServer.Controllers
 
             };
             return Ok(model);
-
-
-
         }
 
         [HttpGet()]
@@ -73,9 +68,6 @@ namespace WebServer.Controllers
             return Ok(UserList);
         }
 
-
-
-
         [HttpGet("login")]
         public IActionResult LoginUser(string username, string hashed_password)
         {
@@ -93,13 +85,13 @@ namespace WebServer.Controllers
             }
         }
 
-
         [HttpPatch("edit")]
         public IActionResult EditUser(string username, string hashed_password, string bio, string photo, string email)  
         {
             _dataService.EditUser(username, bio, photo, email);
             return Ok($"Succesfully updated all information for {username}");
         }
+
 
         [HttpPost("rate")]
         public IActionResult PostRating(string username, string title_id, int rating, string hashed_password)
@@ -125,8 +117,8 @@ namespace WebServer.Controllers
                 return Ok($"Succesfully deleted rating of {title_id} on behalf of {username}");
 
         }
-        [HttpGet("{username}/ratings")]
 
+        [HttpGet("{username}/ratings")]
         public IActionResult GetRatingsForPerson(string username)
         {
             var Ratings_for = $"{username}";
@@ -150,8 +142,5 @@ namespace WebServer.Controllers
             }
             return Ok(new { Ratings_for, RatingList });
         }
-
-
-
     }
 }

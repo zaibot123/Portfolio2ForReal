@@ -8,7 +8,6 @@ namespace DataLayer.Model
 {
     public  class Titles
     {
-
         public string TitleId { get; set; }
         public string TitleName { get; set; }
         public string? TitleType { get; set; }
@@ -20,7 +19,6 @@ namespace DataLayer.Model
         public bool? IsAdult { get; set; }
         public int? NrRatings { get; set; }
         public double? AvgRating { get; set; }
-
 
     }
 }

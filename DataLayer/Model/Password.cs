@@ -12,6 +12,5 @@ namespace DataLayer.Model
         public string Salt { get; set; }
         public string UserName { get; set; }
 
-
     }
 }

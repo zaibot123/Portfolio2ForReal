@@ -9,7 +9,6 @@ namespace DataLayer
 {
     public class  HelperMethods
     {
-
         public  string CreateSqlQueryForVariadic(string user_input, string function_name)
         {
             var u = user_input.Split(",").Select(x => "'" + x + "'");

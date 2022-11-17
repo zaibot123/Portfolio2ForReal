@@ -41,8 +41,6 @@ namespace DataLayer
 
         }
 
-      
-
         public IList<Professionals> GetPersonSearch(string user_input)
         {
             var username = "Troels";
@@ -58,8 +56,6 @@ namespace DataLayer
             return db.Professionals.FromSqlInterpolated($"select * from professionals where prof_id={ID}").FirstOrDefault();
 
         }
-
-
     }
 }
 

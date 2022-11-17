@@ -99,7 +99,6 @@ namespace DataLayer.Security
         }
 
         // check the password
-
         public virtual bool passwordIsOK(string password, string username)
         {
             if (password.Length >= 7 && !username.Contains(password)) return true;
@@ -107,7 +106,6 @@ namespace DataLayer.Security
         }
 
         // sqlSetUserRecord is used in register()
-
         virtual public string sqlInsertUserRecord(string username, string salt, string hashedpassword)
         {
             return "insert into users (username,salt,hashed_password) values ("
@@ -118,7 +116,6 @@ namespace DataLayer.Security
         }
 
         // sqlGetUserRecord is used in login()
-
         virtual public string sqlSelectUserRecord(string username)
         {
             return "select salt, hashed_password from users "

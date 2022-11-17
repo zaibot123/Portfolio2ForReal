@@ -73,7 +73,6 @@ namespace Assignment4.Tests
             var x = _userdataservice.Login("Henrik", "F71AFC9F3FF38638EC539B8548A27AC97F087732DD5E9CA0DF25BFB3EDF4D76");
             Assert.Equal("False",x.ToString());
 
-
         }
     }
 }

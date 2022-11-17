@@ -34,7 +34,6 @@ namespace DataLayer.DataServices
         }
 
 
-
         public IList<Password> Login(string username, string hashed_pass)
         {
             using var db = new IMDBcontext();
@@ -73,16 +72,12 @@ namespace DataLayer.DataServices
             return result;
         }
 
-
-
         public IList<User> GetAllUsers()
         {
             using var db = new IMDBcontext();
             var result = db.User.FromSqlInterpolated($"select * from users;").ToList(); ;
             return result;
         }
-
-
 
 
         public IList<RatingHistory> GetRatingHistory(string username)

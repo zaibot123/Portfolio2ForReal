@@ -12,6 +12,5 @@ namespace DataLayer.Interfaces
         IList<Professionals>? getStructuredPersonSearch(string name, string profession, string character);
         Professionals? GetSingleProfessionalFromID(string ID);
 
-
     }
 }

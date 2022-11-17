@@ -39,7 +39,6 @@ namespace DataLayer
 
             modelBuilder.Entity<Casting>().ToTable("casting");
             modelBuilder.Entity<Casting>().HasKey(x => new { x.TitleId, x.ProfId, x.Ordering });
-
             modelBuilder.Entity<Casting>().Property(x => x.TitleId).HasColumnName("title_id");
             modelBuilder.Entity<Casting>().Property(x => x.ProfId).HasColumnName("prof_id");
             modelBuilder.Entity<Casting>().Property(x => x.Ordering).HasColumnName("ordering");
@@ -66,15 +65,13 @@ namespace DataLayer
             modelBuilder.Entity<SearchResult>().Property(x => x.Plot).HasColumnName("plot");
             modelBuilder.Entity<SearchResult>().Property(x => x.Character).HasColumnName("characters");
             modelBuilder.Entity<SearchResult>().Property(x => x.ActorNames).HasColumnName("profname");
-
-            
+          
             modelBuilder.Entity<Professionals>().ToTable("professionals");
             modelBuilder.Entity<Professionals>().HasKey(x => new { x.ProfId});
             modelBuilder.Entity<Professionals>().Property(x => x.ProfId).HasColumnName("prof_id");
             modelBuilder.Entity<Professionals>().Property(x => x.ProfName).HasColumnName("prof_name");
             modelBuilder.Entity<Professionals>().Property(x => x.BirthYear).HasColumnName("birth_year");
             modelBuilder.Entity<Professionals>().Property(x => x.DeathYear).HasColumnName("death_year");
-           // modelBuilder.Entity<Professionals>().Property(x => x.ProfRating).HasColumnName("prof_rating");
 
             modelBuilder.Entity<Word>().HasNoKey();
             modelBuilder.Entity<Word>().Property(x => x.KeyWord).HasColumnName("words");
@@ -87,12 +84,10 @@ namespace DataLayer
             modelBuilder.Entity<Password>().Property(x => x.HashedPassword).HasColumnName("hashed_password");
             modelBuilder.Entity<Password>().Property(x => x.Salt).HasColumnName("salt");
 
-
             modelBuilder.Entity<Bookmark>().ToTable("bookmark");
             modelBuilder.Entity<Bookmark>().HasKey(x => new { x.UserName, x.TitleId });
             modelBuilder.Entity<Bookmark>().Property(x => x.UserName).HasColumnName("username");
             modelBuilder.Entity<Bookmark>().Property(x => x.TitleId).HasColumnName("title_id");
-
 
             modelBuilder.Entity<User>().ToTable("users");
             modelBuilder.Entity<User>().HasKey(x => new { x.UserName});
@@ -101,7 +96,6 @@ namespace DataLayer
             modelBuilder.Entity<User>().Property(x => x.Bio).HasColumnName("bio");
             modelBuilder.Entity<User>().Property(x => x.Email).HasColumnName("email");
 
-
             modelBuilder.Entity<RatingHistory>().ToTable("rating_history");
             modelBuilder.Entity<RatingHistory>().HasNoKey();
             modelBuilder.Entity<RatingHistory>().Property(x => x.Rating).HasColumnName("rating");
@@ -109,13 +103,11 @@ namespace DataLayer
             modelBuilder.Entity<RatingHistory>().Property(x => x.TitleId).HasColumnName("title_id");
             modelBuilder.Entity<RatingHistory>().Property(x => x.TitleName).HasColumnName("title_name");
 
-
             modelBuilder.Entity<TitleSimilarModel>().HasNoKey();
             modelBuilder.Entity<TitleSimilarModel>().Property(x => x.id).HasColumnName("title_id");
             modelBuilder.Entity<TitleSimilarModel>().Property(x => x.name).HasColumnName("title_name");
             modelBuilder.Entity<TitleSimilarModel>().Property(x => x.poster).HasColumnName("poster");
             modelBuilder.Entity<TitleSimilarModel>().Property(x => x.genre).HasColumnName("genre");
-
 
         }
     }

@@ -30,7 +30,6 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-
         private string? CreateLink(string endpoint, object TitleId)
         {
             return _generator.GetUriByName(
@@ -91,7 +90,6 @@ namespace WebServer.Controllers
             }
             return Ok(titles);
         }
-
 
 
         [HttpGet("{title_id}/similar")]
