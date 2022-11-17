@@ -44,7 +44,7 @@ namespace DataLayer.DataServices
             return result;
         }
 
-        public void EditUser(string username, string bio="", string photo="", string email="")
+        public void EditUser(string username, string bio, string photo, string email)
         {
             var db = new IMDBcontext();
             db.Database.ExecuteSqlInterpolated($"select * from update_function({username},{bio}, {photo},{email});");

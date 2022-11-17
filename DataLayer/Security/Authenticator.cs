@@ -13,7 +13,7 @@ namespace DataLayer.Security
         {
             try
             {
-                string s = "Host=localhost;Username=postgres;Password=1234;Database=imdb";
+                string s = "Host=localhost;Username=postgres;Password=Google-1234;Database=Movie";
                 con = new NpgsqlConnection(s);
                 con.Open();
             }

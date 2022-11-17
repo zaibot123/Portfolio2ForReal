@@ -95,7 +95,7 @@ namespace WebServer.Controllers
 
 
         [HttpPatch("edit")]
-        public IActionResult EditUser(string username, string hashed_password, string bio="", string photo="", string email="")  
+        public IActionResult EditUser(string username, string hashed_password, string bio, string photo, string email)  
         {
             _dataService.EditUser(username, bio, photo, email);
             return Ok($"Succesfully updated all information for {username}");

@@ -8,9 +8,9 @@ namespace DataLayer.Model
 {
     public class TitleSimilarModel
     {
-        public string genre { get; set; }
+        public string? genre { get; set; }
         public string id { get; set; }
         public string name { get; set; }
-        public string poster { get; set; }
+        public string? poster { get; set; }
     }
 }

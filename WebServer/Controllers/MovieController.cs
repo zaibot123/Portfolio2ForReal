@@ -124,11 +124,11 @@ namespace WebServer.Controllers
 
 
         [HttpPut("bookmark")]
-        public IActionResult AssignBookmark(string title_id, string username, string hashed_password)
+        public IActionResult AssignBookmark(string title_id, string username)
         {
             try
             {
-                _dataService.Bookmark(title_id, username, hashed_password);
+                _dataService.Bookmark(title_id, username);
                 return Ok($"201 created bookmark for {username}");
             }
             catch (Npgsql.PostgresException)
@@ -138,9 +138,9 @@ namespace WebServer.Controllers
         }
 
         [HttpDelete("bookmark")]
-        public IActionResult DeleteBookmark(string title_id, string username, string hashed_password)
+        public IActionResult DeleteBookmark(string title_id, string username)
         {
-            _dataService.DeleteBookmark(title_id, username,hashed_password);
+            _dataService.DeleteBookmark(title_id, username);
             return Ok($"204 deleted bookmark for {username}");
         }
 
