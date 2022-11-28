@@ -92,10 +92,8 @@ namespace WebServer.Controllers
                 {
                     Frequency= word.Frequency,
                     KeyWord=word.KeyWord
-
                 };
                 WordList.Add(model);
-
             }
             return Ok(WordList);
         }

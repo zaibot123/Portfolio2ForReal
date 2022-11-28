@@ -30,13 +30,6 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-        private string? CreateLink(string endpoint, object TitleId)
-        {
-            return _generator.GetUriByName(
-                HttpContext,
-                endpoint, TitleId);
-        }
-
 
         [HttpGet(Name = nameof(GetSearch))]
         public IActionResult GetSearch(string searchType, string title, string? plot = null,
@@ -48,12 +41,12 @@ namespace WebServer.Controllers
                 var result = _dataService.getStructuredSearch(title, plot, character, name);
                 return Ok(result);
             }
+
             else if (searchType == "simple")
             {
                 var total = _dataService.getSizeSimpleSearch("Troels", title);
                 var result = _dataService.GetSearch(title,page, pagesize);
-                var paging=SearchPaging<Titles>(page, pagesize, total, result, nameof(GetSearch),searchType,title);
-
+                
                 List<TitlesModel> TitleModelList = new List<TitlesModel>();
                
 
@@ -61,19 +54,21 @@ namespace WebServer.Controllers
                 {
                     return NotFound();
                 }
-
+                    
                 foreach (var movie in result)
                 {
-                    var ID = movie.TitleId;
+                    var titleID = movie.TitleId;    
                     var model = new TitlesModel
                     {
-                        URL = CreateLink(nameof(GetSingleMovie), new { ID }),
+                        URL = "http://localhost:5001/api/movies/"+titleID,
                         TitleName = movie.TitleName,
                         Poster = movie.Poster
                     };
                     TitleModelList.Add(model);
                 }
-                return Ok(TitleModelList);
+                Console.WriteLine(title);
+                var paging = SearchPaging<TitlesModel>(page, pagesize, total, TitleModelList, nameof(GetSearch), searchType, title);
+    
 
                 return Ok(paging);
             }
@@ -126,10 +121,11 @@ namespace WebServer.Controllers
 
             foreach (var movie in titles)
             {
-                Console.WriteLine(movie.ID.ToString()); 
+                var titleID = movie.ID;
+                Console.WriteLine(titleID);
                 var model = new TitlesModel
                 {
-                    URL = "http://localhost:5001/api/movies/" +movie.ID,
+                    URL = "http://localhost:5001/api/movies/" + titleID,
                     Poster = movie.Poster,
                     TitleName = movie.Name,
                 };
@@ -163,24 +159,24 @@ namespace WebServer.Controllers
 
 
 
-        private string? CreatePageLink(int page, int pageSize, string endpoint, string searchtype, string search)
+        private string? CreatePageLink(int page, int pageSize, string endpoint, string searchtype, string title)
         {
             return _generator.GetUriByName(
                 HttpContext,
-                endpoint, new {searchtype, search,page, pageSize });
+                endpoint, new {searchtype, title,page, pageSize });
         }
 
-        private object SearchPaging<T>(int page, int pageSize, int total, IEnumerable<T> items, string endpoint, string searchtype, string search)
+        private object SearchPaging<T>(int page, int pageSize, int total, IEnumerable<T> items, string endpoint, string searchtype, string title)
         {
             pageSize = pageSize > maxPageSize ? maxPageSize : pageSize;
             var pages = (int)Math.Ceiling((double)total / (double)pageSize);
-            var first = CreatePageLink(0, pageSize, endpoint, searchtype,search);
+            var first = CreatePageLink(0, pageSize, endpoint, searchtype,title);
             var prev = page > 0
-                ? CreatePageLink(page - 1, pageSize,endpoint,searchtype,search)
+                ? CreatePageLink(page - 1, pageSize,endpoint,searchtype,title)
                 : null;
-            var current = CreatePageLink(page, pageSize, endpoint,searchtype,search);
+            var current = CreatePageLink(page, pageSize, endpoint,searchtype,title);
             var next = page < pages - 1
-                ? CreatePageLink(page + 1, pageSize,endpoint,searchtype,search)
+                ? CreatePageLink(page + 1, pageSize,endpoint,searchtype,title)
                 : null;
             var result = new
             {
