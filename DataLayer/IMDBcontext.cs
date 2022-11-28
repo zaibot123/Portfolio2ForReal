@@ -104,10 +104,10 @@ namespace DataLayer
             modelBuilder.Entity<RatingHistory>().Property(x => x.TitleName).HasColumnName("title_name");
 
             modelBuilder.Entity<TitleSimilarModel>().HasNoKey();
-            modelBuilder.Entity<TitleSimilarModel>().Property(x => x.id).HasColumnName("title_id");
-            modelBuilder.Entity<TitleSimilarModel>().Property(x => x.name).HasColumnName("title_name");
-            modelBuilder.Entity<TitleSimilarModel>().Property(x => x.poster).HasColumnName("poster");
-            modelBuilder.Entity<TitleSimilarModel>().Property(x => x.genre).HasColumnName("genre");
+            modelBuilder.Entity<TitleSimilarModel>().Property(x => x.ID).HasColumnName("title_id");
+            modelBuilder.Entity<TitleSimilarModel>().Property(x => x.Name).HasColumnName("title_name");
+            modelBuilder.Entity<TitleSimilarModel>().Property(x => x.Poster).HasColumnName("poster");
+           
 
         }
     }

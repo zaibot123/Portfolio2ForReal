@@ -12,6 +12,6 @@ namespace DataLayer.Model
         public string URL { get; set; }
         public string TitleName { get; set; }
         public string? Poster { get; set; }
-        public string genre { get; set; }
+
     }
 }

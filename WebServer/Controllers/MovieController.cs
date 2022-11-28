@@ -54,6 +54,27 @@ namespace WebServer.Controllers
                 var result = _dataService.GetSearch(title,page, pagesize);
                 var paging=SearchPaging<Titles>(page, pagesize, total, result, nameof(GetSearch),searchType,title);
 
+                List<TitlesModel> TitleModelList = new List<TitlesModel>();
+               
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                foreach (var movie in result)
+                {
+                    var ID = movie.TitleId;
+                    var model = new TitlesModel
+                    {
+                        URL = CreateLink(nameof(GetSingleMovie), new { ID }),
+                        TitleName = movie.TitleName,
+                        Poster = movie.Poster
+                    };
+                    TitleModelList.Add(model);
+                }
+                return Ok(TitleModelList);
+
                 return Ok(paging);
             }
 
@@ -105,14 +126,12 @@ namespace WebServer.Controllers
 
             foreach (var movie in titles)
             {
-                Console.WriteLine(movie.id.ToString()); 
+                Console.WriteLine(movie.ID.ToString()); 
                 var model = new TitlesModel
                 {
-                    URL = "http://localhost:5001/api/movies/" +movie.id,
-                    Poster = movie.poster,
-                    TitleName = movie.name,
-                    genre = movie.genre,
-                    
+                    URL = "http://localhost:5001/api/movies/" +movie.ID,
+                    Poster = movie.Poster,
+                    TitleName = movie.Name,
                 };
                 MovieList.Add(model);
             }
