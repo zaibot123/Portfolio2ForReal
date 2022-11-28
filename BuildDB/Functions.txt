@@ -27,7 +27,7 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000
+  ROWS 1000;
 	
 -------------------------------------------------
 
@@ -48,24 +48,24 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000
+  ROWS 1000;
 
 --------------------------------------------------
 
-CREATE OR REPLACE FUNCTION "public"."co_actors_function"("actor" varchar)
-  RETURNS TABLE("prof_id" varchar, "prof_name" varchar, "birth_year" varchar, "death_year" varchar, "frequency" varchar)
-  LANGUAGE sql VOLATILE
-  COST 100
-  ROWS 1000
-
+create or replace function co_actors_function(actor VARCHAR)
+returns table (prof_id VARCHAR,
+	          prof_name VARCHAR,
+						birth_year VARCHAR, 
+						death_year VARCHAR,
+	          frequency VARCHAR)
+language sql as
+$$
 (SELECT DISTINCT prof_id, prof_name, birth_year, death_year, "count"(*) as frequency from co_actors_view NATURAL JOIN has_professions NATURAL JOIN professionals WHERE title_id in
 (SELECT title_id FROM co_actors_view NATURAL JOIN casting WHERE prof_name = actor) and prof_name != actor
 GROUP BY prof_id, prof_name, birth_year, death_year
 ORDER BY frequency desc
 LIMIT 10);
-
-	
-
+$$;
 --------------------------------------------------
 
 
@@ -86,15 +86,10 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000
-	
-
-	
-	
+  ROWS 1000;
 
 	
 ---------------------------------------------------
-
 
 
 
@@ -122,7 +117,7 @@ end if;
 END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
-  COST 100
+  COST 100;
 	
 	
 	
@@ -157,7 +152,7 @@ RETURN QUERY EXECUTE q;
 END $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000
+  ROWS 1000;
 	
 	
 --------------------------------------------------------
@@ -180,7 +175,7 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000
+  ROWS 1000;
 	
 	
 ---------------------------------------------------------
@@ -199,7 +194,7 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000
+  ROWS 1000;
 	
 ----------------------------------------------------------
 
@@ -245,7 +240,7 @@ set avg_rating = avg_rating + ((select distinct rating_ from rating_history) - t
 END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
-  COST 100
+  COST 100;
 
 ----------------------------------------------------------------
 	
@@ -278,7 +273,7 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000
+  ROWS 1000;
 	
 	
 	
@@ -313,7 +308,7 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000
+  ROWS 1000;
 	
 	
 --------------------------------------------------------------------
@@ -333,7 +328,7 @@ WHERE title.title_name ILIKE CONCAT('%',user_input,'%') OR title.title_plot ILIK
 END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
-  COST 100
+  COST 100;
 	
 	
 --------------------------------------------------------------------
@@ -351,7 +346,7 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000
+  ROWS 1000;
 	
 --------------------------------------------------------------------
 
@@ -370,7 +365,7 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000
+  ROWS 1000;
 	
 	
 	
@@ -392,7 +387,7 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000
+  ROWS 1000;
 	
 	
 ---------------------------------------------------------------------
@@ -423,7 +418,7 @@ set photo=photo_ where username = username_;
 END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
-  COST 100
+  COST 100;
 	
 ------------------------------------------------------------------------
 
@@ -464,4 +459,4 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000
+  ROWS 1000;

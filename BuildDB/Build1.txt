@@ -1,0 +1,286 @@
+--DROP ALL TABLES
+
+DROP TABLE IF EXISTS rating_scale CASCADE;
+DROP TABLE IF EXISTS keyword_search CASCADE;
+DROP TABLE IF EXISTS name_rating_history CASCADE;
+DROP TABLE IF EXISTS rating_history CASCADE;
+DROP TABLE IF EXISTS search_history CASCADE;
+DROP TABLE IF EXISTS title_alias CASCADE;
+DROP TABLE IF EXISTS episode CASCADE;
+DROP TABLE IF EXISTS has_genre CASCADE;
+DROP TABLE IF EXISTS genres CASCADE;
+DROP TABLE IF EXISTS has_professions CASCADE;
+DROP TABLE IF EXISTS professions CASCADE;
+DROP TABLE IF EXISTS title_directors CASCADE;
+DROP TABLE IF EXISTS title_writers CASCADE;
+DROP TABLE IF EXISTS casting CASCADE;
+DROP TABLE IF EXISTS professionals CASCADE;
+DROP TABLE IF EXISTS title CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
+--CREATE TABLES
+
+DROP TABLE IF EXISTS title;
+CREATE TABLE title
+(
+title_id VARCHAR,
+title_name VARCHAR,
+title_type VARCHAR,
+poster VARCHAR,
+title_plot VARCHAR,
+start_year CHAR(4),
+end_year CHAR(4), 
+runtime INT4,
+is_adult BOOL,
+nr_ratings INT4,
+avg_rating NUMERIC(10,1),
+PRIMARY KEY (title_id)
+);
+
+--professionals TABLE
+DROP TABLE IF EXISTS professionals;
+CREATE TABLE professionals
+(
+prof_id VARCHAR,
+prof_name VARCHAR,
+birth_year CHAR(4),
+death_year CHAR(4),
+prof_rating NUMERIC(10,1),
+PRIMARY KEY (prof_id)
+);
+
+--professions TABLE
+DROP TABLE IF EXISTS professions;
+CREATE TABLE professions
+(
+profession VARCHAR,
+PRIMARY KEY (profession)
+);
+
+--has profession TABLE
+DROP TABLE IF EXISTS has_professions;
+CREATE TABLE has_professions
+(
+prof_id VARCHAR,
+profession VARCHAR,
+PRIMARY KEY (prof_id, profession),
+FOREIGN KEY (prof_id) REFERENCES professionals (prof_id)
+);
+
+--alias TABLE
+DROP TABLE IF EXISTS title_alias;
+CREATE TABLE title_alias
+(
+title_id VARCHAR,
+ordering INT4,
+alias_name VARCHAR,
+alias_language VARCHAR,
+region VARCHAR,
+is_original BOOL,
+PRIMARY KEY (title_id, ordering),
+FOREIGN KEY (title_id) REFERENCES title (title_id)
+);
+
+--episode TABLE
+DROP TABLE IF EXISTS episode;
+CREATE TABLE episode
+(
+episode_id VARCHAR,
+title_id VARCHAR,
+episode_nr INT4,
+season_nr INT4,
+PRIMARY KEY (episode_id),
+FOREIGN KEY (title_id) REFERENCES title (title_id)
+);
+
+--casting TABLE
+DROP TABLE IF EXISTS casting;
+CREATE TABLE casting
+(
+title_id VARCHAR,
+prof_id VARCHAR,
+ordering INT4,
+job_category VARCHAR,
+job VARCHAR,
+characters VARCHAR,
+PRIMARY KEY (title_id, prof_id, ordering),
+FOREIGN KEY (prof_id) REFERENCES professionals(prof_id),
+FOREIGN KEY (title_id) REFERENCES title(title_id)
+);
+
+
+--keyword_search TABLE
+DROP TABLE IF EXISTS keyword_search;
+CREATE TABLE keyword_search
+(
+title_id VARCHAR,
+keyword VARCHAR,
+field VARCHAR,
+lexeme VARCHAR,
+PRIMARY KEY (title_id, keyword, field),
+FOREIGN KEY (title_id) REFERENCES title(title_id)
+);
+
+--genres TABLE
+DROP TABLE IF EXISTS genres;
+CREATE TABLE genres
+(
+genre VARCHAR,
+PRIMARY KEY (genre)
+);
+
+--has_genre
+DROP TABLE IF EXISTS has_genre;
+CREATE TABLE has_genre
+(
+genre VARCHAR,
+title_id VARCHAR,
+PRIMARY KEY (genre, title_id),
+FOREIGN KEY (title_id) REFERENCES title(title_id)
+);
+
+--create TABLE title_directors
+DROP TABLE IF EXISTS title_directors;
+CREATE TABLE title_directors
+(
+title_id VARCHAR,
+director VARCHAR,
+PRIMARY KEY (title_id, director),
+FOREIGN KEY (director) REFERENCES professionals(prof_id),
+FOREIGN KEY (title_id) REFERENCES title(title_id)
+);
+
+--create TABLE title_writers
+DROP TABLE IF EXISTS title_writers;
+CREATE TABLE title_writers
+(
+title_id VARCHAR,
+writer VARCHAR,
+PRIMARY KEY (title_id, writer),
+FOREIGN KEY (writer) REFERENCES professionals(prof_id),
+FOREIGN KEY (title_id) REFERENCES title(title_id)
+);
+
+--create TABLE best_known_for
+DROP TABLE IF EXISTS best_known_for;
+CREATE TABLE best_known_for
+(
+prof_id VARCHAR,
+title_id VARCHAR,
+PRIMARY KEY (prof_id, title_id),
+FOREIGN KEY (prof_id) REFERENCES professionals(prof_id),
+FOREIGN KEY (title_id) REFERENCES title(title_id)
+);
+
+--INSERT INTO TABLES
+
+--Insert to title from title_basics som findes i omdb_data
+INSERT INTO title(title_id, title_name, start_year, end_year, is_adult, runtime, title_type, poster, title_plot)
+SELECT tconst, title_basics.primarytitle, title_basics.startyear, title_basics.endyear, title_basics.isadult, title_basics.runtimeminutes, title_basics.titletype, omdb_data.poster, omdb_data.plot
+FROM title_basics NATURAL JOIN omdb_data;
+
+--insert into title from title_basics som IKKE findes i omdb_data UDEN poster og plot
+INSERT INTO title(title_id, title_name, start_year, end_year, is_adult, runtime, title_type)
+SELECT tconst, title_basics.primarytitle, title_basics.startyear, title_basics.endyear, title_basics.isadult, title_basics.runtimeminutes, title_basics.titletype
+FROM (select * from title_basics
+where tconst not in(select tconst from omdb_data)) as title_basics;
+
+--insert into title_alias
+INSERT INTO title_alias(title_id, ordering, alias_name, alias_language, region, is_original)
+SELECT titleid, ordering, title, language, region, isoriginaltitle
+FROM title_akas right OUTER JOIN title on title_id = titleid WHERE titleid is not null;
+
+-- insert into professions
+INSERT INTO professions(profession)
+select DISTINCT profession from
+(SELECT primaryprofession,
+UNNEST(STRING_TO_ARRAY(name_basics.primaryprofession, ',')) AS profession
+FROM name_basics) as foo;
+
+--insert into professionals
+INSERT INTO professionals
+SELECT nconst, primaryname, birthyear, deathyear
+FROM name_basics;
+
+--create view casted_in
+CREATE VIEW casted_in AS
+SELECT casting.prof_id, prof_name, title_id, title_name, avg_rating
+FROM casting NATURAL JOIN title INNER JOIN professionals on casting.prof_id = professionals.prof_id;
+
+--update professionals table med average
+UPDATE professionals
+SET prof_rating = avg from (SELECT prof_name, avg(avg_rating) from (SELECT * from casted_in) as foo WHERE prof_name = foo.prof_name GROUP BY prof_name) as temp where temp.prof_name = professionals.prof_name;
+
+--inser into has_professions
+INSERT INTO has_professions (prof_id, profession)
+select nconst, profession from
+(SELECT primaryprofession, nconst,
+UNNEST(STRING_TO_ARRAY(name_basics.primaryprofession, ',')) AS profession
+FROM name_basics) as foo;
+
+--insert into genres
+INSERT INTO genres(genre)
+select DISTINCT genre from
+(SELECT title_basics.genres,
+UNNEST(STRING_TO_ARRAY(title_basics.genres, ',')) AS genre
+FROM title_basics) as foo;
+
+--insert into has_genre
+INSERT INTO has_genre (genre, title_id)
+SELECT genre, tconst FROM
+(SELECT genres, tconst,
+UNNEST(STRING_TO_ARRAY(title_basics.genres, ',')) AS genre
+FROM title_basics)as foo;
+
+--INSERT INTO episode
+INSERT INTO episode(episode_id, title_id, episode_nr, season_nr)
+SELECT tconst, parenttconst, episodenumber, seasonnumber
+FROM title_episode;
+
+--INSERT INTO casting
+INSERT INTO casting(title_id, prof_id, ordering, job_category, job, characters)
+SELECT tconst, nconst, ordering, category, job, characters
+FROM (SELECT tconst, nconst, ordering, category, job, characters FROM title_principals
+WHERE nconst in (SELECT prof_id from professionals)) as foo;
+
+--INSERT INTO keyword_search
+INSERT INTO keyword_search(title_id, keyword, field, lexeme)
+SELECT tconst, word, field, lexeme
+FROM wi;
+
+-- insert into title_directors
+INSERT INTO title_directors(title_id, director)
+SELECT tconst, director FROM
+(SELECT tconst, UNNEST(STRING_TO_ARRAY(title_crew.directors, ',')) AS director
+FROM title_crew) AS foo
+WHERE director IN (SELECT prof_id FROM professionals);
+
+-- insert into title_writers
+INSERT INTO title_writers(title_id, writer)
+SELECT tconst, writer FROM
+(SELECT tconst, UNNEST(STRING_TO_ARRAY(title_crew.writers, ',')) AS writer
+FROM title_crew) AS foo
+WHERE writer IN (SELECT prof_id FROM professionals);
+
+--insert into best_known_for
+INSERT INTO best_known_for(prof_id, title_id)
+SELECT nconst, title_id FROM
+(SELECT nconst,
+UNNEST(STRING_TO_ARRAY(name_basics.knownfortitles, ',')) AS title_id
+FROM name_basics) AS foo
+WHERE title_id IN (SELECT title_id FROM title);
+
+--update title / insert nr_ratings & avg_rating from title_rating	
+UPDATE title
+SET nr_ratings = numvotes, avg_rating = averagerating
+FROM (SELECT tconst, title_id, numvotes,averagerating
+FROM title_ratings INNER JOIN title ON title_id = tconst) AS foo
+WHERE tconst = title.title_id;
+
+--create co_actors_view
+DROP VIEW IF EXISTS co_actors_view;
+CREATE VIEW co_actors_view AS
+SELECT casting.title_id, casting.prof_id, professionals.prof_name
+FROM casting RIGHT OUTER JOIN professionals ON casting.prof_id = professionals.prof_id
+GROUP BY casting.prof_id, prof_name, title_id;
+
