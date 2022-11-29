@@ -2,6 +2,6 @@
 {
     public class HasGenreModel
     {
-        public string? Genre { get; set; }
+        public IList<string>? Genre { get; set; }
     }
 }
