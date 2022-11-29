@@ -202,10 +202,12 @@ namespace WebServer.Controllers
 
             foreach (var genre in genres)
             {
+                Console.WriteLine(genre.Genre);
                 var model = new HasGenreModel
                 {
                     Genre = genre.Genre
                 };
+
                 GenreList.Add(model);
             }
 

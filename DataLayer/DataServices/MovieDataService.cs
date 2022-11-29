@@ -117,10 +117,12 @@ namespace DataLayer
         public IList<HasGenre>? getGenresForTitle(string ID)
         {
             using var db = new IMDBcontext();
-            var result = db.HasGenre.FromSqlInterpolated($"select * from genre_function({ID})");
+            var result = db.HasGenre.FromSqlInterpolated($"select * from has_genre WHERE has_genre.title_id={ID};");
+           
            foreach (var genre in result)
             {
                 Console.WriteLine(genre.Genre);
+                
             }
             return result.ToList();
         }

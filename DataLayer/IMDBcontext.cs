@@ -109,11 +109,9 @@ namespace DataLayer
             modelBuilder.Entity<TitleSimilarModel>().Property(x => x.Name).HasColumnName("title_name");
             modelBuilder.Entity<TitleSimilarModel>().Property(x => x.Poster).HasColumnName("poster");
 
+            modelBuilder.Entity<HasGenre>().HasNoKey();
             modelBuilder.Entity<HasGenre>().ToTable("has_genre");
-            modelBuilder.Entity<HasGenre>().HasKey(x =>  x.TitleId);
-            modelBuilder.Entity<HasGenre>().Property(x => x.TitleId).HasColumnName("title_id");
             modelBuilder.Entity<HasGenre>().Property(x => x.Genre).HasColumnName("genre");
-        
 
         }
     }
