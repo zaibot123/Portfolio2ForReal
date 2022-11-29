@@ -32,8 +32,8 @@ namespace WebServer.Controllers
 
 
         [HttpGet(Name = nameof(GetSearch))]
-        public IActionResult GetSearch(string searchType, string title, string? ID = null, string? plot = null,
-                  string? character = null, string? name = null, int page=0, int pagesize=10)
+        public IActionResult GetSearch(string searchType, string title, string? ID = null, string? plot = "",
+                  string? character = "", string? name = "", int page=0, int pagesize=10)
 
         {
             if (searchType == "structured")
@@ -41,8 +41,8 @@ namespace WebServer.Controllers
                 //var result = _dataService.getStructuredSearch(title, plot, character, name);
                 //return Ok(result);
 
-                var total = _dataService.getSizeSimpleSearch("Troels", title);
-                var result = _dataService.getStructuredSearch(title, ID, plot, character, name);
+                var total = 100;
+                var result = _dataService.getStructuredSearch(title, plot, character, name, page, pagesize);
 
                 List<TitlesModel> TitleModelList = new List<TitlesModel>();
 
@@ -64,7 +64,7 @@ namespace WebServer.Controllers
                     TitleModelList.Add(model);
                 }
                 Console.WriteLine(title);
-                var paging = SearchPaging<TitlesModel>(page, pagesize, total, TitleModelList, nameof(GetSearch), searchType, title);
+                var paging = SearchPaging<TitlesModel>(page, pagesize, total, TitleModelList, nameof(GetSearch), searchType, title, plot, character, name);
 
 
                 return Ok(paging);
@@ -206,24 +206,37 @@ namespace WebServer.Controllers
         }
 
 
-        private string? CreatePageLink(int page, int pageSize, string endpoint, string searchtype, string title)
+        private string? CreatePageLink(int page, int pageSize, string endpoint, string searchtype, string title, string plot, string characters, string name)
         {
-            return _generator.GetUriByName(
+            if (searchtype == "simple")
+            {
+
+                return _generator.GetUriByName(
+                    HttpContext,
+                    endpoint, new { searchtype, title, page, pageSize });
+            }
+
+            else if (searchtype == "structured")
+            {
+                return _generator.GetUriByName(
                 HttpContext,
-                endpoint, new {searchtype, title,page, pageSize });
+                endpoint, new { searchtype, title, plot, characters, name, page, pageSize});
+            }
+            else return null;
         }
 
-        private object SearchPaging<T>(int page, int pageSize, int total, IEnumerable<T> items, string endpoint, string searchtype, string title)
+        private object SearchPaging<T>(int page, int pageSize, int total, IEnumerable<T> items, string endpoint, 
+            string searchtype, string title, string plot="", string characters= "", string name="")
         {
             pageSize = pageSize > maxPageSize ? maxPageSize : pageSize;
             var pages = (int)Math.Ceiling((double)total / (double)pageSize);
-            var first = CreatePageLink(0, pageSize, endpoint, searchtype,title);
+            var first = CreatePageLink(0, pageSize, endpoint, searchtype,title, plot, characters, name);
             var prev = page > 0
-                ? CreatePageLink(page - 1, pageSize,endpoint,searchtype,title)
+                ? CreatePageLink(page - 1, pageSize,endpoint,searchtype,title, plot, characters, name)
                 : null;
-            var current = CreatePageLink(page, pageSize, endpoint,searchtype,title);
+            var current = CreatePageLink(page, pageSize, endpoint,searchtype,title, plot, characters, name);
             var next = page < pages - 1
-                ? CreatePageLink(page + 1, pageSize,endpoint,searchtype,title)
+                ? CreatePageLink(page + 1, pageSize,endpoint,searchtype,title, plot, characters, name)
                 : null;
             var result = new
             {

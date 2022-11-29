@@ -8,7 +8,7 @@ namespace DataLayer.Interfaces
         IList<Titles>? getTitles(string name);
         IList<Titles>? GetSearch(string user_input, int page, int pagesize);
         IList<TitleSimilarModel>? getSimilarMovies(string user_input);
-        IList<SearchResult>? getStructuredSearch(string title, string ID, string plot, string character, string name);
+        IList<SearchResult>? getStructuredSearch(string title, string plot, string character, string name, int page, int pagesize);
         IList<Titles>? GetBestMatch(string user_input);
         IList<Titles>? GetExcactSearch(string user_input);
         IList<Word>? GetWordToWord(string user_input);

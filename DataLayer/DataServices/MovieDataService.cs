@@ -27,10 +27,10 @@ namespace DataLayer
                 .ToList();
         }
 
-        public IList<SearchResult>? getStructuredSearch(string ID, string title, string plot, string character, string name)
+        public IList<SearchResult>? getStructuredSearch( string title, string plot, string character, string name, int page, int pagesize)
         {
             using var db = new IMDBcontext();
-            var result = db.SearchResult.FromSqlInterpolated($"select * from structured_search({ID},{title}, {plot}, {character},{name})").ToList();
+            var result = db.SearchResult.FromSqlInterpolated($"select * from structured_search({title}, {plot}, {character},{name},{page},{pagesize})").ToList();
             return result;
         }
 

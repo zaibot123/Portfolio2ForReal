@@ -15,7 +15,9 @@ builder.Services.AddSingleton<IuserDataService, UserDataService>();
 
 var app = builder.Build();
 
-
+app.UseCors(
+    options =>
+    options.WithOrigins("*").AllowAnyMethod().AllowAnyHeader());
 
 app.MapControllers();
 
