@@ -27,10 +27,10 @@ namespace DataLayer
                 .ToList();
         }
 
-        public IList<SearchResult>? getStructuredSearch( string title, string plot, string character, string name, int page, int pagesize)
+        public IList<TitleSimilarModel>? getStructuredSearch( string title, string plot, string character, string name, int page, int pagesize)
         {
             using var db = new IMDBcontext();
-            var result = db.SearchResult.FromSqlInterpolated($"select * from structured_search({title}, {plot}, {character},{name},{page},{pagesize})").ToList();
+            var result = db.TitlesSimilarModels.FromSqlInterpolated($"select * from structured_search({title}, {plot}, {character},{name},{page},{pagesize})").ToList();
             return result;
         }
 
@@ -110,6 +110,16 @@ namespace DataLayer
             var con=(NpgsqlConnection)db.Database.GetDbConnection();
             con.Open();
             using var cmd = new NpgsqlCommand($"select simple_search_count('{user}','{search}')", con);
+            return (int)cmd.ExecuteScalar();
+
+        }
+
+        public int getSizeStructuredSearch(string search, string plot, string name, string characters)
+        {
+            using var db = new IMDBcontext();
+            var con = (NpgsqlConnection)db.Database.GetDbConnection();
+            con.Open();
+            using var cmd = new NpgsqlCommand($"select structured_search_count('{search}','{plot}','{characters}','{name}')", con);
             return (int)cmd.ExecuteScalar();
 
         }

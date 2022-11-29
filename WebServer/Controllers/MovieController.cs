@@ -33,7 +33,7 @@ namespace WebServer.Controllers
 
         [HttpGet(Name = nameof(GetSearch))]
         public IActionResult GetSearch(string searchType, string title, string? ID = null, string? plot = "",
-                  string? character = "", string? name = "", int page=0, int pagesize=10)
+                  string? characters = "", string? name = "", int page=0, int pagesize=10)
 
         {
             if (searchType == "structured")
@@ -41,8 +41,10 @@ namespace WebServer.Controllers
                 //var result = _dataService.getStructuredSearch(title, plot, character, name);
                 //return Ok(result);
 
-                var total = 100;
-                var result = _dataService.getStructuredSearch(title, plot, character, name, page, pagesize);
+                var total = _dataService.getSizeStructuredSearch(title, plot, characters, name);
+                Console.WriteLine(total);
+                Console.WriteLine("TOTAL");
+                var result = _dataService.getStructuredSearch(title, plot, characters, name, page, pagesize);
 
                 List<TitlesModel> TitleModelList = new List<TitlesModel>();
 
@@ -54,17 +56,17 @@ namespace WebServer.Controllers
 
                 foreach (var movie in result)
                 {
-                    var titleID = movie.TitleId;
                     var model = new TitlesModel
                     {
-                        URL = "http://localhost:5001/api/movies/" + titleID,
-                        TitleName = movie.TitleName,
+                        URL = "http://localhost:5001/api/movies/" + movie.ID,
+                        TitleName = movie.Name,
+                        Poster=movie.Poster
                        
                     };
                     TitleModelList.Add(model);
                 }
                 Console.WriteLine(title);
-                var paging = SearchPaging<TitlesModel>(page, pagesize, total, TitleModelList, nameof(GetSearch), searchType, title, plot, character, name);
+                var paging = SearchPaging<TitlesModel>(page, pagesize, (int)total, TitleModelList, nameof(GetSearch), searchType, title, plot, characters, name);
 
 
                 return Ok(paging);
