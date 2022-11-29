@@ -19,6 +19,5 @@ namespace DataLayer.Model
         public bool? IsAdult { get; set; }
         public int? NrRatings { get; set; }
         public double? AvgRating { get; set; }
-
     }
 }

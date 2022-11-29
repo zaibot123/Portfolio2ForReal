@@ -27,10 +27,10 @@ namespace DataLayer
                 .ToList();
         }
 
-        public IList<SearchResult>? getStructuredSearch(string title, string plot, string character, string name)
+        public IList<SearchResult>? getStructuredSearch(string ID, string title, string plot, string character, string name)
         {
             using var db = new IMDBcontext();
-            var result = db.SearchResult.FromSqlInterpolated($"select * from structured_search({title}, {plot}, {character},{name})").ToList();
+            var result = db.SearchResult.FromSqlInterpolated($"select * from structured_search({ID},{title}, {plot}, {character},{name})").ToList();
             return result;
         }
 
@@ -112,6 +112,17 @@ namespace DataLayer
             using var cmd = new NpgsqlCommand($"select simple_search_count('{user}','{search}')", con);
             return (int)cmd.ExecuteScalar();
 
+        }
+
+        public IList<HasGenre>? getGenresForTitle(string ID)
+        {
+            using var db = new IMDBcontext();
+            var result = db.HasGenre.FromSqlInterpolated($"select * from genre_function({ID})");
+           foreach (var genre in result)
+            {
+                Console.WriteLine(genre.Genre);
+            }
+            return result.ToList();
         }
 
     }

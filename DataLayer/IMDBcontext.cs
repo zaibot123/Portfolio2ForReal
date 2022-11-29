@@ -9,7 +9,7 @@ namespace DataLayer
 
         //TEEEEST
     {
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
+        const string ConnectionString = "host=localhost;db=Movie;uid=postgres;pwd=Google-1234";
         public DbSet<Casting>? Casting { get; set; }
         public DbSet<Bookmark>? Bookmark { get; set; }
         public DbSet<Password>? Password { get; set; }
@@ -20,7 +20,7 @@ namespace DataLayer
         public DbSet<Word>? WordModel { get; set; }
         public DbSet<RatingHistory>? RatingHistory { get; set; }
         public DbSet<User>? User { get; set; }
-
+        public DbSet<HasGenre> HasGenre { get; set; }
         public DbSet<TitleSimilarModel>? TitlesSimilarModels { get; set; }
 
 
@@ -61,11 +61,12 @@ namespace DataLayer
             modelBuilder.Entity<Titles>().Property(x => x.AvgRating).HasColumnName("avg_rating");
 
             modelBuilder.Entity<SearchResult>().HasNoKey();
-            modelBuilder.Entity<SearchResult>().Property(x => x.Title).HasColumnName("title");
+            modelBuilder.Entity<SearchResult>().Property(x => x.TitleName).HasColumnName("title");
             modelBuilder.Entity<SearchResult>().Property(x => x.Plot).HasColumnName("plot");
             modelBuilder.Entity<SearchResult>().Property(x => x.Character).HasColumnName("characters");
             modelBuilder.Entity<SearchResult>().Property(x => x.ActorNames).HasColumnName("profname");
-          
+            modelBuilder.Entity<SearchResult>().Property(x => x.TitleId).HasColumnName("title_id");
+
             modelBuilder.Entity<Professionals>().ToTable("professionals");
             modelBuilder.Entity<Professionals>().HasKey(x => new { x.ProfId});
             modelBuilder.Entity<Professionals>().Property(x => x.ProfId).HasColumnName("prof_id");
@@ -107,7 +108,12 @@ namespace DataLayer
             modelBuilder.Entity<TitleSimilarModel>().Property(x => x.ID).HasColumnName("title_id");
             modelBuilder.Entity<TitleSimilarModel>().Property(x => x.Name).HasColumnName("title_name");
             modelBuilder.Entity<TitleSimilarModel>().Property(x => x.Poster).HasColumnName("poster");
-           
+
+            modelBuilder.Entity<HasGenre>().ToTable("has_genre");
+            modelBuilder.Entity<HasGenre>().HasKey(x =>  x.TitleId);
+            modelBuilder.Entity<HasGenre>().Property(x => x.TitleId).HasColumnName("title_id");
+            modelBuilder.Entity<HasGenre>().Property(x => x.Genre).HasColumnName("genre");
+        
 
         }
     }

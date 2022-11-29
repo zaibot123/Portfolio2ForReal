@@ -8,7 +8,7 @@ namespace DataLayer.Interfaces
         IList<Titles>? getTitles(string name);
         IList<Titles>? GetSearch(string user_input, int page, int pagesize);
         IList<TitleSimilarModel>? getSimilarMovies(string user_input);
-        IList<SearchResult>? getStructuredSearch(string title, string plot, string character, string name);
+        IList<SearchResult>? getStructuredSearch(string title, string ID, string plot, string character, string name);
         IList<Titles>? GetBestMatch(string user_input);
         IList<Titles>? GetExcactSearch(string user_input);
         IList<Word>? GetWordToWord(string user_input);
@@ -16,5 +16,6 @@ namespace DataLayer.Interfaces
         IList<Titles> GetSingleMovieByID(string ID);
         int getSizeSimpleSearch(string user, string search);
         void DeleteBookmark(string title_id, string username);
+       IList<HasGenre> getGenresForTitle(string titles_id);
     }
 }

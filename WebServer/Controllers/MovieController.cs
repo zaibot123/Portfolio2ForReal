@@ -32,14 +32,44 @@ namespace WebServer.Controllers
 
 
         [HttpGet(Name = nameof(GetSearch))]
-        public IActionResult GetSearch(string searchType, string title, string? plot = null,
+        public IActionResult GetSearch(string searchType, string title, string? ID = null, string? plot = null,
                   string? character = null, string? name = null, int page=0, int pagesize=10)
 
         {
             if (searchType == "structured")
             {
-                var result = _dataService.getStructuredSearch(title, plot, character, name);
-                return Ok(result);
+                //var result = _dataService.getStructuredSearch(title, plot, character, name);
+                //return Ok(result);
+
+                var total = _dataService.getSizeSimpleSearch("Troels", title);
+                var result = _dataService.getStructuredSearch(title, ID, plot, character, name);
+
+                List<TitlesModel> TitleModelList = new List<TitlesModel>();
+
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                foreach (var movie in result)
+                {
+                    var titleID = movie.TitleId;
+                    var model = new TitlesModel
+                    {
+                        URL = "http://localhost:5001/api/movies/" + titleID,
+                        TitleName = movie.TitleName,
+                       
+                    };
+                    TitleModelList.Add(model);
+                }
+                Console.WriteLine(title);
+                var paging = SearchPaging<TitlesModel>(page, pagesize, total, TitleModelList, nameof(GetSearch), searchType, title);
+
+
+                return Ok(paging);
+
+
             }
 
             else if (searchType == "simple")
@@ -157,6 +187,30 @@ namespace WebServer.Controllers
             return Ok($"204 deleted bookmark for {username}");
         }
 
+
+        [HttpGet("genre/{title_id}")]
+        public IActionResult GetGenresForTitle(string title_id)
+        {
+
+            List<HasGenreModel> GenreList = new List<HasGenreModel>();
+            var genres =
+                _dataService.getGenresForTitle(title_id);
+            if (genres.Count == 0)
+            {
+                return NotFound("This title has no genre");
+            }
+
+            foreach (var genre in genres)
+            {
+                var model = new HasGenreModel
+                {
+                    Genre = genre.Genre
+                };
+                GenreList.Add(model);
+            }
+
+            return Ok(GenreList);
+        }
 
 
         private string? CreatePageLink(int page, int pageSize, string endpoint, string searchtype, string title)
