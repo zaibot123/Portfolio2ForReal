@@ -41,7 +41,7 @@ namespace Assignment4.Tests
         public void SimpleSearch()
         {
             var service = new MovieDataService();
-            IList<Titles>? result = (IList<Titles>?)service.GetSearch("dog", 0, 10);
+            IList<Titles>? result = (IList<Titles>?)service.GetSearch("troels","dog", 0, 10);
             var name = result.First().TitleName;
             Assert.Equal("10 jaar leuven kort", name);
 
@@ -53,7 +53,7 @@ namespace Assignment4.Tests
         public void SimpleSearchPaging()
         {
             var service = new MovieDataService();
-            IList<Titles>? result = (IList<Titles>?)service.GetSearch("dog", 1, 10);
+            IList<Titles>? result = (IList<Titles>?)service.GetSearch("troels","dog", 1, 10);
             var name = result.First().TitleName;
             Assert.Equal("A Finished Life: The Goodbye & No Regrets Tour", name);
 

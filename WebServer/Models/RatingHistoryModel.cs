@@ -2,7 +2,9 @@
 {
     public class RatingHistoryModel
     {
-        public int Rating { get; set; }
+        public double? Rating { get; set; }
         public string TitleName { get; set; }
+
+        public string URL { get; set; }
     }
 }

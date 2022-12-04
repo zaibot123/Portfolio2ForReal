@@ -32,7 +32,7 @@ namespace WebServer.Controllers
 
 
         [HttpGet(Name = nameof(GetSearch))]
-        public IActionResult GetSearch(string searchType, string title, string? ID = null, string? plot = "",
+        public IActionResult GetSearch(string username, string searchType, string title, string? ID = null, string? plot = "",
                   string? characters = "", string? name = "", int page=0, int pagesize=10)
 
         {
@@ -61,6 +61,7 @@ namespace WebServer.Controllers
                         URL = "http://localhost:5001/api/movies/" + movie.ID,
                         TitleName = movie.Name,
                         Poster=movie.Poster
+                
                        
                     };
                     TitleModelList.Add(model);
@@ -73,11 +74,11 @@ namespace WebServer.Controllers
 
 
             }
-
+                
             else if (searchType == "simple")
             {
                 var total = _dataService.getSizeSimpleSearch("Troels", title);
-                var result = _dataService.GetSearch(title,page, pagesize);
+                var result = _dataService.GetSearch(username, title,page, pagesize);
                 
                 List<TitlesModel> TitleModelList = new List<TitlesModel>();
                
@@ -93,8 +94,11 @@ namespace WebServer.Controllers
                     var model = new TitlesModel
                     {
                         URL = "http://localhost:5001/api/movies/"+titleID,
+                        ID=movie.TitleId,
                         TitleName = movie.TitleName,
-                        Poster = movie.Poster
+                        Poster = movie.Poster,
+                        Plot=movie.TitlePlot,
+                        
                     };
                     TitleModelList.Add(model);
                 }
@@ -131,7 +135,7 @@ namespace WebServer.Controllers
         public IActionResult GetSingleMovie(string title_id)
         {
             var titles =
-                _dataService.GetSingleMovieByID(title_id);
+                _dataService.GetSingleMovieByID(title_id);  
             if (titles.Count == 0)
             {
                 return NotFound();
@@ -205,6 +209,38 @@ namespace WebServer.Controllers
             }
 
             return Ok(genreModel);
+        }
+
+
+        [HttpGet("popular")]
+        public IActionResult getPopularMovies()
+        {
+
+            List<RatingHistoryModel> MovieRatingList = new List<RatingHistoryModel>();
+
+            var result =
+               _dataService.getPopularMovies();
+
+
+            if (result.Count == 0)
+            {
+                return NotFound("This title has no genre");
+            }
+
+            foreach (var item in result)
+            {
+                var movie = new RatingHistoryModel
+                {
+                    Rating = item.AvgRating,
+                    TitleName = item.Name,
+                    URL = "http://localhost:5001/api/movies/" + item.ID,
+                    
+
+
+                };
+                MovieRatingList.Add(movie);
+            }
+            return Ok(MovieRatingList.Where(c => c.Rating != null));
         }
 
 

@@ -30,7 +30,6 @@ namespace WebServer.Controllers
             if (registered) return Ok($"User {username} registered succesfully");
             else return NotFound($"unable to register user: {username}. Try again with a strong password.");
 
-
         }
     }
 }

@@ -13,6 +13,8 @@ namespace DataLayer
         public DbSet<Casting>? Casting { get; set; }
         public DbSet<Bookmark>? Bookmark { get; set; }
         public DbSet<Password>? Password { get; set; }
+
+        public DbSet<PopularMovies> PopularMovies { get; set; }
         public DbSet<Titles>? Titles { get; set; }
         public DbSet<Professionals>? Professionals { get; set; }
         public DbSet<SearchResult>? SearchResult { get; set; }
@@ -108,6 +110,12 @@ namespace DataLayer
             modelBuilder.Entity<TitleSimilarModel>().Property(x => x.ID).HasColumnName("title_id");
             modelBuilder.Entity<TitleSimilarModel>().Property(x => x.Name).HasColumnName("title_name");
             modelBuilder.Entity<TitleSimilarModel>().Property(x => x.Poster).HasColumnName("poster");
+
+            modelBuilder.Entity<PopularMovies>().HasNoKey();
+            modelBuilder.Entity<PopularMovies>().Property(x => x.ID).HasColumnName("title_id");
+            modelBuilder.Entity<PopularMovies>().Property(x => x.Name).HasColumnName("title_name");
+            modelBuilder.Entity<PopularMovies>().Property(x => x.Poster).HasColumnName("poster");
+            modelBuilder.Entity<PopularMovies>().Property(x => x.AvgRating).HasColumnName("avg_rating");
 
             modelBuilder.Entity<HasGenre>().HasNoKey();
             modelBuilder.Entity<HasGenre>().ToTable("has_genre");

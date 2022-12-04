@@ -34,9 +34,8 @@ namespace DataLayer
             return result;
         }
 
-        public IList<Titles> GetSearch(string user_input, int page,int pagesize)
+        public IList<Titles> GetSearch(string username, string user_input, int page,int pagesize)
         { 
-            var username = "Troels";
             using var db = new IMDBcontext();
             Console.WriteLine($" page: {page}");
             var result = db.Titles.FromSqlInterpolated($"select * from simple_search({username},{user_input},{page},{pagesize})").ToList();
@@ -130,6 +129,14 @@ namespace DataLayer
             var result = db.HasGenre.FromSqlInterpolated($"select * from genre_function({ID});").ToList();
             return result;
         }
+
+        public IList<PopularMovies>? getPopularMovies()
+        {
+            using var db = new IMDBcontext();
+            var result = db.PopularMovies.FromSqlInterpolated($"select avg_rating, title_id, title_name, poster from title order by avg_rating DESC limit 100").ToList();
+            return result;
+        }
+
 
     }
 }
