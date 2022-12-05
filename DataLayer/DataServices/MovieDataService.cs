@@ -133,7 +133,7 @@ namespace DataLayer
         public IList<PopularMovies>? getPopularMovies()
         {
             using var db = new IMDBcontext();
-            var result = db.PopularMovies.FromSqlInterpolated($"select avg_rating, title_id, title_name, poster from title order by avg_rating DESC limit 100").ToList();
+            var result = db.PopularMovies.FromSqlInterpolated($"select avg_rating, title_id, title_name, poster from title where avg_rating is not null order by avg_rating DESC limit 100").ToList();
             return result;
         }
 
