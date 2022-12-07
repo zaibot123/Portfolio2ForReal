@@ -32,7 +32,12 @@ namespace DataLayer.DataServices
             }
 
         }
-
+        public IList<Titles> getBookmarksFromUser(string username)
+        {
+            using var db = new IMDBcontext();
+            var result = db.Titles.FromSqlInterpolated($"Select * from bookmark natural join title where username = {username}").ToList();
+            return result;
+        }
 
         public IList<Password> Login(string username, string hashed_pass)
         {
@@ -87,6 +92,7 @@ namespace DataLayer.DataServices
             return result;
 
         }
+
     }
 
 }

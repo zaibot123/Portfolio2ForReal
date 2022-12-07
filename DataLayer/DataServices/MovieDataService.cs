@@ -89,6 +89,7 @@ namespace DataLayer
             using var db = new IMDBcontext();
             var result = db.Bookmark.FromSqlInterpolated($"Select * from bookmark_function({title_id}, {username})").ToList();
         }
+      
 
         public void DeleteBookmark(string username, string title_id)
         {

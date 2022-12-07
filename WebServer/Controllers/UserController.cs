@@ -39,7 +39,7 @@ namespace WebServer.Controllers
             }
             var model = new User
             {
-                Bio = user[0].UserName,
+                Bio = user[0].Bio,
                 Email = user[0].Email,
                 Photo = user[0].Photo,
                 UserName = user[0].UserName,
@@ -85,12 +85,25 @@ namespace WebServer.Controllers
             }
         }
 
+
+
+       
+
         [HttpPatch("edit")]
         public IActionResult EditUser(string username, string hashed_password, string bio, string photo, string email)  
         {
             _dataService.EditUser(username, bio, photo, email);
             return Ok($"Succesfully updated all information for {username}");
         }
+
+
+        [HttpGet("bookmarks/{username}")]
+        public IActionResult GetBookmarksFromUser(string username)
+        {
+            return Ok(_dataService.getBookmarksFromUser(username));
+        }
+
+        
 
 
         [HttpPost("rate")]

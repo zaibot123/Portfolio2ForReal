@@ -13,5 +13,6 @@ namespace DataLayer.Interfaces
         IList<RatingHistory> GetRatingHistory(string username);
         IList<User> GetSingleUser(string username);
         IList<User> GetAllUsers();
+        IList<Titles> getBookmarksFromUser(string username);
     }
 }
