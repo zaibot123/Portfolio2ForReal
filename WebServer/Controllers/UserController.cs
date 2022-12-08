@@ -42,7 +42,7 @@ namespace WebServer.Controllers
                 Bio = user[0].Bio,
                 Email = user[0].Email,
                 Photo = user[0].Photo,
-                UserName = user[0].UserName,
+                UserName = user[0].UserName
 
             };
             return Ok(model);

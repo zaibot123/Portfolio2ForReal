@@ -13,5 +13,8 @@ namespace DataLayer.Model
         public string? Photo { get; set; }
         public string? Bio { get; set; }
         public string? Email { get; set; }
+    
+
+
     }
 }
