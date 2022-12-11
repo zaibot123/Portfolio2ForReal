@@ -4,6 +4,7 @@ using DataLayer.Interfaces;
 using DataLayer.Model;
 using DataLayer.Security;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Nest;
 using System.Security.Cryptography.X509Certificates;
 using WebServer.Models;
@@ -100,8 +101,37 @@ namespace WebServer.Controllers
         [HttpGet("bookmarks/{username}")]
         public IActionResult GetBookmarksFromUser(string username)
         {
-            return Ok(_dataService.getBookmarksFromUser(username));
+         
+            var result = _dataService.getBookmarksFromUser(username);
+
+            List<TitlesModel> TitleModelList = new List<TitlesModel>();
+
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            foreach (var movie in result)
+            {
+                var titleID = movie.TitleId;
+                var model = new TitlesModel
+                {
+                    URL = "http://localhost:5001/api/movies/" + titleID,
+                    ID = movie.TitleId,
+                    TitleName = movie.TitleName,
+                    Poster = movie.Poster,
+                    Plot = movie.TitlePlot,
+
+                };
+                TitleModelList.Add(model);
+            }
+
+
+            return Ok(TitleModelList);
         }
+
+
 
         
 
