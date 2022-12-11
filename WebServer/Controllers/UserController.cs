@@ -128,7 +128,7 @@ namespace WebServer.Controllers
             }
 
 
-            return Ok(TitleModelList);
+            return Ok(_dataService.getBookmarksFromUser(username));
         }
 
 
@@ -178,7 +178,8 @@ namespace WebServer.Controllers
                 {
 
                     Rating = item.Rating,
-                    TitleName = item.TitleName
+                    TitleName = item.TitleName,
+                    URL = "http://localhost:5001/api/movies/" + item.TitleId
                 };
                 RatingList.Add(model);
                 Console.WriteLine(item);
