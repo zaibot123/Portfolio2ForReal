@@ -234,9 +234,7 @@ namespace WebServer.Controllers
                     Rating = item.AvgRating,
                     TitleName = item.Name,
                     URL = "http://localhost:5001/api/movies/" + item.ID,
-                    
-
-
+                    titleId = item.ID
                 };
                 MovieRatingList.Add(movie);
             }

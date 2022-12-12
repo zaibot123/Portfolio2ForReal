@@ -5,6 +5,8 @@
         public double? Rating { get; set; }
         public string TitleName { get; set; }
 
+        public string titleId { get; set; }
+
         public string URL { get; set; }
     }
 }
