@@ -88,7 +88,7 @@ namespace DataLayer.DataServices
         public IList<RatingHistory> GetRatingHistory(string username)
         {
             using var db = new IMDBcontext();
-            var result = db.RatingHistory.FromSqlInterpolated($"Select username,title_id,title_name,rating from rating_history natural join title where username={username}").ToList();
+            var result = db.RatingHistory.FromSqlInterpolated($"Select username,title_id,title_name,rating,poster from rating_history natural join title where username={username} order by rating desc").ToList();
             return result;
 
         }

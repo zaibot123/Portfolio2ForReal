@@ -224,7 +224,7 @@ namespace WebServer.Controllers
 
             if (result.Count == 0)
             {
-                return NotFound("This title has no genre");
+                return NotFound();
             }
 
             foreach (var item in result)
@@ -234,7 +234,9 @@ namespace WebServer.Controllers
                     Rating = item.AvgRating,
                     TitleName = item.Name,
                     URL = "http://localhost:5001/api/movies/" + item.ID,
-                    titleId = item.ID
+                    titleId = item.ID,
+                    Poster = item.Poster
+                   
                 };
                 MovieRatingList.Add(movie);
             }

@@ -164,27 +164,29 @@ namespace WebServer.Controllers
         [HttpGet("{username}/ratings")]
         public IActionResult GetRatingsForPerson(string username)
         {
-            var Ratings_for = $"{username}";
-            List<RatingHistoryModel> RatingList = new List<RatingHistoryModel>();
-            var data = _dataService.GetRatingHistory(username);
-            if (data.Count == 0)
+            List<TitlesModel> RatingList = new List<TitlesModel>();
+
+            var result = _dataService.GetRatingHistory(username);
+
+            if (result == null)
             {
-                return NotFound("No history found for " + username);
+                return NotFound();
             }
 
-            foreach (var item in data)
+            foreach (var movie in result)
             {
-                var model = new RatingHistoryModel
-                {
 
-                    Rating = item.Rating,
-                    TitleName = item.TitleName,
-                    URL = "http://localhost:5001/api/movies/" + item.TitleId
+                var model = new TitlesModel
+                {
+                    URL = "http://localhost:5001/api/movies/" + movie.TitleId,
+                    ID = movie.TitleId,
+                    TitleName = movie.TitleName,
+                    Poster = movie.Poster
+
                 };
                 RatingList.Add(model);
-                Console.WriteLine(item);
             }
-            return Ok(new { Ratings_for, RatingList });
+            return Ok(_dataService.GetRatingHistory(username));
         }
     }
 }
