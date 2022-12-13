@@ -118,7 +118,7 @@ namespace WebServer.Controllers
                 var model = new TitlesModel
                 {
                     URL = "http://localhost:5001/api/movies/" + titleID,
-                    ID = movie.TitleId,
+                    titleId = movie.TitleId,
                     TitleName = movie.TitleName,
                     Poster = movie.Poster,
                     Plot = movie.TitlePlot,
@@ -179,7 +179,7 @@ namespace WebServer.Controllers
                 var model = new TitlesModel
                 {
                     URL = "http://localhost:5001/api/movies/" + movie.TitleId,
-                    ID = movie.TitleId,
+                    titleId = movie.TitleId,
                     TitleName = movie.TitleName,
                     Poster = movie.Poster
 

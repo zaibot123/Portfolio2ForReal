@@ -94,7 +94,7 @@ namespace WebServer.Controllers
                     var model = new TitlesModel
                     {
                         URL = "http://localhost:5001/api/movies/"+titleID,
-                        ID=movie.TitleId,
+                        titleId=movie.TitleId,
                         TitleName = movie.TitleName,
                         Poster = movie.Poster,
                         Plot=movie.TitlePlot,
@@ -157,13 +157,13 @@ namespace WebServer.Controllers
 
             foreach (var movie in titles)
             {
-                var titleID = movie.ID;
-                Console.WriteLine(titleID);
+
                 var model = new TitlesModel
                 {
-                    URL = "http://localhost:5001/api/movies/" + titleID,
+                    URL = "http://localhost:5001/api/movies/" + movie.ID,
                     Poster = movie.Poster,
                     TitleName = movie.Name,
+                    titleId = movie.ID
                 };
                 MovieList.Add(model);
             }
