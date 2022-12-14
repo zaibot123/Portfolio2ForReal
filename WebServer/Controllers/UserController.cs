@@ -70,7 +70,7 @@ namespace WebServer.Controllers
         }
 
         [HttpGet("login")]
-        public IActionResult LoginUser(string username, string hashed_password)
+        public IActionResult GetLoginUser(string username, string hashed_password)
         {
             var data = _dataService.Login(username, hashed_password);
             if (data.Count == 0)
@@ -86,9 +86,29 @@ namespace WebServer.Controllers
             }
         }
 
+        [HttpPost("login")]
+        public IActionResult PostLoginUser(UserLoginModel userLoginModel)
+        {
 
 
-       
+            var data = _dataService.Login(userLoginModel.UserName, userLoginModel.Password);
+            if (data.Count == 0)
+            {
+                return BadRequest();
+            }
+            else if (userLoginModel.UserName == data[0].UserName && userLoginModel.Password == data[0].HashedPassword)
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return BadRequest("Fail");
+            }
+        }
+
+
+
+
 
         [HttpPatch("edit")]
         public IActionResult EditUser(string username, string hashed_password, string bio, string photo, string email)  

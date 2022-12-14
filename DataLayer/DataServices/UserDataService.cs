@@ -39,12 +39,12 @@ namespace DataLayer.DataServices
             return result;
         }
 
-        public IList<Password> Login(string username, string hashed_pass)
+        public IList<Password> Login(string username, string password)
         {
             using var db = new IMDBcontext();
-            var result = db.Password.FromSqlInterpolated($"select * from users where username = {username} and hashed_password = {hashed_pass};").ToList();
-            Console.WriteLine(result.ToString());
-            Console.WriteLine(result[0].UserName.ToString());
+            //convert password to hashed-password
+            var result = db.Password.FromSqlInterpolated($"select * from users where username = {username};").ToList();
+   
             return result;
         }
 
