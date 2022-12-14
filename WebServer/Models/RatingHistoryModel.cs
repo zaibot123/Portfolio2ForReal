@@ -7,10 +7,9 @@
 
         public string titleId { get; set; }
 
-        public string poster { get; set; }
+        public string Poster { get; set; }
 
         public string URL { get; set; }
 
-        public string Poster { get; set; }
     }
 }

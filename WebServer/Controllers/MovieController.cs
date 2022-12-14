@@ -77,7 +77,7 @@ namespace WebServer.Controllers
                 
             else if (searchType == "simple")
             {
-                var total = _dataService.getSizeSimpleSearch("Troels", title);
+                var total = _dataService.getSizeSimpleSearch(username, title);
                 var result = _dataService.GetSearch(username, title,page, pagesize);
                 
                 List<TitlesModel> TitleModelList = new List<TitlesModel>();
@@ -98,12 +98,13 @@ namespace WebServer.Controllers
                         TitleName = movie.TitleName,
                         Poster = movie.Poster,
                         Plot=movie.TitlePlot,
+                        Username = username
                         
                     };
                     TitleModelList.Add(model);
                 }
                 Console.WriteLine(title);
-                var paging = SearchPaging<TitlesModel>(page, pagesize, total, TitleModelList, nameof(GetSearch), searchType, title);
+                var paging = SearchPaging<TitlesModel>(page, pagesize, total, TitleModelList, nameof(GetSearch), searchType, title, username);
     
 
                 return Ok(paging);
@@ -234,7 +235,8 @@ namespace WebServer.Controllers
                     Rating = item.AvgRating,
                     TitleName = item.Name,
                     URL = "http://localhost:5001/api/movies/" + item.ID,
-                    titleId = item.ID
+                    titleId = item.ID,
+                    Poster = item.Poster
                 };
                 MovieRatingList.Add(movie);
             }
@@ -242,37 +244,37 @@ namespace WebServer.Controllers
         }
 
 
-        private string? CreatePageLink(int page, int pageSize, string endpoint, string searchtype, string title, string plot, string characters, string name)
+        private string? CreatePageLink(int page, int pageSize, string endpoint, string searchtype, string title, string plot, string characters, string name, string username)
         {
             if (searchtype == "simple")
             {
 
                 return _generator.GetUriByName(
                     HttpContext,
-                    endpoint, new { searchtype, title, page, pageSize });
-            }
+                    endpoint, new { searchtype, title, page, pageSize, username });
 
+            }
             else if (searchtype == "structured")
             {
                 return _generator.GetUriByName(
                 HttpContext,
-                endpoint, new { searchtype, title, plot, characters, name, page, pageSize});
+                endpoint, new { searchtype, title, plot, characters, name, page, pageSize });
             }
             else return null;
         }
 
         private object SearchPaging<T>(int page, int pageSize, int total, IEnumerable<T> items, string endpoint, 
-            string searchtype, string title, string plot="", string characters= "", string name="")
+            string searchtype, string title, string username, string plot="", string characters= "", string name="")
         {
             pageSize = pageSize > maxPageSize ? maxPageSize : pageSize;
             var pages = (int)Math.Ceiling((double)total / (double)pageSize);
-            var first = CreatePageLink(0, pageSize, endpoint, searchtype,title, plot, characters, name);
+            var first = CreatePageLink(0, pageSize, endpoint, searchtype,title, plot, characters, name, username);
             var prev = page > 0
-                ? CreatePageLink(page - 1, pageSize,endpoint,searchtype,title, plot, characters, name)
+                ? CreatePageLink(page - 1, pageSize,endpoint,searchtype,title, plot, characters, name, username)
                 : null;
-            var current = CreatePageLink(page, pageSize, endpoint,searchtype,title, plot, characters, name);
+            var current = CreatePageLink(page, pageSize, endpoint,searchtype,title, plot, characters, name, username);
             var next = page < pages - 1
-                ? CreatePageLink(page + 1, pageSize,endpoint,searchtype,title, plot, characters, name)
+                ? CreatePageLink(page + 1, pageSize,endpoint,searchtype,title, plot, characters, name, username)
                 : null;
             var result = new
             {

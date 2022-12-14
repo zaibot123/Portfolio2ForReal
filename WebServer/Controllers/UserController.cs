@@ -137,7 +137,7 @@ namespace WebServer.Controllers
 
 
         [HttpPost("rate")]
-        public IActionResult PostRating(string username, string title_id, int rating, string hashed_password)
+        public IActionResult PostRating(string username, string title_id, int rating)
         {
             try
             {
