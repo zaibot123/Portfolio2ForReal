@@ -70,20 +70,20 @@ namespace WebServer.Controllers
         }
 
         [HttpGet("login")]
-        public IActionResult GetLoginUser(string username, string hashed_password)
+        public void GetLoginUser(string username, string hashed_password)
         {
             var data = _dataService.Login(username, hashed_password);
-            if (data.Count == 0)
-            {
-                return BadRequest();
-            }
-            else if (username == data[0].UserName && hashed_password == data[0].HashedPassword) {
-                return Ok(data);
-            }
-            else 
-            {
-                return BadRequest("Fail");
-            }
+            //if (data.Count == 0)
+            //{
+            //    return BadRequest();
+            //}
+            //else if (username == data[0].UserName && hashed_password == data[0].HashedPassword) {
+            //    return Ok(data);
+            //}
+            //else 
+            //{
+            //    return BadRequest("Fail");
+            //}
         }
 
         [HttpPost("login")]
@@ -91,20 +91,18 @@ namespace WebServer.Controllers
         {
 
 
-            var data = _dataService.Login(userLoginModel.UserName, userLoginModel.Password);
-            if (data.Count == 0)
+            var isLoggedIn = _dataService.Login(userLoginModel.UserName, userLoginModel.Password);
+
+            if (isLoggedIn)
             {
-                return BadRequest();
-            }
-            else if (userLoginModel.UserName == data[0].UserName && userLoginModel.Password == data[0].HashedPassword)
-            {
-                return Ok(data);
+                return Ok();
             }
             else
             {
-                return BadRequest("Fail");
+                return BadRequest();
             }
         }
+        
 
 
 

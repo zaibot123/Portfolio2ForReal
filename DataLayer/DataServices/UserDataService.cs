@@ -39,13 +39,30 @@ namespace DataLayer.DataServices
             return result;
         }
 
-        public IList<Password> Login(string username, string password)
+        public bool Login(string username, string password)
         {
+            List<String> userNameHashedPassword = new List<String>();
             using var db = new IMDBcontext();
-            //convert password to hashed-password
+
+
+            Hashing hasher = new Hashing();
+
+
+
             var result = db.Password.FromSqlInterpolated($"select * from users where username = {username};").ToList();
-   
-            return result;
+            var hashed_password_from_user = hasher.hashSHA256(username, result[0].Salt);
+
+            Console.WriteLine(result[0].Salt + "SALT" + hashed_password_from_user);
+
+            if (hashed_password_from_user == result[0].HashedPassword && username == result[0].UserName)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         public void EditUser(string username, string bio, string photo, string email)
