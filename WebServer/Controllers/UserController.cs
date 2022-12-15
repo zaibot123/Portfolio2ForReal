@@ -69,33 +69,16 @@ namespace WebServer.Controllers
             return Ok(UserList);
         }
 
-        [HttpGet("login")]
-        public void GetLoginUser(string username, string hashed_password)
-        {
-            var data = _dataService.Login(username, hashed_password);
-            //if (data.Count == 0)
-            //{
-            //    return BadRequest();
-            //}
-            //else if (username == data[0].UserName && hashed_password == data[0].HashedPassword) {
-            //    return Ok(data);
-            //}
-            //else 
-            //{
-            //    return BadRequest("Fail");
-            //}
-        }
+ 
 
         [HttpPost("login")]
         public IActionResult PostLoginUser(UserLoginModel userLoginModel)
         {
-
-
-            var isLoggedIn = _dataService.Login(userLoginModel.UserName, userLoginModel.Password);
+            var isLoggedIn = _dataService.Login(userLoginModel.UserName.Trim(), userLoginModel.Password);
 
             if (isLoggedIn)
             {
-                return Ok();
+                return Ok("succes");
             }
             else
             {
