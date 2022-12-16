@@ -3,7 +3,7 @@ using DataLayer.Interfaces;
 using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
-
+using WebServer.Models;
 
 namespace WebServer.Controllers
 {
@@ -24,11 +24,12 @@ namespace WebServer.Controllers
         }
 
         [HttpPost()]
-        public IActionResult RegisterUser(string username, string password)
+        public IActionResult RegisterUser(RegisterModel registerModel)
         {
-            var registered = _dataService.RegisterUser(username, password);
-            if (registered) return Ok($"User {username} registered succesfully");
-            else return NotFound($"unable to register user: {username}. Try again with a strong password.");
+            var registered = _dataService.RegisterUser(registerModel.Username, registerModel.Password);
+
+            if (registered) return Ok($"User registered succesfully");
+            else return NotFound($"unable to register user. Try again.");
 
         }
     }
