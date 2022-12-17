@@ -65,11 +65,15 @@ namespace WebServer.Controllers
                var model = new ProfessionalsModel
                 {
                    
-                    URL = CreateLink(nameof(getSingleProffesionalFromId), new { ID }),
+                    //URL = CreateLink(nameof(getSingleProffesionalFromId), new { ID }),
                     Name = actor.ProfName,
                     BirthYear = actor.BirthYear,
                     DeathYear = actor.DeathYear,
-                   // Rating =actor.ProfRating
+                    ID = actor.ProfId,
+                    Characters = actor.Characters
+                   
+               
+                                       // Rating =actor.ProfRating
                 };
                 Console.WriteLine(model.URL);
                 ProfList.Add(model);
@@ -127,6 +131,37 @@ namespace WebServer.Controllers
                 }
             return Ok(ProfList);
             
+        }
+
+
+        [HttpGet("search/{user_input}")]
+        public IActionResult getSearchOfActors(string user_input)
+        {
+
+            List<ProfessionalsModel> ProfList = new List<ProfessionalsModel>();
+            var result = _dataService.GetPersonSearch(user_input);
+
+            if (result == null)
+            {
+                
+                return NotFound("hej");
+            }
+            foreach (var professionals in result)
+            {
+                var ID = professionals.ProfId;
+                var model = new ProfessionalsModel
+                {
+                    Name = professionals.ProfName,
+                    BirthYear = professionals.BirthYear,
+                    DeathYear = professionals.DeathYear,
+                    ID=professionals.ProfId,
+                    Characters = professionals.Characters
+                    
+                };
+                ProfList.Add(model);
+            }
+            return Ok(ProfList);
+
         }
 
         private string? CreateLink(string endpoint, object? values)

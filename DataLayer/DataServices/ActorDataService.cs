@@ -43,9 +43,9 @@ namespace DataLayer
 
         public IList<Professionals> GetPersonSearch(string user_input)
         {
-            var username = "Troels";
+           // var username = "Troels";
             using var db = new IMDBcontext();
-            var result = db.Professionals.FromSqlInterpolated($"select * from simple_search_person({username},{user_input})").ToList();
+            var result = db.Professionals.FromSqlInterpolated($"select * from simple_search_person({user_input})").ToList();
             return result;
         }
 

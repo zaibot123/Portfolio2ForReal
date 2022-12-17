@@ -75,6 +75,7 @@ namespace DataLayer
             modelBuilder.Entity<Professionals>().Property(x => x.ProfName).HasColumnName("prof_name");
             modelBuilder.Entity<Professionals>().Property(x => x.BirthYear).HasColumnName("birth_year");
             modelBuilder.Entity<Professionals>().Property(x => x.DeathYear).HasColumnName("death_year");
+            modelBuilder.Entity<Professionals>().Property(x => x.Characters).HasColumnName("characters");
 
             modelBuilder.Entity<Word>().HasNoKey();
             modelBuilder.Entity<Word>().Property(x => x.KeyWord).HasColumnName("words");

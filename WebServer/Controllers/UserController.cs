@@ -92,10 +92,10 @@ namespace WebServer.Controllers
 
 
         [HttpPatch("edit")]
-        public IActionResult EditUser(string username, string hashed_password, string bio, string photo, string email)  
+        public IActionResult EditUser(EditUserModel editUserModel)  
         {
-            _dataService.EditUser(username, bio, photo, email);
-            return Ok($"Succesfully updated all information for {username}");
+            _dataService.EditUser(editUserModel.UserName, editUserModel.Photo, editUserModel.Bio, editUserModel.Email);
+            return Ok($"Succesfully updated all information for {editUserModel.UserName}");
         }
 
 
@@ -153,7 +153,7 @@ namespace WebServer.Controllers
         }
 
         [HttpDelete("rate")]
-        public IActionResult DeleteRating(string username, string title_id, string hashed_password)
+        public IActionResult DeleteRating(string username, string title_id)
         {
 
              
