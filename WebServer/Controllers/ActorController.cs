@@ -43,42 +43,36 @@ namespace WebServer.Controllers
                 BirthYear = result.BirthYear,
                 DeathYear = result.DeathYear,
                 Name = result.ProfName,
+                Characters = result.Characters,
+                ID = result.ProfId
+
             };
             return Ok(model);
         }
 
-        
-        [HttpGet("coactors/{name}", Name =nameof(getCoactors))]
-        public IActionResult getCoactors(string name,int page=0, int pagesize=5)
+
+        [HttpGet("coactors/{name}", Name = nameof(getCoactors))]
+        public IActionResult getCoactors(string name, int page = 0, int pagesize = 5)
         {
-            List<ProfessionalsModel> ProfList = new List<ProfessionalsModel>();
-            var result=_dataService.getCoActors(name);
-            Console.WriteLine(_movieDataService.getSizeSimpleSearch("Troels", "dog"));
+            List<SimpleProfessionalsModel> ProfList = new List<SimpleProfessionalsModel>();
+            var result = _dataService.getCoActors(name);
+
             if (result == null)
             {
                 return NotFound();
             }
             foreach (var actor in result)
             {
-                Console.WriteLine(actor.ProfId);
-                var ID = actor.ProfId;
-               var model = new ProfessionalsModel
+
+                var model = new SimpleProfessionalsModel
                 {
-                   
-                    //URL = CreateLink(nameof(getSingleProffesionalFromId), new { ID }),
                     Name = actor.ProfName,
-                    BirthYear = actor.BirthYear,
-                    DeathYear = actor.DeathYear,
-                    ID = actor.ProfId,
-                    Characters = actor.Characters
-                   
-               
-                                       // Rating =actor.ProfRating
+                    ProfId = actor.ProfId
                 };
-                Console.WriteLine(model.URL);
+
                 ProfList.Add(model);
             }
-            Console.WriteLine(ProfList.Count);
+
             return Ok(ProfList);
         }
 

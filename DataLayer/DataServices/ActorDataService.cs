@@ -8,10 +8,10 @@ namespace DataLayer
 {
     public class ActorDataService : IActorDataService
     {
-            public IList<Professionals>? getCoActors(string actorname)
+            public IList<SimpleProfessionals>? getCoActors(string actorname)
         {
             using var db = new IMDBcontext();
-            var result = db.Professionals.FromSqlInterpolated($"select * from co_actors_function({actorname})").ToList();
+            var result = db.Professionals.FromSqlInterpolated($"select prof_name, prof_id from co_actors_function({actorname})").ToList();
             return result;
         }
 
@@ -53,7 +53,7 @@ namespace DataLayer
         {
             var username = "Troels";
             using var db = new IMDBcontext();
-            return db.Professionals.FromSqlInterpolated($"select * from professionals where prof_id={ID}").FirstOrDefault();
+            return db.Professionals.FromSqlInterpolated($"select * FROM professionals NATURAL JOIN casting where prof_id={ID}").FirstOrDefault();
 
         }
     }

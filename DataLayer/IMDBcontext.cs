@@ -13,6 +13,7 @@ namespace DataLayer
         public DbSet<Casting>? Casting { get; set; }
         public DbSet<Bookmark>? Bookmark { get; set; }
         public DbSet<Password>? Password { get; set; }
+        public DbSet<SimpleProfessionals> SimpleProfessionals { get; set; }
 
         public DbSet<PopularMovies> PopularMovies { get; set; }
         public DbSet<Titles>? Titles { get; set; }
