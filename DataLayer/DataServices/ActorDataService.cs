@@ -8,10 +8,10 @@ namespace DataLayer
 {
     public class ActorDataService : IActorDataService
     {
-            public IList<SimpleProfessionals>? getCoActors(string actorname)
+        public IList<SimpleProfessionals>? getCoActors(string actorId)
         {
             using var db = new IMDBcontext();
-            var result = db.Professionals.FromSqlInterpolated($"select prof_name, prof_id from co_actors_function({actorname})").ToList();
+            var result = db.SimpleProfessionals.FromSqlInterpolated($"select prof_name, prof_id from co_actors_function({actorId})").ToList();
             return result;
         }
 
@@ -55,6 +55,24 @@ namespace DataLayer
             using var db = new IMDBcontext();
             return db.Professionals.FromSqlInterpolated($"select * FROM professionals NATURAL JOIN casting where prof_id={ID}").FirstOrDefault();
 
+        }
+
+        IList<Characters>? IActorDataService.getCharacters(string prof_id)
+        {
+            using var db = new IMDBcontext();
+            return db.Characters.FromSqlInterpolated($"select * FROM list_of_characters({prof_id});").ToList();
+        }
+
+        IList<TitleName>? IActorDataService.getBestKnownFor(string prof_id)
+        {
+            using var db = new IMDBcontext();
+            return db.TitleNames.FromSqlInterpolated($"select * FROM list_of_bestknownfor({prof_id});").ToList();
+        }
+
+        IList<Profession>? IActorDataService.getProfessions(string prof_id)
+        {
+            using var db = new IMDBcontext();
+            return db.Profession.FromSqlInterpolated($"select * FROM list_of_professions({prof_id});").ToList();
         }
     }
 }

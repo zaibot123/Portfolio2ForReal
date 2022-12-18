@@ -12,7 +12,7 @@ namespace DataLayer
     public class MovieDataService : IMovieDataService
     {
 
-        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
+
        public IList<Titles>? getTitles(string name)
         {
             using var db = new IMDBcontext();
@@ -124,17 +124,18 @@ namespace DataLayer
 
         }
 
-        public IList<HasGenre> getGenresForTitle(string ID)
-        {
-            using var db = new IMDBcontext();
-            var result = db.HasGenre.FromSqlInterpolated($"select * from genre_function({ID});").ToList();
-            return result;
-        }
 
         public IList<PopularMovies>? getPopularMovies()
         {
             using var db = new IMDBcontext();
             var result = db.PopularMovies.FromSqlInterpolated($"select avg_rating, title_id, title_name, poster from title where avg_rating is not null and title_type = 'movie' order by avg_rating DESC limit 100").ToList();
+            return result;
+        }
+
+        IList<HasGenre>? IMovieDataService.getGenre(string prof_id)
+        {
+            using var db = new IMDBcontext();
+            var result = db.HasGenre.FromSqlInterpolated($"select * from genre_function({prof_id});").ToList();
             return result;
         }
     }

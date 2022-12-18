@@ -3,6 +3,7 @@ using DataLayer.Interfaces;
 using DataLayer.Model;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Nest;
 using WebServer.Models;
 
 
@@ -44,7 +45,8 @@ namespace WebServer.Controllers
                 DeathYear = result.DeathYear,
                 Name = result.ProfName,
                 Characters = result.Characters,
-                ID = result.ProfId
+                ID = result.ProfId,
+                ProfRating = result.ProfRating
 
             };
             return Ok(model);
@@ -66,7 +68,7 @@ namespace WebServer.Controllers
 
                 var model = new SimpleProfessionalsModel
                 {
-                    Name = actor.ProfName,
+                    Name = actor.Name,
                     ProfId = actor.ProfId
                 };
 
@@ -89,8 +91,8 @@ namespace WebServer.Controllers
             {
                 var model = new WordModel
                 {
-                    Frequency= word.Frequency,
-                    KeyWord=word.KeyWord
+                    value= word.Frequency,
+                    text=word.KeyWord
                 };
                 WordList.Add(model);
             }
@@ -149,7 +151,8 @@ namespace WebServer.Controllers
                     BirthYear = professionals.BirthYear,
                     DeathYear = professionals.DeathYear,
                     ID=professionals.ProfId,
-                    Characters = professionals.Characters
+                    Characters = professionals.Characters,
+                    ProfRating = professionals.ProfRating
                     
                 };
                 ProfList.Add(model);
@@ -164,5 +167,83 @@ namespace WebServer.Controllers
                 HttpContext,
                 endpoint, values);
         }
+
+
+
+        //[HttpGet("profinfo/{prof_id}")]
+        //public IActionResult GetCharacters(string prof_id)
+        //{
+        //    //List<Object> InfoList = new List<Object>();
+
+        //    var characters = _dataService.getCharacters(prof_id);
+        //    var professions = _dataService.getProfessions(prof_id);
+        //    var titles = _dataService.getBestKnownFor(prof_id);
+
+        //    var model = new ProfInfo()
+        //    {
+        //        Characters = (List<Characters>)characters,
+        //        Professions = (List<Profession>)professions,
+        //        KnownFor = (List<TitleName>)titles
+        //    };
+
+        //    return Ok(model);
+        //}
+
+
+
+
+        [HttpGet("characters/{prof_id}")]
+        public IActionResult GetCharacters(string prof_id)
+        {
+
+            List<String> CharList = new List<String>();
+            var characters = _dataService.getCharacters(prof_id);
+
+            foreach (var character in characters)
+
+            {
+                CharList.Add(character.Character);
+            }
+
+            return Ok(CharList);
+        }
+
+
+        [HttpGet("profession/{prof_id}")]
+        public IActionResult GetProfessions(string prof_id)
+        {
+            List<String> ProfList = new List<String>();
+            var result = _dataService.getProfessions(prof_id);
+
+            foreach (var professions in result)
+
+            {
+                ProfList.Add(professions.Professions);
+            }
+
+            return Ok(ProfList);
+        }
+
+
+        [HttpGet("knownfor/{prof_id}")]
+        public IActionResult GetBestKnownFor(string prof_id)
+        {
+            List<String> MovieList = new List<String>();
+            var result = _dataService.getBestKnownFor(prof_id);
+
+            foreach (var movie in result)
+
+            {
+                MovieList.Add(movie.TitleNames);
+            }
+
+            return Ok(MovieList);
+        }
+
+
+
+
+
+
     }
 }

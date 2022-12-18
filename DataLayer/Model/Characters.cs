@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Model
 {
-    public class SimpleProfessionals
+    public class Characters
     {
-        public string Name { get; set; }
-
-        public string ProfId { get; set; }
+        public string? Character { get; set; }
     }
 }

@@ -198,18 +198,16 @@ namespace WebServer.Controllers
         [HttpGet("genre/{title_id}")]
         public IActionResult GetGenresForTitle(string title_id)
         {
+            List<String> GenreList = new List<String>();
+            var result = _dataService.getGenre(title_id);
 
-            var genreModel = new HasGenreModel();
-            genreModel.Genre =
-                _dataService.getGenresForTitle(title_id)
-                .Select(x => x.Genre).ToList();
-   
-            if (genreModel.Genre.Count == 0)
+            foreach (var genre in result)
+
             {
-                return NotFound("This title has no genre");
+                GenreList.Add(genre.Genre);
             }
 
-            return Ok(genreModel);
+            return Ok(GenreList);
         }
 
 

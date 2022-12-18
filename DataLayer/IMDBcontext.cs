@@ -16,6 +16,15 @@ namespace DataLayer
         public DbSet<SimpleProfessionals> SimpleProfessionals { get; set; }
 
         public DbSet<PopularMovies> PopularMovies { get; set; }
+
+
+        public DbSet<HasGenre> Genre { get; set; }
+        public DbSet<Characters> Characters { get; set; }
+        public DbSet<Profession> Profession { get; set; }
+        public DbSet<TitleName> TitleNames { get; set; }
+
+
+
         public DbSet<Titles>? Titles { get; set; }
         public DbSet<Professionals>? Professionals { get; set; }
         public DbSet<SearchResult>? SearchResult { get; set; }
@@ -77,10 +86,15 @@ namespace DataLayer
             modelBuilder.Entity<Professionals>().Property(x => x.BirthYear).HasColumnName("birth_year");
             modelBuilder.Entity<Professionals>().Property(x => x.DeathYear).HasColumnName("death_year");
             modelBuilder.Entity<Professionals>().Property(x => x.Characters).HasColumnName("characters");
+            modelBuilder.Entity<Professionals>().Property(x => x.ProfRating).HasColumnName("prof_rating");
 
             modelBuilder.Entity<Word>().HasNoKey();
             modelBuilder.Entity<Word>().Property(x => x.KeyWord).HasColumnName("words");
             modelBuilder.Entity<Word>().Property(x => x.Frequency).HasColumnName("c_count");
+
+            modelBuilder.Entity<SimpleProfessionals>().HasNoKey();
+            modelBuilder.Entity<SimpleProfessionals>().Property(x => x.Name).HasColumnName("prof_name");
+            modelBuilder.Entity<SimpleProfessionals>().Property(x => x.ProfId).HasColumnName("prof_id");
 
             modelBuilder.Entity<Password>().ToTable("password");
             modelBuilder.Entity<Password>().HasKey(x => new { x.UserName });
@@ -123,6 +137,19 @@ namespace DataLayer
             modelBuilder.Entity<HasGenre>().HasNoKey();
             modelBuilder.Entity<HasGenre>().ToTable("has_genre");
             modelBuilder.Entity<HasGenre>().Property(x => x.Genre).HasColumnName("genre");
+
+
+            modelBuilder.Entity<Characters>().HasNoKey();
+            modelBuilder.Entity<Characters>().Property(x => x.Character).HasColumnName("characters"); 
+            
+            modelBuilder.Entity<TitleName>().HasNoKey();
+            modelBuilder.Entity<TitleName>().Property(x => x.TitleNames).HasColumnName("title_name");
+
+
+            modelBuilder.Entity<Profession>().ToTable("has_profession");
+            modelBuilder.Entity<Profession>().HasKey(x => new { x.ProfId, x.Professions });
+            modelBuilder.Entity<Profession>().Property(x => x.ProfId).HasColumnName("prof_id");
+            modelBuilder.Entity<Profession>().Property(x => x.Professions).HasColumnName("profession");
 
         }
     }

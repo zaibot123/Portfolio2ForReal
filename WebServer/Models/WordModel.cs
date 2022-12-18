@@ -8,7 +8,7 @@ namespace DataLayer.Model
 {
     public class WordModel
     {
-        public string KeyWord { get; set; }
-        public int Frequency {  get; set; }
+        public string text { get; set; }
+        public int value {  get; set; }
     }
 }
