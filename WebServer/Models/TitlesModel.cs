@@ -15,7 +15,7 @@ namespace DataLayer.Model
         public string TitleName { get; set; }
         public string? Poster { get; set; } 
 
-        public string? Plot { get; set; }
+        public string? TitlePlot { get; set; }
 
         public string Username { set; get; }
         //

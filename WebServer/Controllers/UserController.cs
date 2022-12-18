@@ -122,7 +122,7 @@ namespace WebServer.Controllers
                     titleId = movie.TitleId,
                     TitleName = movie.TitleName,
                     Poster = movie.Poster,
-                    Plot = movie.TitlePlot,
+                    TitlePlot = movie.TitlePlot,
 
                 };
                 TitleModelList.Add(model);
