@@ -111,6 +111,16 @@ namespace DataLayer.DataServices
 
         }
 
+
+        public IList<SearchHistory> GetSearchHistories(string username)
+        {
+            Console.WriteLine("NOOO");
+            using var db = new IMDBcontext();
+            var result = db.searchHistories.FromSqlInterpolated($"select * from search_history where username={username}").ToList();
+            return result;
+
+        }
+
     }
 
 }

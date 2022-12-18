@@ -189,5 +189,28 @@ namespace WebServer.Controllers
             }
             return Ok(_dataService.GetRatingHistory(username));
         }
+
+
+        [HttpGet("history/{username}")]
+        public IActionResult getSearchForUser(string username)
+        {
+
+            List<SearchHistory> SearchHistory = new List<SearchHistory>();
+            var result = _dataService.GetSearchHistories(username);
+            Console.WriteLine(result);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            foreach (var movie in result)
+            {
+                var model = new SearchHistory
+                {
+                    Search = movie.Search
+                };
+                SearchHistory.Add(model);
+            }
+            return Ok(SearchHistory);
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace DataLayer
 
         //TEEEEST
     {
-        const string ConnectionString = "host=localhost;db=Movie;uid=postgres;pwd=Google-1234";
+        const string ConnectionString = "host=localhost;db=imdb;uid=postgres;pwd=1234";
         public DbSet<Casting>? Casting { get; set; }
         public DbSet<Bookmark>? Bookmark { get; set; }
         public DbSet<Password>? Password { get; set; }
@@ -17,11 +17,11 @@ namespace DataLayer
 
         public DbSet<PopularMovies> PopularMovies { get; set; }
 
-
         public DbSet<HasGenre> Genre { get; set; }
         public DbSet<Characters> Characters { get; set; }
         public DbSet<Profession> Profession { get; set; }
         public DbSet<TitleName> TitleNames { get; set; }
+        public DbSet<SearchHistory> searchHistories { get; set; }
 
 
 
@@ -85,8 +85,7 @@ namespace DataLayer
             modelBuilder.Entity<Professionals>().Property(x => x.ProfName).HasColumnName("prof_name");
             modelBuilder.Entity<Professionals>().Property(x => x.BirthYear).HasColumnName("birth_year");
             modelBuilder.Entity<Professionals>().Property(x => x.DeathYear).HasColumnName("death_year");
-            modelBuilder.Entity<Professionals>().Property(x => x.Characters).HasColumnName("characters");
-            modelBuilder.Entity<Professionals>().Property(x => x.ProfRating).HasColumnName("prof_rating");
+
 
             modelBuilder.Entity<Word>().HasNoKey();
             modelBuilder.Entity<Word>().Property(x => x.KeyWord).HasColumnName("words");
@@ -144,6 +143,10 @@ namespace DataLayer
             
             modelBuilder.Entity<TitleName>().HasNoKey();
             modelBuilder.Entity<TitleName>().Property(x => x.TitleNames).HasColumnName("title_name");
+
+
+            modelBuilder.Entity<SearchHistory>().HasNoKey();
+            modelBuilder.Entity<SearchHistory>().Property(x => x.Search).HasColumnName("search_string");
 
 
             modelBuilder.Entity<Profession>().ToTable("has_profession");
