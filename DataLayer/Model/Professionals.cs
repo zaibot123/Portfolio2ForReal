@@ -13,7 +13,7 @@ namespace DataLayer.Model
         public string? DeathYear { get; set; }
         public string? BirthYear { get; set; }
         public double? ProfRating { get; set; }
-        public string? Characters { get; set; }
+
 
     }
 }

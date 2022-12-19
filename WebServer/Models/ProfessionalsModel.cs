@@ -14,7 +14,6 @@ namespace WebServer.Models
         public string? BirthYear { get; set; }
   
         public double? ProfRating { get; set; }
-        public string? Characters { get; set; }
         public string ID { get; set; }
     }
 }

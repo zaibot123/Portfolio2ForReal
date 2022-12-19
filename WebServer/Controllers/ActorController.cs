@@ -44,7 +44,7 @@ namespace WebServer.Controllers
                 BirthYear = result.BirthYear,
                 DeathYear = result.DeathYear,
                 Name = result.ProfName,
-                Characters = result.Characters,
+         
                 ID = result.ProfId,
                 ProfRating = result.ProfRating
 
@@ -151,7 +151,6 @@ namespace WebServer.Controllers
                     BirthYear = professionals.BirthYear,
                     DeathYear = professionals.DeathYear,
                     ID=professionals.ProfId,
-                    Characters = professionals.Characters,
                     ProfRating = professionals.ProfRating
                     
                 };
