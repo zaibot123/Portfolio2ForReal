@@ -144,7 +144,7 @@ namespace WebServer.Controllers
             }
             foreach (var professionals in result)
             {
-                var ID = professionals.ProfId;
+               
                 var model = new ProfessionalsModel
                 {
                     Name = professionals.ProfName,
