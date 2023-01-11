@@ -169,28 +169,6 @@ namespace WebServer.Controllers
 
 
 
-        //[HttpGet("profinfo/{prof_id}")]
-        //public IActionResult GetCharacters(string prof_id)
-        //{
-        //    //List<Object> InfoList = new List<Object>();
-
-        //    var characters = _dataService.getCharacters(prof_id);
-        //    var professions = _dataService.getProfessions(prof_id);
-        //    var titles = _dataService.getBestKnownFor(prof_id);
-
-        //    var model = new ProfInfo()
-        //    {
-        //        Characters = (List<Characters>)characters,
-        //        Professions = (List<Profession>)professions,
-        //        KnownFor = (List<TitleName>)titles
-        //    };
-
-        //    return Ok(model);
-        //}
-
-
-
-
         [HttpGet("characters/{prof_id}")]
         public IActionResult GetCharacters(string prof_id)
         {
