@@ -97,8 +97,7 @@ namespace DataLayer
             modelBuilder.Entity<SimpleProfessionals>().Property(x => x.ProfId).HasColumnName("prof_id");
 
             modelBuilder.Entity<Password>().ToTable("password");
-            modelBuilder.Entity<Password>().HasKey(x => new { x.UserName });
-
+            modelBuilder.Entity<Password>().HasKey(x => new { x.UserName });    
             modelBuilder.Entity<Password>().Property(x => x.UserName).HasColumnName("username");
             modelBuilder.Entity<Password>().Property(x => x.HashedPassword).HasColumnName("hashed_password");
             modelBuilder.Entity<Password>().Property(x => x.Salt).HasColumnName("salt");

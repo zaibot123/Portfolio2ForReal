@@ -9,7 +9,6 @@ namespace DataLayer.Model
     public class SimpleProfessionals
     {
         public string Name { get; set; }
-
         public string ProfId { get; set; }
     }
 }

@@ -217,10 +217,5 @@ namespace WebServer.Controllers
             return Ok(MovieList);
         }
 
-
-
-
-
-
     }
 }
