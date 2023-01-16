@@ -8,6 +8,8 @@ namespace DataLayer.Security
 
     public class Authenticator
     {
+        protected NpgsqlConnection? con;
+        public Hashing hashing;
 
         public Authenticator()
         {
@@ -26,9 +28,6 @@ namespace DataLayer.Security
             }
             hashing = new Hashing();
         }
-
-        protected NpgsqlConnection? con;
-        public Hashing hashing;
 
         public bool register(string username, string password)
         {
@@ -74,30 +73,6 @@ namespace DataLayer.Security
             return true;
         }
 
-        public bool login(string username, string login_password)
-        {
-            string sql = sqlSelectUserRecord(username);
-            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-            NpgsqlDataReader rdr = cmd.ExecuteReader();
-            bool userIsRegistered = rdr.HasRows;
-            if (!userIsRegistered)
-            {
-                rdr.Close();
-                return false;
-            }
-            rdr.Read(); // now access first row in result set
-                        // the row has the format ( salt, hashed_password )
-            string salt = rdr.GetString(0);
-            string hashed_registered_password = rdr.GetString(1);
-            rdr.Close();
-            bool passwordIsVerified = hashing.verify(login_password, hashed_registered_password, salt);
-            if (passwordIsVerified) return true;
-            else
-            {
-                Console.WriteLine("Wrong password combination");
-                return false;
-            }
-        }
 
         // check the password
         public virtual bool passwordIsOK(string password, string username)
@@ -115,14 +90,6 @@ namespace DataLayer.Security
                              + "'" + hashedpassword + "'"
                              + ")";
         }
-
-        // sqlGetUserRecord is used in login()
-        virtual public string sqlSelectUserRecord(string username)
-        {
-            return "select salt, hashed_password from users "
-                    + "where username = '" + username + "'";
-        }
-
     }
 }
 

@@ -42,19 +42,11 @@ namespace DataLayer.DataServices
 
         public bool Login(string username, string password)
         {
-            List<String> userNameHashedPassword = new List<String>();
             using var db = new IMDBcontext();
-
             Hashing hasher = new Hashing();
 
             var result = db.Password.FromSqlInterpolated($"select * from users where username = {username};").ToList();
             var hashed_password_from_user = hasher.hashSHA256(password.Trim(), result[0].Salt);
-
-            Console.WriteLine(result[0].Salt + ": SALT");
-            Console.WriteLine(result[0].HashedPassword + ": result[0] hashed password");
-         
-            Console.WriteLine(username + ": username IKKE hashed");
-            Console.WriteLine(hashed_password_from_user + ": HASHED PASSWORD FROM USER");
 
             if (hashed_password_from_user == result[0].HashedPassword && username.Trim() == result[0].UserName.Trim())
             {
@@ -85,6 +77,7 @@ namespace DataLayer.DataServices
             con.Open();
             using var cmd = new NpgsqlCommand($"select delete_rating_function('{username}','{title_id}')", con);
             cmd.ExecuteReader();
+            con.Close();
         }
 
         public IList<User> GetSingleUser(string username)

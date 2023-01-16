@@ -26,14 +26,6 @@ public class Hashing {
     return Tuple.Create(hash, saltstring);
   }
 
-  // verify(string login_password, string hashed_registered_password, string saltstring)
-  // is called from Authenticator.login()
-
-  public virtual bool verify(string login_password, string hashed_registered_password, string saltstring) {
-    string hashed_login_password = hashSHA256(login_password, saltstring);
-    if (hashed_registered_password.Equals(hashed_login_password)) return true;
-    else return false;
-  }
 
   // hashSHA256 is the "workhorse" --- the actual hashing
 
@@ -41,27 +33,8 @@ public class Hashing {
     byte[] hashinput = Encoding.UTF8.GetBytes(saltstring + password); // perhaps encode only the password part?
     byte[] hashoutput = sha256.ComputeHash(hashinput); 
     return Convert.ToHexString(hashoutput);
+
   }
-
-  // how much time does it take to compute a bunch of hash values?
-
-  public void hash_measurement() {
-    int count = 250000;
-    byte[] hashinput = {0, 0, 0, 0, 0, 0, 0, 0};
-    Console.WriteLine("Doing " + count + " hash computations");
-    for (int i = 0; i < count; i++) {
-      hashinput = sha256.ComputeHash(hashinput);
-    }
-  }
-
-  public void pbkdf2_measurement() {
-    int iterations = 1000000;
-    Console.WriteLine("Doing " + iterations + " in function Pbkdf2");
-    string password = "admindnc";
-    byte[] salt = {0, 0, 0, 0, 0, 0, 0, 0};
-    KeyDerivation.Pbkdf2(password, salt, KeyDerivationPrf.HMACSHA256, iterations, hash_bytesize); 
-  }
-
 }
 
 

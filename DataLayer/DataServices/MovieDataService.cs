@@ -34,7 +34,6 @@ namespace DataLayer
         public IList<Titles> GetSearch(string username, string user_input, int page,int pagesize)
         { 
             using var db = new IMDBcontext();
-            Console.WriteLine($" page: {page}");
             var result = db.Titles.FromSqlInterpolated($"select * from simple_search({username},{user_input},{page},{pagesize})").ToList();
             return result.OrderBy(x => x.TitleName).ToList();                
         }
@@ -56,14 +55,6 @@ namespace DataLayer
             return result;
         }
 
-        private static string CreateSqlQueryForVariadic(string user_input, string function_name)
-        {
-            var u = user_input.Split(",").Select(x => "'" + x + "'");
-            var search = string.Join(",", u);
-            var sqlstring = $"select * from {function_name}({search})";
-            Console.WriteLine(sqlstring);
-            return sqlstring;
-        }
 
        public IList<TitleSimilarModel>? getSimilarMovies(string title_id)
         {
@@ -134,6 +125,17 @@ namespace DataLayer
             using var db = new IMDBcontext();
             var result = db.HasGenre.FromSqlInterpolated($"select * from genre_function({prof_id});").ToList();
             return result;
+        }
+
+
+        //Helper method
+
+        private static string CreateSqlQueryForVariadic(string user_input, string function_name)
+        {
+            var u = user_input.Split(",").Select(x => "'" + x + "'");
+            var search = string.Join(",", u);
+            var sqlstring = $"select * from {function_name}({search})";
+            return sqlstring;
         }
     }
 }
