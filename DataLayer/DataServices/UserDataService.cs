@@ -13,7 +13,7 @@ using DataLayer.Interfaces;
 
 namespace DataLayer.DataServices
 {
-    public class UserDataService : IuserDataService
+    public class UserDataService : IUserDataService
     {
        public IMDBcontext db = new IMDBcontext();
 
@@ -23,19 +23,17 @@ namespace DataLayer.DataServices
             bool registered = auth.register(username, password);
             if (registered)
             {
-                Console.WriteLine("Registration succeeded");
                 return true;
             }
             else
             {
-                Console.WriteLine("Registration failed");
                 return false;
             }
 
         }
         public IList<Titles> getBookmarksFromUser(string username)
         {
-            //using var db = new IMDBcontext();
+            using var db = new IMDBcontext();
             var result = db.Titles.FromSqlInterpolated($"Select * from bookmark natural join title where username = {username}").ToList();
             return result;
         }
@@ -100,17 +98,14 @@ namespace DataLayer.DataServices
             using var db = new IMDBcontext();
             var result = db.RatingHistory.FromSqlInterpolated($"Select username,title_id,title_name,rating,poster from rating_history natural join title where username={username} order by rating desc").ToList();
             return result;
-
         }
 
 
         public IList<SearchHistory> GetSearchHistories(string username)
         {
-            Console.WriteLine("NOOO");
             using var db = new IMDBcontext();
             var result = db.searchHistories.FromSqlInterpolated($"select * from search_history where username={username}").ToList();
             return result;
-
         }
 
     }

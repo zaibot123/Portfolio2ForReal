@@ -11,7 +11,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddSingleton<IActorDataService, ActorDataService>();
 builder.Services.AddSingleton<IMovieDataService, MovieDataService>();
-builder.Services.AddSingleton<IuserDataService, UserDataService>();
+builder.Services.AddSingleton<IUserDataService, UserDataService>();
 
 var app = builder.Build();
 

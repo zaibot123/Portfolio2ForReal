@@ -1,4 +1,5 @@
 using DataLayer;
+using DataLayer.DataServices;
 using DataLayer.Interfaces;
 using DataLayer.Model;
 using DataLayer.Security;
@@ -15,7 +16,7 @@ namespace Assignment4.Tests
         /* Categories */
         private IMovieDataService _movieDataService;
         private IActorDataService _actorDataService;
-        private IuserDataService _userdataservice;
+        private IUserDataService _userdataservice;
 
         [Fact]
         public void CrateEmptyActorsModelWithNullValue()
@@ -29,8 +30,8 @@ namespace Assignment4.Tests
         public void CoActors()
         {
             var service = new ActorDataService();
-            var result = service.getCoActors("Jennifer Aniston");
-            var name = result.First().ProfName;
+            var result = service.getCoActors("nm0000098");
+            var name = result.First().Name;
             Assert.Equal(10, result.Count);
             Assert.Equal("Courteney Cox", name);
         }
@@ -41,7 +42,7 @@ namespace Assignment4.Tests
         public void SimpleSearch()
         {
             var service = new MovieDataService();
-            IList<Titles>? result = (IList<Titles>?)service.GetSearch("troels","dog", 0, 10);
+            IList<Titles>? result = (IList<Titles>?)service.GetSearch("Tobias","dog", 0, 10);
             var name = result.First().TitleName;
             Assert.Equal("10 jaar leuven kort", name);
 
@@ -53,26 +54,27 @@ namespace Assignment4.Tests
         public void SimpleSearchPaging()
         {
             var service = new MovieDataService();
-            IList<Titles>? result = (IList<Titles>?)service.GetSearch("troels","dog", 1, 10);
+            IList<Titles>? result = (IList<Titles>?)service.GetSearch("Tobias","dog", 1, 10);
             var name = result.First().TitleName;
-            Assert.Equal("A Finished Life: The Goodbye & No Regrets Tour", name);
+            Assert.Equal("A Dog's Purpose: A Writer's Purpose", name);
 
         }
 
         [Fact]
         public void LoginValid()
         {
-            var x = _userdataservice.Login("Henrik", "F71AFC9F3FF38638EC539B8548A27AC97F0876732DD5E9CA0DF25BFB3EDF4D76");
-            Assert.Equal(0,x.Count);
+            var service = new UserDataService();
+            var x = service.Login("Tobias", "Google-1234");
+            Assert.Equal(x, true);
         }
 
 
         [Fact]
         public void LoginInvalid()
         {
-            var x = _userdataservice.Login("Henrik", "F71AFC9F3FF38638EC539B8548A27AC97F087732DD5E9CA0DF25BFB3EDF4D76");
-            Assert.Equal("False",x.ToString());
-
+            var service = new UserDataService();
+            var x = service.Login("Tobias", "HEJHEJ");
+            Assert.False(x);
         }
     }
 }

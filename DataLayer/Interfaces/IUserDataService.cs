@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataLayer.Interfaces
 {
-    public interface IuserDataService
+    public interface IUserDataService
     {
         void EditUser(string username, string bio, string photo, string email);
         bool Login(string username, string hashed_pass);

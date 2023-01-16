@@ -12,11 +12,11 @@ namespace WebServer.Controllers
 
     public class RegisterController : ControllerBase
     {
-        private IuserDataService _dataService;
+        private IUserDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
-        public RegisterController(IuserDataService dataService, LinkGenerator generator, IMapper mapper)
+        public RegisterController(IUserDataService dataService, LinkGenerator generator, IMapper mapper)
         {
             _dataService = dataService;
             _generator = generator;
@@ -26,6 +26,7 @@ namespace WebServer.Controllers
         [HttpPost()]
         public IActionResult RegisterUser(RegisterModel registerModel)
         {
+
             var registered = _dataService.RegisterUser(registerModel.Username, registerModel.Password);
 
             if (registered) return Ok($"User registered succesfully");

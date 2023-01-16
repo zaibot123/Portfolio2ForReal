@@ -17,11 +17,11 @@ namespace WebServer.Controllers
     public class UserController : ControllerBase
 
     {
-        private IuserDataService _dataService;
+        private IUserDataService _dataService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
-        public UserController(IuserDataService dataService, LinkGenerator generator, IMapper mapper)
+        public UserController(IUserDataService dataService, LinkGenerator generator, IMapper mapper)
 
         {
             _dataService = dataService;
