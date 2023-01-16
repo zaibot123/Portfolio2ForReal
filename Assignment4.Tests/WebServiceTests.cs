@@ -14,11 +14,8 @@ using DataLayer.DataServices;
 namespace Assignment4.Tests
 
 {
-
     public class WebServiceTests
     {
-
-
 
         /* /api/categories */
 
@@ -121,7 +118,7 @@ namespace Assignment4.Tests
                 var response = client.DeleteAsync(url).Result;
                 return response.StatusCode;
             }
-     
+
     }
 }
 

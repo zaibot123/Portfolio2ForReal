@@ -64,7 +64,7 @@ namespace WebServer.Controllers
                     };
                     TitleModelList.Add(model);
                 }
-                Console.WriteLine(title);
+      
                 var paging = SearchPaging<TitlesModel>(page, pagesize, (int)total, TitleModelList, nameof(GetSearch), searchType, title, plot, characters, name);
 
 
