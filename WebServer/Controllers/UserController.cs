@@ -182,7 +182,7 @@ namespace WebServer.Controllers
                     URL = "http://localhost:5001/api/movies/" + movie.TitleId,
                     titleId = movie.TitleId,
                     TitleName = movie.TitleName,
-                    Poster = movie.Poster
+                    Poster = "poster"
 
                 };
                 RatingList.Add(model);

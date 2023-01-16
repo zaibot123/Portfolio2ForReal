@@ -13,8 +13,8 @@ using static System.Net.WebRequestMethods;
 
 namespace WebServer.Controllers
 {
-    [Route("api/movies")]
     [ApiController]
+    [Route("api/movies")]
 
     public class MovieController : ControllerBase
     {
@@ -38,9 +38,7 @@ namespace WebServer.Controllers
         {
             if (searchType == "structured")
             {
-                //var result = _dataService.getStructuredSearch(title, plot, character, name);
-                //return Ok(result);
-
+   
                 var total = _dataService.getSizeStructuredSearch(title, plot, characters, name);
                 Console.WriteLine(total);
                 Console.WriteLine("TOTAL");

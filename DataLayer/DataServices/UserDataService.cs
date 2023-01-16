@@ -15,8 +15,9 @@ namespace DataLayer.DataServices
 {
     public class UserDataService : IuserDataService
     {
+       public IMDBcontext db = new IMDBcontext();
 
-        public bool RegisterUser(string username, string password)
+    public bool RegisterUser(string username, string password)
         {
             Authenticator auth = new Authenticator();
             bool registered = auth.register(username, password);
@@ -34,7 +35,7 @@ namespace DataLayer.DataServices
         }
         public IList<Titles> getBookmarksFromUser(string username)
         {
-            using var db = new IMDBcontext();
+            //using var db = new IMDBcontext();
             var result = db.Titles.FromSqlInterpolated($"Select * from bookmark natural join title where username = {username}").ToList();
             return result;
         }
@@ -63,14 +64,12 @@ namespace DataLayer.DataServices
             {
                 return false;
             }
-
         }
 
         public void EditUser(string username, string bio, string photo, string email)
         {
             var db = new IMDBcontext();
             db.Database.ExecuteSqlInterpolated($"select * from update_function({username},{bio}, {photo},{email});");
-
         }
 
         public void RateMovie(string username, string title_id, int rating)

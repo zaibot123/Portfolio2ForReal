@@ -11,8 +11,6 @@ namespace DataLayer
 {
     public class MovieDataService : IMovieDataService
     {
-
-
        public IList<Titles>? getTitles(string name)
         {
             using var db = new IMDBcontext();
@@ -21,7 +19,6 @@ namespace DataLayer
                 .Select(x => new Titles
                 {
                     TitleName = x.TitleName,
-
                     Poster = (x.Poster == null) ? "" : x.Poster
                 })
                 .ToList();
